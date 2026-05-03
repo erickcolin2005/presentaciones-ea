@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tus datos no fallaron. Tu presentación sí. — Erick Albornoz</title>
+  <style>
+    :root {
+      --dark:       #0f172a;
+      --dark-2:     #1e293b;
+      --yellow:     #f59e0b;
+      --yellow-dk:  #d97706;
+      --blue:       #2563eb;
+      --blue-lt:    #dbeafe;
+      --red:        #dc2626;
+      --red-lt:     #fee2e2;
+      --green:      #16a34a;
+      --green-lt:   #dcfce7;
+      --slate:      #475569;
+      --light:      #f8fafc;
+      --white:      #ffffff;
+      --text:       #1a1a1a;
+      --text-2:     #2d2d2d;
+      --border:     #e2e8f0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      background: var(--dark);
+      color: var(--text);
+    }
+
+    /* ── NAVIGATION ── */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(8px);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(245, 158, 11, 0.25);
+    }
+
+    #nav .brand {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--yellow);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-controls { display: flex; align-items: center; gap: 12px; }
+
+    .nav-btn {
+      background: rgba(245,158,11,0.15);
+      border: 1px solid rgba(245,158,11,0.4);
+      color: var(--yellow);
+      padding: 6px 18px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-btn:hover { background: var(--yellow); color: var(--dark); }
+
+    #counter {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      font-weight: 600;
+      min-width: 44px;
+      text-align: center;
+    }
+
+    /* ── SLIDE WRAPPER ── */
+    #stage {
+      padding-top: 56px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+      animation: fadeUp 0.35s ease both;
+    }
+    .slide.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SLIDE CARD ── */
+    .card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 40px 44px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+    }
+
+    /* ── PORTADA ── */
+    #slide-1 .card {
+      background: var(--dark);
+      padding: 48px 44px;
+    }
+
+    .portada-tag {
+      display: inline-block;
+      background: rgba(245,158,11,0.15);
+      border: 1px solid rgba(245,158,11,0.5);
+      color: var(--yellow);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 4px;
+      margin-bottom: 28px;
+    }
+
+    .portada-monogram {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--yellow);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 36px;
+    }
+
+    .portada-title {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .portada-title span { color: var(--yellow); }
+
+    .portada-sub {
+      font-size: 1.05rem;
+      color: #94a3b8;
+      margin-bottom: 36px;
+      max-width: 520px;
+    }
+
+    .portada-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      margin-bottom: 28px;
+    }
+
+    .portada-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 24px;
+      margin-bottom: 20px;
+    }
+
+    .portada-meta-item {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .portada-meta-item strong { color: var(--white); }
+
+    .portada-author {
+      font-size: 1rem;
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .portada-author a {
+      color: var(--yellow);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .portada-author a:hover { color: var(--yellow-dk); }
+
+    .portada-tagline {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    /* ── SECTION LABEL ── */
+    .sec-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .sec-context { background: #dbeafe; color: #1e40af; }
+    .sec-hallazgo { background: #fef3c7; color: #92400e; }
+    .sec-implicacion { background: var(--red-lt); color: #991b1b; }
+    .sec-accion { background: var(--green-lt); color: #166534; }
+
+    /* ── HEADINGS ── */
+    .slide-title {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+
+    .slide-title span { color: var(--blue); }
+
+    /* ── BODY TEXT ── */
+    p { color: var(--text-2); margin-bottom: 16px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── HIGHLIGHT BLOCK ── */
+    .highlight {
+      background: var(--dark);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin: 24px 0;
+    }
+    .highlight p { color: var(--white); margin: 0; font-size: 1.05rem; font-weight: 500; }
+    .highlight .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 8px;
+    }
+
+    /* ── COMPARISON ── */
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .compare-before {
+      background: #f1f5f9;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+    .compare-before .label { font-size: 0.72rem; font-weight: 700; color: var(--red); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+    .compare-before p { color: #475569; font-size: 0.95rem; }
+
+    .compare-after {
+      background: var(--dark);
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+    .compare-after .label { font-size: 0.72rem; font-weight: 700; color: var(--yellow); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+    .compare-after p { color: var(--white); font-size: 0.95rem; font-weight: 500; }
+
+    /* ── RULE / QUOTE ── */
+    .rule-box {
+      border-left: 4px solid var(--yellow);
+      background: #fffbeb;
+      padding: 16px 20px;
+      border-radius: 0 10px 10px 0;
+      margin: 24px 0;
+    }
+    .rule-box p { color: var(--text); font-weight: 600; margin: 0; font-size: 1rem; }
+
+    /* ── DATA BARS ── */
+    .data-bars { margin: 24px 0; display: flex; flex-direction: column; gap: 14px; }
+    .bar-row { }
+    .bar-row .bar-meta { display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .bar-row .bar-meta .amount { color: var(--text-2); }
+    .bar-track { height: 20px; background: var(--border); border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; }
+    .bar-fill.blue  { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+    .bar-fill.amber { background: linear-gradient(90deg, #f59e0b, #d97706); }
+    .bar-fill.red   { background: linear-gradient(90deg, #ef4444, #dc2626); }
+
+    .stat-note {
+      font-size: 0.82rem;
+      color: #475569;
+      font-style: italic;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ── INSIGHT TRIO ── */
+    .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+    .trio-card {
+      border-radius: 10px;
+      padding: 16px 18px;
+      text-align: center;
+    }
+    .trio-card .trio-num { font-size: 1.5rem; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+    .trio-card .trio-desc { font-size: 0.82rem; font-weight: 600; }
+    .trio-red   { background: var(--red-lt); }
+    .trio-red   .trio-num, .trio-red   .trio-desc { color: #991b1b; }
+    .trio-amber { background: #fef3c7; }
+    .trio-amber .trio-num, .trio-amber .trio-desc { color: #92400e; }
+    .trio-blue  { background: var(--blue-lt); }
+    .trio-blue  .trio-num, .trio-blue  .trio-desc { color: #1e40af; }
+
+    /* ── CHECKLIST ── */
+    .steps { display: flex; flex-direction: column; gap: 12px; margin: 24px 0; }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--light);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .step .step-num {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      background: var(--dark);
+      color: var(--yellow);
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step p { margin: 0; color: var(--text); font-size: 0.95rem; }
+    .step strong { color: var(--text); }
+
+    /* ── FLOW ── */
+    .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 24px 0; }
+    .flow-step {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 14px 12px;
+      text-align: center;
+      border-top: 3px solid var(--border);
+    }
+    .flow-step.active-flow { background: var(--dark); border-top-color: var(--yellow); }
+    .flow-step .fs-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .flow-step .fs-label { color: #64748b; }
+    .flow-step.active-flow .fs-label { color: var(--yellow); }
+    .flow-step .fs-q { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+    .flow-step.active-flow .fs-q { color: var(--white); }
+
+    /* ── CTA BLOCK ── */
+    .cta-block {
+      background: var(--dark);
+      border-radius: 12px;
+      padding: 26px 28px;
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .cta-block p { color: var(--white); margin: 0; font-weight: 600; font-size: 1rem; }
+    .cta-block a {
+      color: var(--yellow);
+      text-decoration: underline;
+      font-weight: 700;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+    .cta-block a:hover { color: var(--yellow-dk); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .card { padding: 28px 20px; }
+      .compare { grid-template-columns: 1fr; }
+      .trio { grid-template-columns: 1fr 1fr; }
+      .flow { grid-template-columns: 1fr 1fr; }
+      #slide-1 .card { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="nav">
+  <div class="brand">EAx</div>
+  <div class="nav-controls">
+    <button class="nav-btn" onclick="go(-1)">← Anterior</button>
+    <span id="counter">1 / 5</span>
+    <button class="nav-btn" onclick="go(1)">Siguiente →</button>
+  </div>
+</nav>
+
+<div id="stage">
+
+  <div class="slide active" id="slide-1">
+    <div class="card">
+      <div class="portada-tag">Narrativa con datos · Linkedin</div>
+      <div class="portada-monogram">EAx</div>
+      <div class="portada-title">
+        Tus datos no fallaron.<br>
+        <span>Tu presentación sí.</span>
+      </div>
+      <p class="portada-sub">
+        Cómo convertir un análisis correcto en una decisión que realmente se toma.
+      </p>
+      <div class="portada-divider"></div>
+      <div class="portada-meta">
+        <div class="portada-meta-item"><strong>Contexto</strong> → Hallazgo → Implicación → Acción</div>
+        <div class="portada-meta-item">Audiencia mixta · Colombia</div>
+      </div>
+      <div class="portada-author">
+        By <a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener">Erick Albornoz</a>
+      </div>
+      <div class="portada-tagline">
+        Obsessed with business logic · Systems Engineer · Distributed Architecture · AI Automation
+      </div>
+      <div class="portada-tagline" style="margin-top: 10px; font-style: normal; color: #475569; font-weight: 600;">
+        Not demos. Not prototypes. Systems that stay up.
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-2">
+    <div class="card">
+      <span class="sec-label sec-context">Contexto</span>
+      <h1 class="slide-title">El análisis correcto también puede fracasar.</h1>
+      <p>No por los datos. Por cómo se presentan.</p>
+      <p>Un informe técnico impecable que empieza por el proceso obliga a la audiencia a reconstruir la historia por su cuenta. La mayoría no lo hace. Escucha, asiente, y no cambia nada.</p>
+      <div class="compare">
+        <div class="compare-before">
+          <div class="label">Versión que no funciona</div>
+          <p>"Analizamos los registros semanales de asistencia de 2023 y encontramos una relación entre las ausencias tempranas y el rendimiento final."</p>
+          <p style="margin-top:10px; font-size: 0.82rem; color: #94a3b8;">Correcto. Pasivo. La audiencia todavía no sabe por qué importa.</p>
+        </div>
+        <div class="compare-after">
+          <div class="label">Versión que mueve a acción</div>
+          <p>"Las ausencias al inicio del semestre predicen pérdida mejor que las notas. La asistencia es una señal de alerta temprana, no una métrica administrativa."</p>
+          <p style="margin-top:10px; font-size: 0.82rem; color: #94a3b8;">Mismo análisis. Mismos datos. Implicación visible desde la primera línea.</p>
+        </div>
+      </div>
+      <div class="rule-box">
+        <p>No empieces donde tú empezaste a trabajar. Empieza donde la audiencia necesita claridad.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-3">
+    <div class="card">
+      <span class="sec-label sec-hallazgo">Hallazgo</span>
+      <h1 class="slide-title">La narrativa no es decoración.<br><span>Es arquitectura de decisión.</span></h1>
+      <p>El storytelling con datos no es hacer slides más bonitas. Es decidir qué debe entender primero la audiencia, y diseñar todo lo demás para sostener eso.</p>
+      <div class="highlight">
+        <div class="label">Estructura que convierte análisis en acción</div>
+        <p>Contexto → Hallazgo → Implicación → Acción.</p>
+        <p style="margin-top: 8px; color: #94a3b8; font-size: 0.9rem; font-weight: 400;">Cuatro bloques. Si el contenido no encaja en alguno, probablemente no necesita estar.</p>
+      </div>
+      <div class="flow">
+        <div class="flow-step active-flow">
+          <div class="fs-label">Contexto</div>
+          <div class="fs-q">¿Qué estamos viendo?</div>
+        </div>
+        <div class="flow-step active-flow">
+          <div class="fs-label">Hallazgo</div>
+          <div class="fs-q">¿Qué encontramos?</div>
+        </div>
+        <div class="flow-step active-flow">
+          <div class="fs-label">Implicación</div>
+          <div class="fs-q">¿Por qué importa?</div>
+        </div>
+        <div class="flow-step active-flow">
+          <div class="fs-label">Acción</div>
+          <div class="fs-q">¿Qué hacemos?</div>
+        </div>
+      </div>
+      <div class="rule-box">
+        <p>Si el título de tu gráfico es neutro, le estás delegando el trabajo de interpretación a la audiencia. El título debe cargar con el punto, no etiquetarlo.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-4">
+    <div class="card">
+      <span class="sec-label sec-implicacion">Implicación</span>
+      <h1 class="slide-title">Sin narrativa, el dato correcto pasa invisible.</h1>
+      <p>Caso real: dataset de ejecución presupuestal colombiana. Tres números del mismo informe, tres historias completamente distintas según el encuadre.</p>
+      <div class="data-bars">
+        <div class="bar-row">
+          <div class="bar-meta">
+            <span>Apropiación (techo autorizado)</span>
+            <span class="amount">88,4 billones · 100%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill blue" style="width: 100%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-meta">
+            <span>Compromisos (intención contractual)</span>
+            <span class="amount">29,9 billones · 33,8%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill amber" style="width: 33.8%;"></div></div>
+          <div class="stat-note">Si solo reportas compromisos, la historia suena mejor de lo que realmente está pasando.</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-meta">
+            <span>Pagos reales (ejecución efectiva)</span>
+            <span class="amount">1,06 billones · 1,2%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill red" style="width: 1.2%; min-width: 10px;"></div></div>
+          <div class="stat-note">Este es el dato que cambia la conversación. Sin narrativa, queda enterrado.</div>
+        </div>
+      </div>
+      <div class="trio">
+        <div class="trio-card trio-red">
+          <div class="trio-num">28,9B</div>
+          <div class="trio-desc">Brecha compromisos vs. pagos</div>
+        </div>
+        <div class="trio-card trio-amber">
+          <div class="trio-num">1,2%</div>
+          <div class="trio-desc">Pagos sobre apropiación total</div>
+        </div>
+        <div class="trio-card trio-blue">
+          <div class="trio-num">3</div>
+          <div class="trio-desc">Historias distintas, un mismo dataset</div>
+        </div>
+      </div>
+      <div class="highlight">
+        <div class="label">El problema no fue el análisis</div>
+        <p>Fue que presentar solo compromisos hace que la ejecución parezca avanzar cuando los pagos reales apenas cubren el 1,2% de lo autorizado.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-5">
+    <div class="card">
+      <span class="sec-label sec-accion">Acción</span>
+      <h1 class="slide-title">Antes de tu próxima presentación.<br><span>Cuatro preguntas.</span></h1>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <p><strong>¿Puedo decir mi hallazgo principal en una sola frase?</strong> Si no, todavía no está claro. No hay estructura que salve un mensaje que no existe.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <p><strong>¿Cada bloque se justifica por el hallazgo o por la acción?</strong> Si no, sobra. Cortar sin piedad es parte del trabajo de narrativa.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <p><strong>¿Los títulos de mis gráficos son conclusiones o etiquetas neutras?</strong> Una etiqueta informa. Una conclusión mueve.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <p><strong>¿El cierre dice qué tiene que hacer o decidir la audiencia?</strong> Sin acción concreta, el análisis muere en la sala.</p>
+        </div>
+      </div>
+      <div class="rule-box">
+        <p>El storytelling con datos no se optimiza para impresionar. Se optimiza para que la audiencia sepa exactamente qué hacer con lo que acaba de ver.</p>
+      </div>
+      <div class="cta-block">
+        <p>¿Cuál es el mayor error que cometes al presentar datos? Déjalo en los comentarios.</p>
+        <a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener">Conectemos en LinkedIn →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  const counter = document.getElementById('counter');
+
+  function go(dir) {
+    slides[cur].classList.remove('active');
+    cur = (cur + dir + total) % total;
+    slides[cur].classList.add('active');
+    counter.textContent = cur + 1 + ' / ' + total;
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); go(-1); }
+  });
+</script>
+</body>
+</html>
