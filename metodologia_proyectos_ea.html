@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La metodología no entrega el proyecto. El criterio sí. — Erick Albornoz</title>
+  <style>
+    :root {
+      --dark:      #0f172a;
+      --dark-2:    #1e293b;
+      --yellow:    #f59e0b;
+      --yellow-dk: #d97706;
+      --blue:      #2563eb;
+      --blue-lt:   #dbeafe;
+      --red:       #dc2626;
+      --red-lt:    #fee2e2;
+      --green:     #16a34a;
+      --green-lt:  #dcfce7;
+      --amber-lt:  #fef3c7;
+      --white:     #ffffff;
+      --light:     #f8fafc;
+      --text:      #1a1a1a;
+      --text-2:    #2d2d2d;
+      --border:    #e2e8f0;
+      --slate:     #475569;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      background: var(--dark);
+      color: var(--text);
+    }
+
+    /* ── NAV ── */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(15,23,42,0.96);
+      backdrop-filter: blur(8px);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(245,158,11,0.22);
+    }
+    #nav .brand { font-weight: 900; font-size: 1.05rem; color: var(--yellow); letter-spacing: -0.02em; }
+    .nav-controls { display: flex; align-items: center; gap: 12px; }
+    .nav-btn {
+      background: rgba(245,158,11,0.12);
+      border: 1px solid rgba(245,158,11,0.32);
+      color: var(--yellow);
+      padding: 6px 18px;
+      border-radius: 6px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-btn:hover { background: var(--yellow); color: var(--dark); }
+    #counter { color: #94a3b8; font-size: 0.8rem; font-weight: 600; min-width: 44px; text-align: center; }
+
+    /* ── STAGE ── */
+    #stage {
+      padding-top: 56px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 20px 16px 52px;
+      animation: fadeUp 0.35s ease both;
+    }
+    .slide.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 44px 50px;
+      box-shadow: 0 6px 44px rgba(0,0,0,0.2);
+    }
+    #slide-1 .card { background: var(--dark); padding: 52px 50px; }
+
+    /* ── PORTADA ── */
+    .p-tag {
+      display: inline-block;
+      background: rgba(245,158,11,0.14);
+      border: 1px solid rgba(245,158,11,0.42);
+      color: var(--yellow);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 4px;
+      margin-bottom: 30px;
+    }
+    .p-mono { font-size: 2.1rem; font-weight: 900; color: var(--yellow); letter-spacing: -0.04em; line-height: 1; margin-bottom: 36px; }
+    .p-title { font-size: clamp(1.55rem, 3.6vw, 2.4rem); font-weight: 800; color: var(--white); line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .p-title span { color: var(--yellow); }
+    .p-sub { font-size: 0.97rem; color: #94a3b8; margin-bottom: 38px; max-width: 540px; }
+    .p-hr { height: 1px; background: rgba(255,255,255,0.08); margin-bottom: 28px; }
+    .p-author { font-size: 0.97rem; color: var(--white); font-weight: 600; }
+    .p-author a { color: var(--yellow); text-decoration: underline; }
+    .p-author a:hover { color: var(--yellow-dk); }
+    .p-tag2 { font-size: 0.8rem; color: #64748b; margin-top: 6px; }
+    .p-tag2.strong { color: #475569; font-weight: 600; margin-top: 10px; }
+
+    /* ── LABELS ── */
+    .sec {
+      display: inline-block;
+      font-size: 0.69rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 4px;
+      margin-bottom: 22px;
+    }
+    .s-ctx  { background: #dbeafe; color: #1e40af; }
+    .s-hall { background: #fef3c7; color: #92400e; }
+    .s-impl { background: #fee2e2; color: #991b1b; }
+    .s-acc  { background: #dcfce7; color: #166534; }
+
+    /* ── TITLE ── */
+    .title {
+      font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+      font-weight: 800; color: var(--text);
+      line-height: 1.22; letter-spacing: -0.02em;
+      margin-bottom: 26px;
+    }
+    .title span { color: var(--blue); }
+
+    p { color: var(--text-2); margin-bottom: 16px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── HIGHLIGHT ── */
+    .hl { background: var(--dark); border-radius: 12px; padding: 22px 26px; margin: 24px 0; }
+    .hl .hl-lbl { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--yellow); margin-bottom: 8px; }
+    .hl p { color: var(--white); margin: 0; font-weight: 500; font-size: 1rem; }
+
+    /* ── RULE ── */
+    .rule { border-left: 4px solid var(--yellow); background: #fffbeb; padding: 14px 20px; border-radius: 0 10px 10px 0; margin: 24px 0; }
+    .rule p { color: var(--text); font-weight: 600; font-size: 0.95rem; margin: 0; }
+
+    /* ── 2-COL COMPARE ── */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .cmp-bad {
+      background: #f1f5f9; border: 2px solid var(--border);
+      border-left: 4px solid var(--red); border-radius: 10px; padding: 18px 20px;
+    }
+    .cmp-bad .lbl { font-size: 0.68rem; font-weight: 700; color: var(--red); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    .cmp-bad p { color: #475569; font-size: 0.9rem; margin-bottom: 6px; }
+    .cmp-good { background: var(--dark); border-radius: 10px; padding: 18px 20px; }
+    .cmp-good .lbl { font-size: 0.68rem; font-weight: 700; color: var(--yellow); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    .cmp-good p { color: var(--white); font-size: 0.9rem; font-weight: 500; margin-bottom: 6px; }
+    .cmp-good p:last-child, .cmp-bad p:last-child { margin-bottom: 0; }
+
+    /* ── DECISION GRID ── */
+    .dec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0; }
+    .dec-card { border-radius: 12px; padding: 18px 16px; }
+    .dec-card h4 { font-size: 0.82rem; font-weight: 800; margin-bottom: 10px; }
+    .dec-card ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .dec-card ul li { font-size: 0.78rem; font-weight: 500; padding-left: 12px; position: relative; }
+    .dec-card ul li::before { content: '→'; position: absolute; left: 0; font-weight: 700; }
+    .dec-waterfall { background: var(--blue-lt); }
+    .dec-waterfall h4, .dec-waterfall li, .dec-waterfall li::before { color: #1e40af; }
+    .dec-agile { background: var(--green-lt); }
+    .dec-agile h4, .dec-agile li, .dec-agile li::before { color: #166534; }
+    .dec-hybrid { background: var(--amber-lt); }
+    .dec-hybrid h4, .dec-hybrid li, .dec-hybrid li::before { color: #92400e; }
+
+    /* ── THEATER CARDS ── */
+    .theater { display: flex; flex-direction: column; gap: 12px; margin: 24px 0; }
+    .theater-item { display: flex; gap: 14px; align-items: flex-start; background: var(--red-lt); border-radius: 10px; padding: 14px 16px; }
+    .theater-item .ti-icon { flex-shrink: 0; font-size: 1rem; font-weight: 900; color: var(--red); width: 24px; }
+    .theater-item p { margin: 0; color: #991b1b; font-size: 0.9rem; font-weight: 500; }
+    .theater-item strong { color: #7f1d1d; }
+
+    /* ── INSIGHT ROW ── */
+    .insight-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .ins-card { border-radius: 12px; padding: 18px 20px; background: var(--light); border-top: 3px solid var(--border); }
+    .ins-card.act { background: var(--dark); border-top-color: var(--yellow); }
+    .ins-card h4 { font-size: 0.82rem; font-weight: 800; color: var(--slate); margin-bottom: 8px; }
+    .ins-card.act h4 { color: var(--yellow); }
+    .ins-card p { font-size: 0.85rem; color: #475569; margin: 0; }
+    .ins-card.act p { color: #94a3b8; }
+
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; gap: 12px; margin: 24px 0; }
+    .step { display: flex; align-items: flex-start; gap: 14px; background: var(--light); border-radius: 10px; padding: 14px 16px; }
+    .step .sn { flex-shrink: 0; width: 28px; height: 28px; background: var(--dark); color: var(--yellow); border-radius: 6px; font-weight: 800; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; }
+    .step p { margin: 0; color: var(--text); font-size: 0.93rem; }
+    .step strong { color: var(--text); }
+
+    /* ── CTA ── */
+    .cta { background: var(--dark); border-radius: 12px; padding: 24px 28px; margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+    .cta p { color: var(--white); margin: 0; font-weight: 600; font-size: 0.95rem; }
+    .cta a { color: var(--yellow); text-decoration: underline; font-weight: 700; font-size: 0.92rem; white-space: nowrap; }
+    .cta a:hover { color: var(--yellow-dk); }
+
+    @media (max-width: 640px) {
+      .card { padding: 28px 20px; }
+      #slide-1 .card { padding: 34px 20px; }
+      .compare, .dec-grid, .insight-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="brand">EAx</div>
+  <div class="nav-controls">
+    <button class="nav-btn" onclick="go(-1)">← Anterior</button>
+    <span id="counter">1 / 5</span>
+    <button class="nav-btn" onclick="go(1)">Siguiente →</button>
+  </div>
+</nav>
+
+<div id="stage">
+
+  <!-- ══════════════════════
+       SLIDE 1 — PORTADA
+  ═══════════════════════ -->
+  <div class="slide active" id="slide-1">
+    <div class="card">
+      <div class="p-tag">Gestión de proyectos · Criterio técnico · LinkedIn</div>
+      <div class="p-mono">EAx</div>
+
+      <div class="p-title">
+        La metodología no entrega el proyecto.<br>
+        <span>El criterio sí.</span>
+      </div>
+      <p class="p-sub">
+        Por qué elegir Agile o Waterfall sin analizar el contexto es tan peligroso como no elegir ninguno — y cómo tomar esa decisión con ingeniería, no con moda.
+      </p>
+
+      <div class="p-hr"></div>
+
+      <div class="p-author">
+        By <a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener">Erick Albornoz</a>
+      </div>
+      <p class="p-tag2">Obsessed with business logic · Systems Engineer · Distributed Architecture · AI Automation</p>
+      <p class="p-tag2 strong">Not demos. Not prototypes. Systems that stay up.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       SLIDE 2 — CONTEXTO
+  ═══════════════════════ -->
+  <div class="slide" id="slide-2">
+    <div class="card">
+      <span class="sec s-ctx">Contexto</span>
+
+      <h1 class="title">El mismo proyecto. Dos equipos.<br><span>Un resultado completamente distinto.</span></h1>
+
+      <p>No fue suerte. No fue talento. Fue la metodología aplicada con o sin criterio de contexto.</p>
+
+      <div class="compare">
+        <div class="cmp-bad">
+          <div class="lbl">Equipo A — Proceso correcto, producto incorrecto</div>
+          <p>3 meses en documentación antes de escribir una línea de código.</p>
+          <p>Los requerimientos cambiaron dos veces durante ese tiempo.</p>
+          <p>Entregaron exactamente lo especificado.</p>
+          <p>El cliente quedó insatisfecho con lo que pidió.</p>
+          <p style="margin-top:10px; font-size:0.82rem; font-weight:700; color:#991b1b;">Resultado: éxito técnico, fracaso de negocio.</p>
+        </div>
+        <div class="cmp-good">
+          <div class="lbl">Equipo B — Proceso adaptado, producto correcto</div>
+          <p>MVP funcional en el primer sprint.</p>
+          <p>Feedback del cliente en semana 2. Pivote en semana 3.</p>
+          <p>Entregaron lo que el cliente realmente necesitaba.</p>
+          <p>El cliente pidió más funcionalidades.</p>
+          <p style="margin-top:10px; font-size:0.82rem; font-weight:700; color:#f59e0b;">Resultado: producto validado, cliente convencido.</p>
+        </div>
+      </div>
+
+      <div class="rule">
+        <p>Waterfall nació en manufactura, donde un cambio en la línea de producción puede costar millones. En software, el costo del cambio puede ser bajo si diseñas para eso. Aplicar la misma lógica sin ese análisis es el primer error.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       SLIDE 3 — HALLAZGO
+  ═══════════════════════ -->
+  <div class="slide" id="slide-3">
+    <div class="card">
+      <span class="sec s-hall">Hallazgo</span>
+
+      <h1 class="title">La elección de metodología es una decisión de ingeniería.<br><span>No una declaración de identidad.</span></h1>
+
+      <p>La pregunta no es "¿eres de Waterfall o de Agile?" La pregunta es: ¿qué estructura le reduce más riesgo a este proyecto específico?</p>
+
+      <div class="dec-grid">
+        <div class="dec-card dec-waterfall">
+          <h4>Usa Waterfall cuando:</h4>
+          <ul>
+            <li>Requerimientos claros y estables</li>
+            <li>Cumplimiento regulatorio requerido</li>
+            <li>Contrato de precio fijo</li>
+            <li>Tecnología bien comprendida</li>
+            <li>Producto físico involucrado</li>
+          </ul>
+        </div>
+        <div class="dec-card dec-agile">
+          <h4>Usa Agile cuando:</h4>
+          <ul>
+            <li>Requerimientos van a evolucionar</li>
+            <li>Necesitas velocidad a mercado</li>
+            <li>El cliente puede dar feedback continuo</li>
+            <li>Equipo maduro o co-ubicado</li>
+            <li>MVP como enfoque viable</li>
+          </ul>
+        </div>
+        <div class="dec-card dec-hybrid">
+          <h4>Evalúa híbrido cuando:</h4>
+          <ul>
+            <li>Partes estables, partes en evolución</li>
+            <li>Integración con sistemas legacy</li>
+            <li>Múltiples tipos de stakeholders</li>
+            <li>Contexto empresarial grande</li>
+            <li>Restricciones regulatorias parciales</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hl">
+        <div class="hl-lbl">Dato que contradice el dogma</div>
+        <p>Netflix usa Agile para desarrollo de producto. Y usa Waterfall para contratos de licencias de contenido. La metodología sigue al problema — no al revés.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       SLIDE 4 — IMPLICACIÓN
+  ═══════════════════════ -->
+  <div class="slide" id="slide-4">
+    <div class="card">
+      <span class="sec s-impl">Implicación</span>
+
+      <h1 class="title">El error más costoso no es elegir<br><span>la metodología equivocada. Es ejecutarla mal.</span></h1>
+
+      <p>Hay un patrón que destruye más proyectos que elegir Waterfall cuando debería ser Agile: hacer Agile de forma que es, en la práctica, Waterfall disfrazado.</p>
+
+      <div class="theater">
+        <div class="theater-item">
+          <div class="ti-icon">✗</div>
+          <p><strong>Daily standups sin colaboración real.</strong> Cada persona reporta su estado. Nadie resuelve bloqueos. Es un reporte de estatus con nombre diferente.</p>
+        </div>
+        <div class="theater-item">
+          <div class="ti-icon">✗</div>
+          <p><strong>Sprints sin software funcionando al final.</strong> Si cada sprint termina con "casi listo", no hay sprint — hay mini-waterfall con deadline semanal.</p>
+        </div>
+        <div class="theater-item">
+          <div class="ti-icon">✗</div>
+          <p><strong>Retrospectivas sin cambios.</strong> Si el equipo identifica el mismo problema tres sprints seguidos y nada cambia, la retrospectiva es teatro.</p>
+        </div>
+        <div class="theater-item">
+          <div class="ti-icon">✗</div>
+          <p><strong>Requerimientos completos antes de empezar, llamados "historias de usuario".</strong> El cambio de nombre no cambia el problema de fondo.</p>
+        </div>
+      </div>
+
+      <div class="insight-row">
+        <div class="ins-card">
+          <h4>Lo que esto produce</h4>
+          <p>Overhead de Agile (ceremonias, roles, tableros) con rigidez de Waterfall (sin adaptación real, sin feedback incorporado). Lo peor de ambos mundos.</p>
+        </div>
+        <div class="ins-card act">
+          <h4>La vara de medir correcta</h4>
+          <p>Un Waterfall bien ejecutado con criterio supera a un Agile mal implementado. La disciplina de ejecución pesa más que el nombre del proceso.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       SLIDE 5 — ACCIÓN
+  ═══════════════════════ -->
+  <div class="slide" id="slide-5">
+    <div class="card">
+      <span class="sec s-acc">Acción</span>
+
+      <h1 class="title">Antes de elegir la metodología del próximo proyecto.<br><span>Cuatro preguntas sin respuesta política.</span></h1>
+
+      <div class="steps">
+        <div class="step">
+          <div class="sn">1</div>
+          <p><strong>¿Qué tan estables son los requerimientos?</strong> Si el cliente puede cambiarlos mañana, cualquier metodología que asume estabilidad va a fallar — independientemente del nombre.</p>
+        </div>
+        <div class="step">
+          <div class="sn">2</div>
+          <p><strong>¿El cliente puede participar en el proceso — o solo en la entrega?</strong> Agile sin cliente disponible para feedback no es Agile. Es Waterfall con sprints.</p>
+        </div>
+        <div class="step">
+          <div class="sn">3</div>
+          <p><strong>¿Hay partes del proyecto que son reguladas o tienen costo de cambio alto?</strong> Esas partes pueden necesitar Waterfall aunque el resto sea Agile. El híbrido no es debilidad — es criterio.</p>
+        </div>
+        <div class="step">
+          <div class="sn">4</div>
+          <p><strong>¿La elección responde al problema o a la preferencia del equipo?</strong> Si la respuesta es la segunda, tienes un problema de gobernanza antes de tener un problema de metodología.</p>
+        </div>
+      </div>
+
+      <div class="rule" style="margin-top: 28px;">
+        <p>La metodología es un mapa. El mapa no es el territorio. Lo que importa es entregar valor — y eso requiere criterio, no dogma.</p>
+      </div>
+
+      <div class="cta">
+        <p>¿Has visto proyectos que fracasaron por la metodología — o por cómo se ejecutó?</p>
+        <a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener">Conectemos en LinkedIn →</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /stage -->
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  const counter = document.getElementById('counter');
+
+  function go(dir) {
+    slides[cur].classList.remove('active');
+    cur = (cur + dir + total) % total;
+    slides[cur].classList.add('active');
+    counter.textContent = `${cur + 1} / ${total}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  });
+</script>
+</body>
+</html>
