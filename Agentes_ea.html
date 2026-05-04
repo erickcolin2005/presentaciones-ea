@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentes que operan. No que impresionan. — Erick Albornoz</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --ink:#0f1729;
+  --ink-mid:#1e3a5f;
+  --yellow:#f5c518;
+  --blue:#2563eb;
+  --blue-dark:#1d4ed8;
+  --green:#059669;
+  --red:#dc2626;
+  --text:#1a1a1a;
+  --text-mid:#374151;
+  --text-soft:#4b5563;
+  --bg:#f3f4f6;
+  --white:#ffffff;
+  --surface:#f8f9fa;
+  --border:#e5e7eb;
+}
+
+body{
+  font-family:'Georgia',serif;
+  background:var(--bg);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;top:14px;right:14px;z-index:100;
+  display:flex;align-items:center;gap:8px;
+}
+.btn{
+  background:var(--white);border:1.5px solid var(--border);
+  padding:0 18px;border-radius:6px;cursor:pointer;
+  font-family:'Georgia',serif;font-weight:700;font-size:.85rem;color:var(--text);
+  min-height:44px;min-width:44px;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;
+  transition:background .12s,color .12s;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+.btn:hover{background:var(--ink);color:var(--white);}
+.btn:active{background:var(--ink-mid);color:var(--white);}
+.counter{
+  background:var(--white);border:1.5px solid var(--border);
+  padding:0 14px;border-radius:6px;font-size:.82rem;font-weight:700;
+  color:var(--text-mid);min-height:44px;display:flex;align-items:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+
+/* ── WRAPPER ── */
+.wrap{
+  max-width:1100px;margin:0 auto;padding:28px 20px 52px;
+}
+
+/* ── SLIDE BASE ── */
+.slide{
+  background:var(--white);border-radius:12px;
+  padding:52px 60px;min-height:84vh;
+  box-shadow:0 12px 40px rgba(0,0,0,.12);
+  display:none;flex-direction:column;position:relative;overflow:hidden;
+}
+.slide.on{display:flex;animation:up .3s ease-out;}
+@keyframes up{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── COVER ── */
+.cover{
+  background:var(--ink);min-height:84vh;
+  justify-content:space-between;
+}
+.brand{display:flex;flex-direction:column;gap:3px;}
+.logo{font-size:2.6rem;font-weight:900;color:var(--yellow);letter-spacing:-1px;line-height:1;font-family:'Georgia',serif;}
+.byline{font-size:.95rem;color:#e5e7eb;font-family:system-ui,sans-serif;}
+.byline a{color:var(--yellow);text-decoration:underline;text-underline-offset:3px;}
+.byline a:hover{color:var(--white);}
+.obsessed{font-size:.85rem;color:#9ca3af;margin-top:2px;font-family:system-ui,sans-serif;font-style:italic;}
+
+.cover-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:44px 0 28px;}
+.cover-title{
+  font-size:clamp(2.4rem,5.5vw,4rem);font-weight:900;
+  color:var(--white);line-height:1.1;letter-spacing:-.5px;margin-bottom:22px;
+}
+.cover-title em{color:var(--yellow);font-style:normal;}
+.cover-sub{
+  font-size:1.1rem;color:#d1d5db;max-width:52ch;line-height:1.65;
+  font-family:system-ui,sans-serif;
+}
+
+.cover-foot{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.tag{
+  font-size:.72rem;font-weight:700;color:#9ca3af;
+  text-transform:uppercase;letter-spacing:.9px;
+  font-family:system-ui,sans-serif;
+}
+.tag+.tag::before{content:'·';margin-right:6px;color:#4b5563;}
+.tagline{font-size:.82rem;color:#6b7280;font-style:italic;font-family:system-ui,sans-serif;}
+
+/* ── LABELS ── */
+.lbl{
+  display:inline-block;padding:4px 13px;border-radius:4px;
+  font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+  margin-bottom:22px;width:fit-content;font-family:system-ui,sans-serif;
+}
+.lbl-c{background:#dbeafe;color:#1e40af;}
+.lbl-h{background:#dcfce7;color:#14532d;}
+.lbl-i{background:#fef3c7;color:#78350f;}
+.lbl-a{background:#ede9fe;color:#5b21b6;}
+
+/* ── CONTENT TYPOGRAPHY ── */
+.slide h2{
+  font-size:clamp(1.55rem,3vw,2.3rem);font-weight:900;color:var(--text);
+  line-height:1.2;margin-bottom:10px;letter-spacing:-.3px;
+}
+.lead{
+  font-size:1.05rem;color:var(--text-soft);line-height:1.7;
+  margin-bottom:28px;max-width:70ch;font-family:system-ui,sans-serif;
+}
+
+/* ── TWO COL ── */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
+
+/* ── CARD ── */
+.card{
+  background:var(--surface);border-radius:10px;padding:22px 26px;
+  border-left:4px solid var(--border);
+}
+.card.bad{border-color:var(--red);}
+.card.good{border-color:var(--green);}
+.card.blue{border-color:var(--blue);}
+.card h3{
+  font-size:.85rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.6px;margin-bottom:12px;font-family:system-ui,sans-serif;
+}
+.card h3.r{color:var(--red);}
+.card h3.g{color:var(--green);}
+.card h3.b{color:var(--blue);}
+
+/* ── LIST ── */
+ul.cl{list-style:none;padding:0;display:flex;flex-direction:column;gap:9px;}
+ul.cl li{
+  font-size:.95rem;color:var(--text-mid);padding-left:18px;
+  position:relative;line-height:1.5;font-family:system-ui,sans-serif;
+}
+ul.cl li::before{
+  content:'';position:absolute;left:0;top:7px;
+  width:7px;height:7px;border-radius:50%;background:#9ca3af;
+}
+ul.cl.r li::before{background:var(--red);}
+ul.cl.g li::before{background:var(--green);}
+
+/* ── LEVELS GRID ── */
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;flex:1;}
+.lv{border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:7px;}
+.lv-n{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-family:system-ui,sans-serif;}
+.lv-name{font-size:1.05rem;font-weight:800;line-height:1.2;}
+.lv-desc{font-size:.88rem;line-height:1.45;font-family:system-ui,sans-serif;}
+.lv-verdict{font-size:.78rem;font-weight:700;margin-top:auto;padding-top:6px;font-family:system-ui,sans-serif;}
+
+.lv1{background:#eff6ff;color:#1e3a5f;}
+.lv1 .lv-n{color:#3b82f6;}
+.lv1 .lv-verdict{color:#64748b;}
+
+.lv2{background:#f0fdf4;color:#14532d;}
+.lv2 .lv-n{color:#16a34a;}
+.lv2 .lv-verdict{color:#059669;}
+
+.lv3{background:#f5f3ff;color:#3b0764;}
+.lv3 .lv-n{color:#7c3aed;}
+.lv3 .lv-verdict{color:#6d28d9;}
+
+.lv4{background:var(--ink);color:#f9fafb;}
+.lv4 .lv-n{color:var(--yellow);}
+.lv4 .lv-name{color:var(--white);}
+.lv4 .lv-desc{color:#d1d5db;}
+.lv4 .lv-verdict{color:var(--yellow);}
+
+/* ── DARK BOX ── */
+.dark{
+  background:var(--ink);border-radius:10px;padding:22px 26px;margin-top:20px;
+}
+.dark p{font-size:1rem;color:#e5e7eb;line-height:1.65;font-family:system-ui,sans-serif;}
+.dark strong{color:var(--yellow);}
+
+/* ── WARNING ── */
+.warn{
+  background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;
+  padding:18px 22px;margin-top:18px;
+}
+.warn p{font-size:.95rem;color:#7f1d1d;line-height:1.55;font-family:system-ui,sans-serif;}
+.warn strong{color:var(--red);}
+
+/* ── ORCH FLOW ── */
+.flow{display:flex;flex-direction:column;gap:10px;justify-content:center;}
+.flow-row{display:flex;align-items:center;gap:10px;}
+.fbox{
+  border-radius:7px;padding:9px 15px;font-size:.85rem;font-weight:700;
+  color:var(--white);text-align:center;flex-shrink:0;font-family:system-ui,sans-serif;
+}
+.arrow{font-size:1rem;color:#9ca3af;flex-shrink:0;}
+.fnote{font-size:.82rem;color:var(--text-soft);font-style:italic;font-family:system-ui,sans-serif;}
+
+/* ── QUESTIONS ── */
+.qs{display:flex;flex-direction:column;gap:14px;flex:1;}
+.qi{display:flex;align-items:flex-start;gap:14px;background:var(--surface);border-radius:10px;padding:18px 22px;}
+.qn{
+  width:34px;height:34px;background:var(--ink);color:var(--yellow);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.9rem;flex-shrink:0;font-family:system-ui,sans-serif;
+}
+.qi h4{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.qi p{font-size:.88rem;color:var(--text-soft);line-height:1.55;font-family:system-ui,sans-serif;}
+
+/* ── CTA ── */
+.cta{
+  background:var(--ink);border-radius:10px;padding:20px 26px;margin-top:20px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+}
+.cta p{font-size:.95rem;color:#e5e7eb;line-height:1.5;font-family:system-ui,sans-serif;}
+.cta strong{color:var(--yellow);}
+.cta-btn{
+  display:inline-flex;align-items:center;
+  background:var(--yellow);color:var(--ink);font-weight:800;font-size:.88rem;
+  padding:0 20px;border-radius:7px;text-decoration:none;white-space:nowrap;
+  min-height:44px;min-width:44px;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  font-family:system-ui,sans-serif;
+  transition:background .12s;
+}
+.cta-btn:hover{background:var(--white);}
+.cta-btn:active{background:#e5e7eb;}
+
+/* ── PRINT ── */
+@media print{
+  .slide{display:flex!important;page-break-after:always;box-shadow:none;min-height:auto;}
+  .nav{display:none;}
+}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .wrap{padding:14px 12px 64px;}
+  .slide{padding:30px 22px;min-height:auto;}
+  .cover{padding:30px 22px;}
+  .two{grid-template-columns:1fr;}
+  .levels{grid-template-columns:1fr 1fr;}
+  .nav{top:10px;right:10px;gap:6px;}
+  .btn{padding:0 12px;font-size:.8rem;}
+}
+@media(max-width:480px){
+  .levels{grid-template-columns:1fr;}
+  .cover-title{font-size:2.1rem;}
+  .flow-row{flex-wrap:wrap;}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <button class="btn" onclick="prev()">← Anterior</button>
+  <span class="counter" id="c">1 / 5</span>
+  <button class="btn" onclick="next()">Siguiente →</button>
+</div>
+
+<div class="wrap">
+
+  <!-- ═══ SLIDE 1 · PORTADA ═══ -->
+  <div class="slide cover on">
+    <div class="brand">
+      <div class="logo">EA+</div>
+      <div class="byline">By <a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener">Erick Albornoz</a></div>
+      <div class="obsessed">Obsessed with business logic</div>
+    </div>
+
+    <div class="cover-body">
+      <h1 class="cover-title">Agentes que <em>operan.</em><br>No que impresionan.</h1>
+      <p class="cover-sub">La diferencia entre un agente que muere en la demo y uno que ejecuta procesos reales no está en el modelo — está en cómo fue diseñado.</p>
+    </div>
+
+    <div class="cover-foot">
+      <div class="tags">
+        <span class="tag">Systems Engineer</span>
+        <span class="tag">Distributed Architecture</span>
+        <span class="tag">AI Automation</span>
+      </div>
+      <div class="tagline">Not demos. Not prototypes. Systems that stay up.</div>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 2 · CONTEXTO ═══ -->
+  <div class="slide">
+    <span class="lbl lbl-c">Contexto</span>
+    <h2>La mayoría de "automatizaciones con IA" no sobreviven la primera semana en producción</h2>
+    <p class="lead">No por el modelo. Por cómo fueron construidas. Un prompt no es un agente. Un chatbot que responde no es un sistema que opera.</p>
+
+    <div class="two" style="flex:1;">
+      <div class="card bad">
+        <h3 class="r">Lo que se despliega</h3>
+        <ul class="cl r">
+          <li>Tareas repetitivas ejecutadas manualmente, operador por medio</li>
+          <li>Cada proceso documentado una vez y olvidado la semana siguiente</li>
+          <li>Código nuevo para cada variación del mismo problema</li>
+          <li>Horas de trabajo operativo que no escalan con el volumen del negocio</li>
+        </ul>
+        <p style="margin-top:14px;font-size:.88rem;color:var(--red);font-weight:700;font-family:system-ui,sans-serif;">Horas de trabajo humano por cada entregable repetible.</p>
+      </div>
+      <div class="card good">
+        <h3 class="g">Lo que debería operar</h3>
+        <ul class="cl g">
+          <li>El agente recibe la regla de negocio — el sistema la ejecuta sin intervención</li>
+          <li>Patrones repetitivos capturados como skills reutilizables y versionadas</li>
+          <li>Documentación generada desde el código real, no redactada después</li>
+          <li>El operador decide. El sistema ejecuta.</li>
+        </ul>
+        <p style="margin-top:14px;font-size:.88rem;color:var(--green);font-weight:700;font-family:system-ui,sans-serif;">Foco en razonamiento, no en tipeo.</p>
+      </div>
+    </div>
+
+    <div class="dark">
+      <p><strong>El problema no es la IA.</strong> Es que la mayoría construye Level 1 — un prompt — y lo llama automatización. La brecha entre impresionar en la demo y operar en producción está en los niveles que no se ven el día de la presentación.</p>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 3 · HALLAZGO ═══ -->
+  <div class="slide">
+    <span class="lbl lbl-h">Hallazgo</span>
+    <h2>Cuatro niveles separan un asistente conversacional de un sistema que opera en producción</h2>
+    <p class="lead">La mayoría de implementaciones nunca pasan del Nivel 1. El agente que funciona en producción necesita los cuatro — y sabe cuándo usar cada uno.</p>
+
+    <div class="levels">
+      <div class="lv lv1">
+        <span class="lv-n">Nivel 1</span>
+        <span class="lv-name">Prompt</span>
+        <span class="lv-desc">Pregunta única. Sin memoria. Sin acceso a archivos. Muere al cerrar la sesión.</span>
+        <span class="lv-verdict">Útil para preguntas rápidas. No es un agente.</span>
+      </div>
+      <div class="lv lv2">
+        <span class="lv-n">Nivel 2</span>
+        <span class="lv-name">Skill</span>
+        <span class="lv-desc">Archivo de instrucciones reutilizables (SKILL.md). Portátil entre herramientas. Versionable en git.</span>
+        <span class="lv-verdict">Una tarea. Siempre igual. Sin reescribir.</span>
+      </div>
+      <div class="lv lv3">
+        <span class="lv-n">Nivel 3</span>
+        <span class="lv-name">Agente</span>
+        <span class="lv-desc">Lee archivos, toma decisiones, ejecuta múltiples pasos, delega. Autónomo con contexto real del proyecto.</span>
+        <span class="lv-verdict">Multi-step. Consciente del sistema.</span>
+      </div>
+      <div class="lv lv4">
+        <span class="lv-n">Nivel 4</span>
+        <span class="lv-name">MCP Server</span>
+        <span class="lv-desc">Conexión en vivo con bases de datos, APIs y herramientas externas. El agente opera sobre datos reales.</span>
+        <span class="lv-verdict">Conectado. Datos en vivo. Integrado.</span>
+      </div>
+    </div>
+
+    <div class="dark" style="margin-top:18px;">
+      <p><strong>Insight:</strong> un agente sin skill es inconsistente. Un agente sin MCP server opera sobre datos viejos. Nivel 4 no es complejidad por moda — es la diferencia entre describir y ejecutar.</p>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 4 · IMPLICACIÓN ═══ -->
+  <div class="slide">
+    <span class="lbl lbl-i">Implicación</span>
+    <h2>Sin arquitectura explícita, el agente improvisa. En producción, improvisar tiene costo real.</h2>
+    <p class="lead">El patrón que funciona en producción: un orquestador que lee y decide pero nunca escribe. Agentes especialistas con una sola responsabilidad. Skills cargadas on-demand.</p>
+
+    <div class="two" style="flex:1;align-items:start;">
+      <div class="flow">
+        <div class="flow-row">
+          <div class="fbox" style="background:var(--ink);min-width:100px;">SPEC.md</div>
+          <span class="arrow">→</span>
+          <div class="fbox" style="background:var(--ink-mid);min-width:100px;">PLAN.md</div>
+        </div>
+        <div class="flow-row">
+          <div class="fbox" style="background:var(--ink-mid);min-width:100px;">PLAN.md</div>
+          <span class="arrow">→</span>
+          <div class="fbox" style="background:#4f46e5;min-width:130px;">Orquestador</div>
+          <span class="fnote">Lee, decide. Nunca escribe.</span>
+        </div>
+        <div class="flow-row" style="padding-left:20px;">
+          <span class="arrow">↓</span>
+          <div class="fbox" style="background:var(--green);min-width:150px;">Agentes especialistas</div>
+          <span class="fnote">Una responsabilidad cada uno.</span>
+        </div>
+        <div class="flow-row" style="padding-left:40px;">
+          <span class="arrow">↓</span>
+          <div class="fbox" style="background:var(--ink);min-width:130px;">Skills + MCP</div>
+          <span class="fnote">On-demand. Datos reales.</span>
+        </div>
+
+        <div style="margin-top:4px;background:var(--surface);border-radius:10px;padding:18px 20px;border-left:4px solid var(--blue);">
+          <p style="font-size:.88rem;color:var(--text-mid);line-height:1.6;font-family:system-ui,sans-serif;">
+            Si el orquestador nunca escribe, el punto de falla siempre es trazable.<br>
+            Si cada agente tiene una responsabilidad, se reemplaza sin reescribir el sistema.<br>
+            Si las skills están en git, el comportamiento es auditable.
+          </p>
+        </div>
+      </div>
+
+      <div class="card blue" style="height:100%;">
+        <h3 class="b">¿Qué pasa sin esto?</h3>
+        <ul class="cl" style="gap:12px;">
+          <li>El agente accede a lo que no debe — archivos, credenciales, estado de producción — porque nadie definió el perímetro</li>
+          <li>Un cambio en un componente rompe todo el flujo porque no hay separación de responsabilidades</li>
+          <li>El comportamiento varía entre ejecuciones porque no hay skill que lo fije</li>
+          <li>Cuando algo falla, no hay trazabilidad — el agente "hizo algo" pero nadie sabe qué ni cuándo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn">
+      <p><strong>Dato de producción:</strong> el 36.82% de las skills de comunidad tienen al menos una falla de seguridad. Un agente con acceso a tu sistema y una skill comprometida es un riesgo operativo — no un problema de rendimiento.</p>
+    </div>
+  </div>
+
+  <!-- ═══ SLIDE 5 · ACCIÓN ═══ -->
+  <div class="slide">
+    <span class="lbl lbl-a">Acción</span>
+    <h2>Antes de construir un agente, responde estas tres preguntas</h2>
+    <p class="lead">No se trata de qué modelo usar ni qué framework instalar. Se trata de tener criterio sobre qué construir, qué herramientas necesita, y qué no debe tocar nunca.</p>
+
+    <div class="qs">
+      <div class="qi">
+        <div class="qn">1</div>
+        <div>
+          <h4>¿Qué proceso concreto resuelve?</h4>
+          <p>No "mejorar la eficiencia". Qué tarea exacta, en qué sistema, con qué frecuencia y con qué criterio de éxito. Sin esto el agente no tiene scope definido. Sin scope, improvisa.</p>
+        </div>
+      </div>
+      <div class="qi">
+        <div class="qn">2</div>
+        <div>
+          <h4>¿Qué herramientas necesita acceder?</h4>
+          <p>Archivos, APIs, bases de datos, sistemas externos. Cada acceso es un MCP server explícito. Si no está en la lista, no se conecta. El agente opera dentro de un perímetro — no en libertad.</p>
+        </div>
+      </div>
+      <div class="qi">
+        <div class="qn">3</div>
+        <div>
+          <h4>¿Qué NO debe tocar nunca?</h4>
+          <p>Los límites explícitos son la diferencia entre un agente confiable y caos automatizado. Si no los defines antes de desplegarlo, los defines después de que algo se rompe en producción.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <p>¿Tienes un proceso que debería operar sin intervención humana?<br><strong>Hablemos.</strong></p>
+      <a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener" class="cta-btn">Conectar en LinkedIn →</a>
+    </div>
+  </div>
+
+</div><!-- .wrap -->
+
+<script>
+let cur=0;
+const slides=document.querySelectorAll('.slide');
+const total=slides.length;
+function render(){
+  slides.forEach(s=>s.classList.remove('on'));
+  slides[cur].classList.add('on');
+  document.getElementById('c').textContent=`${cur+1} / ${total}`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function next(){cur=(cur+1)%total;render();}
+function prev(){cur=(cur-1+total)%total;render();}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
+  else if(e.key==='ArrowLeft'){e.preventDefault();prev();}
+});
+</script>
+</body>
+</html>
