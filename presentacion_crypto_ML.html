@@ -62,9 +62,33 @@ html,body{
 }
 .slide.active{
   opacity:1;pointer-events:all;transform:translateX(0);
-  animation:fadeUp .35s ease-out;
 }
 .slide.out-left{opacity:0;transform:translateX(-52px)}
+.slide.out-right{opacity:0;transform:translateX(52px)}
+.slide.will-enter-left{transform:translateX(-52px)!important;transition:none!important;opacity:0!important}
+/* ══ IMAGE ZOOM ══════════════════════════════════════════════════ */
+.ic{cursor:zoom-in}
+.ic img{transition:transform .22s ease,box-shadow .22s ease}
+.ic:hover img{transform:scale(1.03);box-shadow:0 6px 24px rgba(0,0,0,.22)}
+/* ══ LIGHTBOX ════════════════════════════════════════════════════ */
+#lb{
+  display:none;position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.92);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;cursor:zoom-out;
+}
+#lb.open{display:flex;animation:lbIn .22s ease}
+@keyframes lbIn{from{opacity:0}to{opacity:1}}
+#lb img{
+  max-width:92vw;max-height:90vh;border-radius:10px;
+  box-shadow:0 24px 64px rgba(0,0,0,.6);
+  pointer-events:none;
+}
+#lb-close{
+  position:absolute;top:18px;right:22px;
+  background:none;border:none;color:#fff;font-size:2rem;
+  cursor:pointer;line-height:1;opacity:.7;
+}
+#lb-close:hover{opacity:1}
 .notes{display:none}
 /* ══ SLIDE META ══════════════════════════════════════════════════ */
 .slide-meta{
@@ -625,14 +649,28 @@ code{font-family:'Cascadia Code','Courier New',monospace;font-size:.82em;
 
   function go(next, dir){
     if(next < 0 || next >= total) return;
-    slides[cur].classList.remove('active');
-    if(dir > 0){
-      slides[cur].classList.add('out-left');
-      setTimeout(() => slides[cur].classList.remove('out-left'), 400);
-    }
+    const outEl = slides[cur];
+    const inEl  = slides[next];
+
+    outEl.classList.remove('active');
+    outEl.classList.add(dir > 0 ? 'out-left' : 'out-right');
+    setTimeout(() => outEl.classList.remove('out-left','out-right'), 420);
+
     cur = next;
-    slides[cur].classList.add('active');
-    render();
+
+    if(dir < 0){
+      // Stamp off-screen left without transition, paint it, then animate in
+      inEl.classList.add('will-enter-left');
+      void inEl.offsetWidth;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        inEl.classList.remove('will-enter-left');
+        inEl.classList.add('active');
+        render();
+      }));
+    } else {
+      inEl.classList.add('active');
+      render();
+    }
   }
 
   function toggleNotes(){
@@ -667,7 +705,29 @@ code{font-family:'Cascadia Code','Courier New',monospace;font-size:.82em;
   }, {passive:true});
 
   render();
+
+  // ── Lightbox ──────────────────────────────────────────────────────────────
+  const lb      = document.getElementById('lb');
+  const lbImg   = document.getElementById('lb-img');
+  const lbClose = document.getElementById('lb-close');
+
+  document.querySelectorAll('.ic img').forEach(img => {
+    img.addEventListener('click', () => {
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lb.classList.add('open');
+    });
+  });
+
+  function closeLb(){ lb.classList.remove('open'); lbImg.src = ''; }
+  lb.addEventListener('click', e => { if(e.target !== lbImg) closeLb(); });
+  lbClose.addEventListener('click', closeLb);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLb(); });
 })();
 </script>
+<div id="lb" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+  <button id="lb-close" aria-label="Cerrar">&#x2715;</button>
+  <img id="lb-img" src="" alt=""/>
+</div>
 </body>
 </html>
