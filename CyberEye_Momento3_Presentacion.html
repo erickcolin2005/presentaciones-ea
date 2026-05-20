@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberEye · Momento 3</title>
+<style>
+:root{--dark:#0f172a;--dark2:#1e293b;--acc:#2563eb;--neut:#64748b;--light:#f1f5f9;--white:#fff;--pm:#3b82f6;--ml:#8b5cf6;--be:#10b981;--fe:#f59e0b;--red:#ef4444;--green:#22c55e;--amber:#f59e0b;--font:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--r:14px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:15px}
+body{font-family:var(--font);background:var(--dark);color:var(--white);height:100vh;overflow:hidden;line-height:1.6}
+.deck{position:fixed;inset:0}.slide{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden;animation:fu .3s ease-out}.slide.on{display:flex}@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.nav{position:fixed;bottom:22px;right:22px;display:flex;gap:8px;z-index:999}
+.btn{min-width:44px;min-height:44px;border:1px solid rgba(255,255,255,.15);border-radius:12px;background:rgba(255,255,255,.08);color:var(--white);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;backdrop-filter:blur(10px);transition:background .15s}.btn:hover,.btn:active{background:rgba(255,255,255,.2)}
+.cnt{min-height:44px;padding:0 14px;display:flex;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;font-size:.78rem;color:rgba(255,255,255,.55);backdrop-filter:blur(10px)}
+.si{display:flex;flex-direction:column;padding:30px 52px;height:100%;overflow:hidden}
+.ey{font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}.ti{font-size:clamp(1.3rem,2vw,1.75rem);font-weight:800;letter-spacing:-.025em;margin-bottom:3px}.sb{font-size:.82rem;margin-bottom:14px}
+/* S1 */
+.s1{background:var(--dark);justify-content:flex-end}.s1-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 72% 38%,rgba(239,68,68,.12),transparent 65%),radial-gradient(ellipse 45% 45% at 18% 82%,rgba(139,92,246,.08),transparent 60%)}
+.s1-in{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;padding:48px 64px;height:100%}
+.s1-ey{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--red);margin-bottom:12px}
+.s1-ti{font-size:clamp(2.6rem,5vw,4.2rem);font-weight:900;line-height:.95;letter-spacing:-.04em;margin-bottom:18px}
+.s1-ti em{display:block;font-style:normal;color:rgba(255,255,255,.3);font-size:.48em;font-weight:700;letter-spacing:-.01em;margin-bottom:6px}
+.s1-desc{font-size:.88rem;color:rgba(255,255,255,.42);max-width:520px;margin-bottom:28px;line-height:1.7}
+.s1-meta{display:flex;gap:0;margin-bottom:22px;border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden;width:fit-content;flex-wrap:wrap}
+.mi{padding:9px 15px;border-right:1px solid rgba(255,255,255,.1)}.mi:last-child{border-right:none}
+.ml2{font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:rgba(255,255,255,.28);margin-bottom:2px}
+.mv{font-size:.78rem;font-weight:600;color:rgba(255,255,255,.78)}
+.s1-tags{display:flex;gap:7px;flex-wrap:wrap}
+.tag{padding:5px 12px;border-radius:999px;font-size:.72rem;font-weight:600}
+.tag-r{border:1px solid rgba(239,68,68,.5);color:#fca5a5;background:rgba(239,68,68,.1)}
+.tag-p{border:1px solid rgba(139,92,246,.5);color:#c4b5fd;background:rgba(139,92,246,.1)}
+.tag-a{border:1px solid rgba(37,99,235,.5);color:#93c5fd;background:rgba(37,99,235,.1)}
+.tag-g{border:1px solid rgba(34,197,94,.5);color:#86efac;background:rgba(34,197,94,.1)}
+/* CARDS */
+.cd{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:16px}
+.cd-t{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.il{display:flex;flex-direction:column;gap:7px}.il-i{display:flex;gap:9px;align-items:flex-start;font-size:.79rem;color:rgba(255,255,255,.68);line-height:1.45}
+.il-d{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
+/* S2 */
+.s2{background:#1a0a0a;color:var(--white)}.s2 .ey{color:var(--red)}.s2 .sb{color:rgba(255,255,255,.42)}
+.mrow{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;flex-shrink:0}
+.met{background:rgba(255,255,255,.06);border-radius:10px;padding:10px 14px;flex:1;min-width:100px;border:1px solid rgba(255,255,255,.07)}
+.met-v{font-size:1.3rem;font-weight:900;line-height:1}.met-l{font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.32);margin-top:2px}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0;overflow:hidden}
+.tbox{background:rgba(255,255,255,.04);border-radius:var(--r);padding:16px;border:1px solid rgba(255,255,255,.07);overflow-y:auto}
+.tl-l{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.tl-bar{height:26px;border-radius:8px;display:flex;align-items:center;padding:0 10px;font-size:.7rem;font-weight:700;color:#fff;margin-bottom:5px}
+/* S3 */
+.s3{background:var(--light);color:var(--dark)}.s3 .ey{color:var(--ml)}.s3 .sb{color:var(--neut)}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0}
+.dcard{border-radius:var(--r);padding:20px 18px;display:flex;flex-direction:column;gap:8px}
+.dcard.prb{background:#fef2f2;border:1px solid #fecaca}.dcard.sol{background:#f0fdf4;border:1px solid #bbf7d0}
+.dcard .dti{font-size:.95rem;font-weight:800;color:var(--dark)}
+.dl{list-style:none;display:flex;flex-direction:column;gap:5px}.dl li{font-size:.8rem;color:var(--neut);display:flex;gap:6px;line-height:1.45}.dl li::before{content:'→';flex-shrink:0;font-weight:700}
+.dcard.prb .dl li::before{color:var(--red)}.dcard.sol .dl li::before{color:var(--green)}
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:8px}
+.tc{border-radius:12px;padding:12px 10px;text-align:center;border:1px solid rgba(0,0,0,.08)}
+.tc-n{font-size:.8rem;font-weight:700;color:var(--dark);margin-top:3px}.tc-r{font-size:.66rem;color:var(--neut)}
+.tc-b{display:inline-block;padding:2px 7px;border-radius:999px;font-size:.6rem;font-weight:700;margin-top:3px}
+.rstrip{background:var(--dark);border-radius:var(--r);padding:13px 18px;display:flex;align-items:center;gap:11px;flex-shrink:0;margin-top:auto}
+.rstrip p{font-size:.8rem;color:rgba(255,255,255,.82);flex:1}.rstrip strong{color:#86efac}
+/* S4 */
+.s4{background:var(--dark);color:var(--white)}.s4 .ey{color:#60a5fa}.s4 .sb{color:rgba(255,255,255,.42)}
+.hgrid{display:grid;grid-template-columns:1fr 1.6fr;gap:14px;flex:1;min-height:0;overflow:hidden}
+.htw{overflow-y:auto;border-radius:12px;border:1px solid rgba(255,255,255,.08)}
+.ht{width:100%;border-collapse:collapse;font-size:.78rem}
+.ht th{background:rgba(37,99,235,.22);color:rgba(255,255,255,.8);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:8px 9px;text-align:left;position:sticky;top:0;z-index:5}
+.ht td{padding:7px 9px;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.72)}
+.dp{color:#fca5a5;font-weight:700}.dz{color:#86efac;font-weight:700}
+.bsm{display:inline-block;padding:2px 6px;border-radius:999px;font-size:.6rem;font-weight:700}
+.bg-r{background:rgba(239,68,68,.2);color:#fca5a5}.bg-a{background:rgba(245,158,11,.2);color:#fde68a}.bg-g{background:rgba(34,197,94,.2);color:#86efac}
+/* S5 */
+.s5{background:#090f1c;color:var(--white)}.s5 .ey{color:#c4b5fd}.s5 .sb{color:rgba(255,255,255,.4)}
+.cparams{display:flex;gap:6px;margin-bottom:9px;flex-wrap:wrap;flex-shrink:0}
+.cp{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.06);border-radius:8px;padding:4px 9px;font-size:.68rem;font-weight:600;color:rgba(255,255,255,.58)}
+.cp strong{color:#c4b5fd;font-size:.8rem}
+.tabs{display:flex;gap:5px;margin-bottom:9px;flex-shrink:0}
+.tab{padding:5px 12px;border-radius:8px;font-size:.72rem;font-weight:700;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.4);transition:all .15s;touch-action:manipulation}.tab.on{background:var(--ml);color:var(--white);border-color:var(--ml)}
+.tbc{display:none;flex:1;min-height:0;flex-direction:column}.tbc.on{display:flex}
+.tscroll{overflow:auto;flex:1;border-radius:10px;border:1px solid rgba(255,255,255,.07)}
+.st{width:100%;border-collapse:collapse;font-size:.73rem;min-width:900px}
+.st th{background:rgba(139,92,246,.22);color:rgba(255,255,255,.78);font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:7px 7px;text-align:left;position:sticky;top:0;z-index:10;white-space:nowrap}
+.st td{padding:5px 7px;border-bottom:1px solid rgba(255,255,255,.04);color:rgba(255,255,255,.72);vertical-align:middle}
+.ph td{background:rgba(139,92,246,.1);color:rgba(255,255,255,.82);font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.rh td{background:rgba(139,92,246,.07)}.rh .an{font-weight:700;color:#fff}
+.hp{display:inline-block;background:var(--ml);color:#fff;font-size:.58rem;font-weight:700;padding:2px 6px;border-radius:999px}
+.rd{display:inline-flex;align-items:center;gap:4px;font-size:.68rem;font-weight:600;white-space:nowrap}.rd::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.rd-pm::before{background:var(--pm)}.rd-ml::before{background:var(--ml)}.rd-be::before{background:var(--be)}.rd-fe::before{background:var(--fe)}
+.gbar{position:absolute;top:50%;transform:translateY(-50%);height:8px;border-radius:999px;opacity:.85}
+.gbar-pm{background:var(--pm)}.gbar-ml{background:var(--ml)}.gbar-be{background:var(--be)}.gbar-fe{background:var(--fe)}
+.gview{flex:1;overflow:auto;min-height:0}.gc{min-width:860px}
+.gh2{display:flex;height:34px;position:sticky;top:0;z-index:10;background:#090f1c}
+.glc{width:210px;flex-shrink:0;background:rgba(139,92,246,.16);display:flex;align-items:center;padding:0 9px;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.45)}
+.gwrap{flex:1;display:flex;border-bottom:1px solid rgba(255,255,255,.1)}
+.gwk{flex:1;border-left:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.gwk-m{font-size:.56rem;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.42);position:absolute;top:2px;left:2px;letter-spacing:.06em}
+.gwk-n{font-size:.5rem;color:rgba(255,255,255,.18);padding:0 2px 2px}
+.sl2{border-bottom:1px solid rgba(255,255,255,.04)}
+.slh2{display:flex;height:22px;align-items:center;background:rgba(255,255,255,.04)}
+.sln2{width:210px;flex-shrink:0;padding:0 9px;font-size:.66rem;font-weight:700;display:flex;align-items:center;gap:4px}
+.slrow2{display:flex;height:20px}
+.slnm2{width:210px;flex-shrink:0;padding:0 9px;font-size:.62rem;color:rgba(255,255,255,.48);display:flex;align-items:center;border-right:1px solid rgba(255,255,255,.05);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.slba{flex:1;position:relative}
+.sbar{position:absolute;height:11px;top:50%;transform:translateY(-50%);border-radius:3px;opacity:.85;min-width:3px}
+.sbar-pm{background:var(--pm)}.sbar-ml{background:var(--ml)}.sbar-be{background:var(--be)}.sbar-fe{background:var(--fe)}
+/* S6 */
+.s6{background:var(--light);color:var(--dark)}.s6 .ey{color:var(--red)}.s6 .sb{color:var(--neut)}
+.cgrid{display:grid;grid-template-columns:1fr 1.3fr;gap:12px;flex:1;min-height:0;overflow:hidden}
+.cc{background:var(--white);border-radius:var(--r);padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.06),0 6px 20px rgba(0,0,0,.04);overflow-y:auto}
+.cct{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.ragr{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:.78rem}.ragr:last-child{border-bottom:none}
+.ragd{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.ragp{font-weight:700;color:var(--dark);flex:1}.ragn{font-size:.7rem;color:var(--neut)}
+.ctbl{width:100%;border-collapse:collapse;font-size:.74rem}
+.ctbl th{background:var(--light);color:var(--dark);font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:6px 7px;text-align:left;position:sticky;top:0;z-index:5}
+.ctbl td{padding:6px 7px;border-bottom:1px solid rgba(0,0,0,.06);color:var(--neut);vertical-align:top;line-height:1.4}
+.cid{font-weight:700;color:var(--dark);white-space:nowrap}
+/* S7 */
+.s7{background:var(--dark);color:var(--white)}.s7 .ey{color:#c4b5fd}.s7 .sb{color:rgba(255,255,255,.42)}
+.blay{display:grid;grid-template-columns:1.8fr 1fr;gap:14px;flex:1;min-height:0}
+.bleft{display:flex;flex-direction:column;gap:9px;min-height:0}
+.btw{background:rgba(255,255,255,.04);border-radius:12px;overflow:auto;flex:1;border:1px solid rgba(255,255,255,.07)}
+.bt{width:100%;border-collapse:collapse;font-size:.79rem}
+.bt th{background:rgba(139,92,246,.25);color:rgba(255,255,255,.82);font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:8px 11px;text-align:left;position:sticky;top:0}
+.bt th:not(:first-child){text-align:right}.bt td{padding:8px 11px;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.78)}
+.bt td:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+.bt .tr td{background:rgba(139,92,246,.18);color:#fff;font-weight:700;border-bottom:none}
+.rc{font-size:.62rem;font-weight:600;padding:1px 6px;border-radius:999px}
+.bright{display:flex;flex-direction:column;gap:9px;min-height:0}
+.bs{background:rgba(255,255,255,.05);border-radius:12px;padding:14px 16px;border:1px solid rgba(255,255,255,.07)}
+.bs-l{font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.33);margin-bottom:3px}
+.bs-v{font-size:1.4rem;font-weight:900;line-height:1;letter-spacing:-.02em;color:#fff}
+.bs-s{font-size:.68rem;color:rgba(255,255,255,.33);margin-top:2px}
+.rc2{background:rgba(255,255,255,.05);border-radius:12px;padding:13px 16px;border:1px solid rgba(255,255,255,.07);flex:1;overflow-y:auto}
+.rc2-t{font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.33);margin-bottom:7px}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.76rem}.rr:last-child{border-bottom:none}
+.rr-who{color:rgba(255,255,255,.62);display:flex;align-items:center;gap:5px}.rr-v{font-weight:700;color:#fff}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0}
+.crow{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.04);border-radius:10px;padding:9px 12px;border:1px solid rgba(255,255,255,.07);flex-shrink:0}
+.cnd{background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);border-radius:8px;padding:6px 9px;text-align:center;flex:1}
+.cnd-l{font-size:.53rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.33)}
+.cnd-v{font-size:.76rem;font-weight:700;color:#fff}
+.ca{font-size:.85rem;color:rgba(255,255,255,.18);flex-shrink:0}
+@media(max-width:768px){.si{padding:18px 14px}.s1-in{padding:22px 18px}.sgrid,.dgrid,.hgrid,.cgrid,.blay,.tgrid{grid-template-columns:1fr;overflow-y:auto}.s1-ti{font-size:2rem}}
+</style>
+</head>
+<body>
+<div class="deck">
+<section class="slide s1 on" id="s1"><div class="s1-bg"></div><div class="s1-in"><div class="s1-ey">Gerencia de Proyectos · UCC · 2026</div><h1 class="s1-ti"><em>Momento 3 — Control y Replanificación</em>CyberEye</h1><p class="s1-desc">La Fase 1 (Pipeline) se atrasó un 70%. Esto exigió reestructurar el equipo, replanificar el cronograma y documentar cada decisión. Este entregable muestra cómo se controló el proyecto sin mover la fecha final.</p><div class="s1-meta"><div class="mi"><div class="ml2">PM</div><div class="mv">Erick Albornoz</div></div><div class="mi"><div class="ml2">ML Engineer</div><div class="mv">Nuevo recurso</div></div><div class="mi"><div class="ml2">Backend</div><div class="mv">Milton Quintero</div></div><div class="mi"><div class="ml2">Frontend</div><div class="mv">J.J. Mosquera</div></div><div class="mi"><div class="ml2">Sponsor</div><div class="mv">Sponsor del Proyecto</div></div><div class="mi"><div class="ml2">Línea base</div><div class="mv">V2.0 · Mayo 2026</div></div></div><div class="s1-tags"><span class="tag tag-r">⚠ Atraso 70% Fase 1</span><span class="tag tag-p">+ ML Engineer dedicado</span><span class="tag tag-a">Cronograma V2</span><span class="tag tag-g">H6 se mantiene: 21/06</span></div></div></section>
+
+<section class="slide s2" id="s2"><div class="si"><div class="ey" style="color:var(--red)">Escenario</div><h2 class="ti" style="color:#fff">La Fase 1 se rompió — y todo se movió</h2><p class="sb" style="color:rgba(255,255,255,.42)">El Sprint 1 (Pipeline de Datos) debía durar 17 días. Tomó 29. Atraso de +12 días en cascada sobre todo el proyecto.</p><div class="mrow"><div class="met"><div class="met-v" style="color:var(--acc)">17 días</div><div class="met-l">Planificado (V1)</div></div><div class="met"><div class="met-v" style="color:var(--red)">29 días</div><div class="met-l">Real</div></div><div class="met"><div class="met-v" style="color:var(--red)">+70%</div><div class="met-l">Desviación</div></div><div class="met"><div class="met-v" style="color:var(--red)">+12 d</div><div class="met-l">Atraso</div></div><div class="met"><div class="met-v" style="color:var(--amber)">03/07</div><div class="met-l">Cierre sin intervención</div></div></div><div class="sgrid"><div class="tbox"><div class="tl-l" style="color:var(--acc)">Línea base V1 — Plan original</div><div style="font-size:.7rem;color:rgba(255,255,255,.38);margin-bottom:6px">Sprint 1: Mar 9 → Mar 25 · H2: 25/03</div><div class="tl-bar" style="width:38%;background:linear-gradient(90deg,var(--acc),#1d4ed8)">Pipeline · 17 d</div><div class="tl-bar" style="width:78%;background:linear-gradient(90deg,var(--acc),#1d4ed8);opacity:.7">Motor IA · 35 d</div><div class="tl-bar" style="width:50%;background:linear-gradient(90deg,var(--acc),#1d4ed8);opacity:.5">API + Int. + Entrega</div><div style="font-size:.68rem;color:rgba(255,255,255,.45);margin-top:5px">✓ Cierre: <strong style="color:#93c5fd">21/06/26</strong></div></div><div class="tbox"><div class="tl-l" style="color:var(--red)">Sin intervención — Cascada</div><div style="font-size:.7rem;color:rgba(255,255,255,.38);margin-bottom:6px">Sprint 1 real: Mar 9 → Abr 6 · H2: 06/04</div><div class="tl-bar" style="width:65%;background:linear-gradient(90deg,var(--red),#b91c1c)">Pipeline · 29 d (+70%)</div><div class="tl-bar" style="width:78%;background:rgba(255,255,255,.08);color:rgba(255,255,255,.35)">Motor IA → desplazado +12 d</div><div class="tl-bar" style="width:50%;background:rgba(255,255,255,.08);color:rgba(255,255,255,.35)">Resto → +12 d</div><div style="font-size:.68rem;color:rgba(255,255,255,.45);margin-top:5px">✗ Cierre: <strong style="color:#fca5a5">03/07/26 (+12 d)</strong></div></div></div><div style="display:flex;gap:12px;margin-top:10px;flex-shrink:0"><div class="cd" style="flex:1"><div class="cd-t" style="color:var(--red)">Causa raíz</div><div class="il"><div class="il-i"><span class="il-d" style="background:var(--red)"></span>Datasets Wi-Fi con formatos inconsistentes (CSV headers variables, JSON no documentado)</div><div class="il-i"><span class="il-d" style="background:var(--red)"></span>Feature engineering requirió iteraciones no previstas (57 variables, selección compleja)</div><div class="il-i"><span class="il-d" style="background:var(--amber)"></span>Erick saturado: la doble carga PM + ML retrasó ambos frentes</div></div></div><div class="cd" style="flex:1"><div class="cd-t" style="color:var(--amber)">Qué se pierde sin acción</div><div class="il"><div class="il-i"><span class="il-d" style="background:var(--red)"></span>Fecha final incumplida (+12 días)</div><div class="il-i"><span class="il-d" style="background:var(--red)"></span>H3–H5 se desplazan en cascada</div><div class="il-i"><span class="il-d" style="background:var(--amber)"></span>El riesgo de concentración (55% esfuerzo en 1 persona) ya se materializó</div></div></div></div></div></section>
+
+<section class="slide s3" id="s3"><div class="si"><div class="ey" style="color:var(--ml)">Decisión estratégica</div><h2 class="ti" style="color:var(--dark)">ML Engineer dedicado + Erick exclusivamente PM</h2><p class="sb" style="color:var(--neut)">El riesgo de concentración se materializó. Se separan los roles y se recuperan 12 días por paralelismo.</p><div class="dgrid"><div class="dcard prb"><div style="font-size:1.4rem">🔴</div><div class="dti">Problema</div><ul class="dl"><li>Erick concentraba PM + ML = 55% del esfuerzo total (264 h de 480 h)</li><li>Actividades ML eran secuenciales con PM: no podían solaparse</li><li>Si hacía ML, no controlaba. Si controlaba, no avanzaba ML</li><li>El cuello de botella produjo +12 días de atraso real</li></ul></div><div class="dcard sol"><div style="font-size:1.4rem">✅</div><div class="dti">Solución aprobada por Sponsor</div><ul class="dl"><li>ML Engineer dedicado: $90.000/h, 180 horas estimadas</li><li>Erick pasa a PM exclusivo: planificación, control, comunicación</li><li>ML y PM ahora en paralelo (no secuencial) → compresión real</li><li>Motor IA: 35 → 25 días (–10 d). Sprint 5: 21 → 16 d (–5 d)</li></ul></div></div><div style="margin-top:10px"><div style="font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--ml);margin-bottom:7px">Equipo V2 — 4 personas</div><div class="tgrid"><div class="tc" style="background:#eff6ff"><div style="font-size:1.3rem">🎯</div><div class="tc-n">Erick Albornoz</div><div class="tc-r">PM exclusivo</div><div class="tc-b" style="background:#dbeafe;color:#1e40af">130 h · $110k/h</div></div><div class="tc" style="background:#f5f3ff"><div style="font-size:1.3rem">🤖</div><div class="tc-n">ML Engineer</div><div class="tc-r">ML dedicado (nuevo)</div><div class="tc-b" style="background:#ede9fe;color:#5b21b6">180 h · $90k/h</div></div><div class="tc" style="background:#ecfdf5"><div style="font-size:1.3rem">⚙️</div><div class="tc-n">Milton Quintero</div><div class="tc-r">Backend / DevOps</div><div class="tc-b" style="background:#d1fae5;color:#065f46">152 h · $65k/h</div></div><div class="tc" style="background:#fffbeb"><div style="font-size:1.3rem">📊</div><div class="tc-n">J.J. Mosquera</div><div class="tc-r">Frontend</div><div class="tc-b" style="background:#fef3c7;color:#92400e">72 h · $65k/h</div></div></div></div><div class="rstrip"><span style="font-size:1rem;flex-shrink:0">📐</span><p><strong>Recuperación:</strong> Motor IA –10 d (paralelismo ML) + Sprint 5 –2 d (4 personas doc.) = <strong>12 días recuperados. Fecha final: 21/06 sin cambio.</strong></p></div></div></section>
+
+<section class="slide s4" id="s4"><div class="si"><div class="ey" style="color:#60a5fa">V1 → V2</div><h2 class="ti" style="color:#fff">Comparación de hitos: qué se movió y qué se recuperó</h2><p class="sb" style="color:rgba(255,255,255,.42)">H2 se atrasó 12 días. El paralelismo ML comprimió Motor IA y absorbió el atraso. H6 se mantiene.</p><div class="hgrid"><div class="htw"><table class="ht"><thead><tr><th>Hito</th><th>V1</th><th>V2</th><th>Δ</th><th>Estado</th></tr></thead><tbody><tr><td style="font-weight:700;color:#fff">H1 · Kickoff</td><td>04/03</td><td>04/03</td><td class="dz">0</td><td><span class="bsm bg-g">✓ OK</span></td></tr><tr><td style="font-weight:700;color:#fff">H2 · Pipeline</td><td>25/03</td><td style="color:#fca5a5">06/04</td><td class="dp">+12 d</td><td><span class="bsm bg-g">✓ Completado</span></td></tr><tr><td style="font-weight:700;color:#fff">H3 · Modelo ML</td><td>29/04</td><td style="color:#fde68a">01/05</td><td class="dp">+2 d</td><td><span class="bsm bg-g">✓ Completado</span></td></tr><tr><td style="font-weight:700;color:#fff">H4 · API REST</td><td>10/05</td><td style="color:#fde68a">17/05</td><td class="dp">+7 d</td><td><span class="bsm bg-a">🔶 En curso</span></td></tr><tr><td style="font-weight:700;color:#fff">H5 · Integración</td><td>31/05</td><td style="color:#fde68a">05/06</td><td class="dp">+5 d</td><td><span class="bsm" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.45)">◻ Pendiente</span></td></tr><tr><td style="font-weight:700;color:#fff">H6 · Entrega</td><td>21/06</td><td style="color:#86efac">21/06</td><td class="dz">0</td><td><span class="bsm" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.45)">◻ Pendiente</span></td></tr></tbody></table></div><div style="display:flex;flex-direction:column;gap:10px;overflow-y:auto"><div class="cd"><div class="cd-t" style="color:#60a5fa">Estrategia de recuperación</div><div class="il"><div class="il-i"><span class="il-d" style="background:var(--ml)"></span><strong style="color:#c4b5fd">–10 días:</strong> ML Engineer trabaja en paralelo con PM → Motor IA de 35 a 25 días</div><div class="il-i"><span class="il-d" style="background:var(--green)"></span><strong style="color:#86efac">–2 días:</strong> Sprint 5 con 4 personas en documentación → de 21 a 16 días</div><div class="il-i"><span class="il-d" style="background:var(--acc)"></span><strong style="color:#93c5fd">Resultado:</strong> 12 días de atraso → 12 días recuperados = fecha final intacta</div></div></div><div class="cd"><div class="cd-t" style="color:var(--amber)">Por qué el cronograma V2 es creíble</div><div class="il"><div class="il-i"><span class="il-d" style="background:var(--green)"></span>H1, H2 y H3 completados en V2 → la compresión se ejecutó, no es teórica</div><div class="il-i"><span class="il-d" style="background:var(--green)"></span>Ninguna persona tiene dos tareas simultáneas el mismo día</div><div class="il-i"><span class="il-d" style="background:var(--green)"></span>Cada actividad tiene un predecesor explícito y verificable</div><div class="il-i"><span class="il-d" style="background:var(--green)"></span>Sprint 5 tiene 16 días para documentación y defensa (holgura real)</div></div></div><div class="cd" style="background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.3)"><div class="cd-t" style="color:var(--ml)">Lección de gerencia</div><p style="font-size:.8rem;color:rgba(255,255,255,.72);line-height:1.5">El atraso no se resolvió con optimismo ni agregando días. Se identificó la causa raíz (concentración de carga), se tomó una decisión estructural (nuevo recurso) y se documentó la nueva línea base con respaldo del Sponsor.</p></div></div></div></div></section>
+
+<section class="slide s5" id="s5"><div class="si" style="padding:22px 32px"><div class="ey" style="color:#c4b5fd">Cronograma V2</div><h2 class="ti" style="color:#fff">44 Actividades · 4 Personas · 16 Semanas — Replanificado</h2><div class="cparams"><div class="cp">Inicio: <strong>02/03</strong></div><div class="cp">Cierre: <strong>21/06</strong></div><div class="cp">Hitos: <strong>6</strong></div><div class="cp">Act.: <strong>44</strong></div><div class="cp" style="background:rgba(139,92,246,.12)">Versión: <strong>V2</strong></div><div class="cp" style="background:rgba(239,68,68,.1)">Sprint 1: <strong>+70%</strong></div><div class="cp" style="background:rgba(34,197,94,.1)">Motor IA: <strong>–10 d</strong></div></div><div class="tabs"><button class="tab on" onclick="showTab('tbl',this)">📋 Actividades</button><button class="tab" onclick="showTab('gnt',this)">📊 Gantt</button></div><div class="tbc on" id="tbl"><div class="tscroll"><table class="st" id="st"></table></div></div><div class="tbc" id="gnt"><div class="gview"><div class="gc" id="gc"></div></div></div></div></section>
+
+<section class="slide s6" id="s6"><div class="si"><div class="ey" style="color:var(--red)">Control y seguimiento</div><h2 class="ti" style="color:var(--dark)">Semáforo + Registro de cambios + Riesgos activos</h2><p class="sb" style="color:var(--neut)">Estado al 17/05/2026 (Semana 11). Seguimiento semanal con evidencia.</p><div class="cgrid"><div style="display:flex;flex-direction:column;gap:10px;min-height:0"><div class="cc"><div class="cct" style="color:var(--acc)">🚦 Semáforo RAG</div><div class="ragr"><span class="ragd" style="background:var(--green)"></span><span class="ragp">Sprint 0 · Inicio</span><span class="ragn">Completado a tiempo</span></div><div class="ragr"><span class="ragd" style="background:var(--green)"></span><span class="ragp">Sprint 1 · Pipeline</span><span class="ragn">Completado +12d → reestructurado</span></div><div class="ragr"><span class="ragd" style="background:var(--green)"></span><span class="ragp">Sprint 2-3 · Motor IA</span><span class="ragn">Completado. Comprimido a 25 d</span></div><div class="ragr"><span class="ragd" style="background:var(--acc)"></span><span class="ragp">Sprint 3-4 · API REST</span><span class="ragn">En curso. H4 review hoy</span></div><div class="ragr"><span class="ragd" style="background:#d1d5db"></span><span class="ragp">Sprint 4-5 · Integración</span><span class="ragn">Inicia 18/05</span></div><div class="ragr"><span class="ragd" style="background:#d1d5db"></span><span class="ragp">Sprint 5 · Entrega</span><span class="ragn">Inicia 06/06</span></div></div><div class="cc" style="flex:1;overflow-y:auto"><div class="cct" style="color:var(--red)">⚡ Riesgos activos</div><table class="ctbl"><thead><tr><th>Riesgo</th><th>Estado</th><th>Respuesta</th></tr></thead><tbody><tr><td style="font-weight:600;color:var(--dark)">Concentración PM/ML</td><td><span class="bsm bg-g" style="font-size:.62rem">Mitigado</span></td><td>ML Engineer incorporado</td></tr><tr><td style="font-weight:600;color:var(--dark)">Calidad datos Pipeline</td><td><span class="bsm bg-g" style="font-size:.62rem">Cerrado</span></td><td>Feature engineering completado</td></tr><tr><td style="font-weight:600;color:var(--dark)">Compresión Sprint 5</td><td><span class="bsm bg-a" style="font-size:.62rem">Activo</span></td><td>4 personas en documentación</td></tr><tr><td style="font-weight:600;color:var(--dark)">Integración ML Engineer</td><td><span class="bsm bg-g" style="font-size:.62rem">Controlado</span></td><td>Onboarding + docs existentes</td></tr></tbody></table></div></div><div class="cc" style="overflow-y:auto"><div class="cct" style="color:var(--ml)">📝 Registro de cambios</div><table class="ctbl"><thead><tr><th>ID</th><th>Fecha</th><th>Cambio</th><th>Razón</th><th>Aprobó</th></tr></thead><tbody><tr><td class="cid">CDC-001</td><td style="white-space:nowrap">06/04</td><td style="font-weight:600;color:var(--dark)">Sprint 1 +12 días</td><td>Datos inadecuados + feature engineering complejo + Erick saturado</td><td>Sponsor</td></tr><tr><td class="cid">CDC-002</td><td style="white-space:nowrap">07/04</td><td style="font-weight:600;color:var(--dark)">ML Engineer incorporado. Erick → PM</td><td>Riesgo materializado. 55% en 1 persona insostenible</td><td>Sponsor</td></tr><tr><td class="cid">CDC-003</td><td style="white-space:nowrap">07/04</td><td style="font-weight:600;color:var(--dark)">Motor IA: 35 → 25 días</td><td>Paralelismo ML + PM permite solapar actividades</td><td>PM</td></tr><tr><td class="cid">CDC-004</td><td style="white-space:nowrap">07/04</td><td style="font-weight:600;color:var(--dark)">Línea base V2 aprobada</td><td>Replanificación integral. Fecha final intacta</td><td>Sponsor</td></tr></tbody></table><div style="margin-top:12px;border-top:1px solid rgba(0,0,0,.08);padding-top:10px"><div class="cct" style="color:var(--dark)">📋 Reporte semanal — Sem. 11 (17/05)</div><table class="ctbl" style="font-size:.76rem"><tbody><tr><td style="font-weight:700;color:var(--dark);width:34%">Qué debía pasar</td><td>Sprint Review 3-4 (H4). API operativa e integrada con ML</td></tr><tr><td style="font-weight:700;color:var(--dark)">Qué pasó</td><td>API completada. Integración API ↔ ML verificada. pytest 100%</td></tr><tr><td style="font-weight:700;color:var(--dark)">Qué bloqueó</td><td>Sin bloqueo activo. Integración limpia</td></tr><tr><td style="font-weight:700;color:var(--dark)">Decisión tomada</td><td>H4 aprobado. Sprint 4-5 inicia mañana (18/05)</td></tr><tr><td style="font-weight:700;color:var(--dark)">Siguiente semana</td><td>Milton: pruebas Pipeline→API. Juan José: integración dashboard real</td></tr></tbody></table></div></div></div></div></section>
+
+<section class="slide s7" id="s7"><div class="si"><div class="ey" style="color:#c4b5fd">Presupuesto V2</div><h2 class="ti" style="color:#fff">+$2.160.000 (+5.0%) por ML Engineer — Justificado y aprobado</h2><p class="sb" style="color:rgba(255,255,255,.42)">Sin el nuevo recurso, el proyecto incumplía la fecha por 12 días. El costo del atraso supera el costo de la solución.</p><div class="blay"><div class="bleft"><div class="btw"><table class="bt"><thead><tr><th>Persona / Rol</th><th>Horas</th><th>Tarifa/h</th><th>Costo V2</th></tr></thead><tbody><tr><td>Erick Albornoz <span class="rc" style="background:#dbeafe;color:#1e40af">PM</span></td><td>130 h</td><td>$110.000</td><td>$14.300.000</td></tr><tr><td>ML Engineer <span class="rc" style="background:#ede9fe;color:#5b21b6">Nuevo</span></td><td>180 h</td><td>$90.000</td><td>$16.200.000</td></tr><tr><td>Milton Quintero <span class="rc" style="background:#d1fae5;color:#065f46">BE</span></td><td>152 h</td><td>$65.000</td><td>$9.880.000</td></tr><tr><td>Juan José Mosquera <span class="rc" style="background:#fef3c7;color:#92400e">FE</span></td><td>72 h</td><td>$65.000</td><td>$4.680.000</td></tr><tr><td>Infraestructura</td><td>—</td><td>—</td><td>$230.000</td></tr><tr class="tr"><td><strong>TOTAL V2</strong></td><td><strong>534 h</strong></td><td></td><td><strong>$45.290.000</strong></td></tr></tbody></table></div><div class="crow"><div class="cnd"><div class="cnd-l">V1 Original</div><div class="cnd-v">$43.130.000</div></div><div class="ca">→</div><div class="cnd" style="background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3)"><div class="cnd-l">Atraso</div><div class="cnd-v" style="color:#fca5a5">+12 d</div></div><div class="ca">→</div><div class="cnd" style="background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.3)"><div class="cnd-l">+ ML Eng.</div><div class="cnd-v" style="color:#c4b5fd">+180 h</div></div><div class="ca">→</div><div class="cnd" style="background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3)"><div class="cnd-l">V2 Final</div><div class="cnd-v" style="color:#86efac">$45.290.000</div></div></div></div><div class="bright"><div class="bs"><div class="bs-l">Delta presupuestal</div><div class="bs-v" style="color:#fca5a5">+$2.16 M</div><div class="bs-s">+5.0% sobre V1 · Aprobado por Sponsor</div></div><div class="bs"><div class="bs-l">Esfuerzo total V2</div><div class="bs-v">534 h</div><div class="bs-s">4 personas · 16 semanas · 44 actividades</div></div><div class="bs"><div class="bs-l">Fecha de cierre</div><div class="bs-v" style="color:#86efac">21/06/26</div><div class="bs-s">Sin cambio vs V1 — recuperación exitosa</div></div><div class="rc2"><div class="rc2-t">Desglose del sobrecosto</div><div class="rr"><div class="rr-who">Erick antes (PM+ML)</div><div class="rr-v">264h · $29.04M</div></div><div class="rr"><div class="rr-who">Erick ahora (PM)</div><div class="rr-v">130h · $14.30M</div></div><div class="rr"><div class="rr-who">ML Engineer (nuevo)</div><div class="rr-v">180h · $16.20M</div></div><div style="border-top:1px solid rgba(255,255,255,.08);padding-top:6px;margin-top:5px"><div class="rr"><div class="rr-who" style="color:rgba(255,255,255,.4)">PM+ML antes</div><div class="rr-v" style="color:rgba(255,255,255,.5)">$29.040.000</div></div><div class="rr"><div class="rr-who" style="color:rgba(255,255,255,.4)">PM+ML ahora</div><div class="rr-v" style="color:rgba(255,255,255,.5)">$30.500.000</div></div><div class="rr"><div class="rr-who" style="color:var(--amber)">Δ roles PM/ML</div><div class="rr-v" style="color:#fde68a">+$1.460.000</div></div><div class="rr"><div class="rr-who" style="color:var(--amber)">Milton hrs extra</div><div class="rr-v" style="color:#fde68a">+$520.000</div></div></div></div></div></div></div></section>
+</div>
+
+<nav class="nav"><button class="btn" onclick="go(-1)">‹</button><div class="cnt" id="cnt">1 / 7</div><button class="btn" onclick="go(1)">›</button></nav>
+
+<script>
+const TT=112;
+const A=[
+['01','pm','Kickoff y aprobación del Project Charter','02/03','04/03','—','H1',1,3],
+['02','pm','Estructura organizacional y gobierno del proyecto','05/03','06/03','01','',4,5],
+['03','be','Configuración repositorio GitHub + PMIS','04/03','05/03','01','',3,4],
+['04','be','Instalación y validación del entorno Docker','06/03','08/03','03','',5,7],
+['05','pm','Sprint Planning 1','09/03','09/03','02,04','',8,8],
+['06','ml','Análisis y selección de datasets Wi-Fi','10/03','18/03','05','',9,17],
+['07','be','Módulo de ingesta de logs CSV/JSON','10/03','21/03','05','',9,20],
+['08','ml','Módulo de feature engineering (57 caract.)','19/03','01/04','06','',18,31],
+['09','be','Pipeline de normalización de logs Wi-Fi','22/03','03/04','07','',21,33],
+['10','ml','Pruebas del pipeline con dataset validación','04/04','05/04','08,09','',34,35],
+['11','pm','Sprint Review 1 — Pipeline funcional (ATRASADO)','06/04','06/04','10','H2',36,36],
+['12','pm','Sprint Planning 2','07/04','07/04','11','',37,37],
+['13','ml','Diseño de arquitectura del modelo ML','07/04','10/04','12','',37,40],
+['14','be','Diseño técnico de infraestructura y contratos API','07/04','11/04','11','',37,41],
+['15','fe','Investigación tech stack y prototipado dashboard','07/04','17/04','11','',37,47],
+['16','ml','Entrenamiento del modelo ML — primera iteración','11/04','20/04','13','',41,50],
+['17','be','Especificación OpenAPI/Swagger de la API','12/04','17/04','14','',42,47],
+['18','be','Desarrollo esqueleto API REST (FastAPI)','18/04','27/04','17','',48,57],
+['19','fe','Wireframes y mockups del dashboard operativo','18/04','27/04','15','',48,57],
+['20','ml','Evaluación de métricas del modelo (≥ 85%)','21/04','25/04','16','',51,55],
+['21','ml','Ajuste de umbrales e iteración del modelo','26/04','29/04','20','',56,59],
+['22','ml','Documentación de métricas y decisiones ML','30/04','30/04','21','',60,60],
+['23','pm','Sprint Review 2-3 — Modelo ML validado','01/05','01/05','22','H3',61,61],
+['24','pm','Sprint Planning 3','02/05','02/05','23','',62,62],
+['25','be','API REST de scoring — desarrollo completo','28/04','09/05','18','',58,69],
+['26','fe','Dashboard — componentes base (HTML/JS)','28/04','09/05','19','',58,69],
+['27','be','Integración API REST ↔ Modelo ML','10/05','14/05','25,22','',70,74],
+['28','be','Pruebas de integración API (pytest)','15/05','16/05','27','',75,76],
+['29','pm','Sprint Review 3-4 — API operativa','17/05','17/05','28','H4',77,77],
+['30','pm','Sprint Planning 4','18/05','18/05','29','',78,78],
+['31','fe','Integración dashboard con API REST','18/05','27/05','26,27','',78,87],
+['32','be','Pruebas integración Pipeline→Modelo→API','18/05','27/05','28','',78,87],
+['33','be','Integración end-to-end del sistema','28/05','01/06','31,32','',88,92],
+['34','pm','Pruebas end-to-end del sistema completo','02/06','04/06','33','',93,95],
+['35','pm','Sprint Review 4-5 — Sistema integrado','05/06','05/06','34','H5',96,96],
+['36','pm','Sprint Planning 5','06/06','06/06','35','',97,97],
+['37','be','Contenedorización final (Docker Compose)','06/06','12/06','35','',97,103],
+['38','pm','Documentación de arquitectura del sistema','07/06','12/06','35','',98,103],
+['39','fe','Guía de despliegue y manual de usuario','06/06','12/06','35','',97,103],
+['40','ml','Documentación pipeline ML y modelos','06/06','12/06','35','',97,103],
+['41','be','Documentación API REST (Swagger)','13/06','16/06','37','',104,107],
+['42','pm','Informe final y preparación defensa','13/06','18/06','38','',104,109],
+['43','be','Pruebas finales de aceptación Docker','17/06','19/06','41,39','',108,110],
+['44','pm','Entrega final y defensa del proyecto','20/06','21/06','42,43','H6',111,112],
+];
+const PH=[
+{l:'Inicio del Proyecto (02/03 – 08/03)',ids:['01','02','03','04']},
+{l:'🔴 Pipeline de Datos — ATRASADO +70% (09/03 – 06/04)',ids:['05','06','07','08','09','10','11']},
+{l:'⚡ Motor de IA — COMPRIMIDO vía ML paralelo (07/04 – 01/05)',ids:['12','13','14','15','16','17','18','19','20','21','22','23']},
+{l:'API REST de Scoring (02/05 – 17/05)',ids:['24','25','26','27','28','29']},
+{l:'Integración del Sistema (18/05 – 05/06)',ids:['30','31','32','33','34','35']},
+{l:'Despliegue y Documentación (06/06 – 21/06)',ids:['36','37','38','39','40','41','42','43','44']},
+];
+const RL={pm:'PM (Erick)',ml:'ML Engineer',be:'Backend (Milton)',fe:'Frontend (Juan José)'};
+const WKS=[{w:1,m:'Mar'},{w:2,m:''},{w:3,m:''},{w:4,m:''},{w:5,m:'Abr'},{w:6,m:''},{w:7,m:''},{w:8,m:''},{w:9,m:''},{w:10,m:'May'},{w:11,m:''},{w:12,m:''},{w:13,m:''},{w:14,m:'Jun'},{w:15,m:''},{w:16,m:''}];
+function renderTable(){const M={};A.forEach(a=>M[a[0]]=a);let h='<thead><tr><th style="width:26px">#</th><th>Actividad</th><th style="width:120px">Responsable</th><th style="width:52px">Inicio</th><th style="width:52px">Fin</th><th style="width:52px">Dep.</th><th style="width:42px">Hito</th><th style="min-width:230px">Gantt (16 sem.)</th></tr></thead><tbody>';PH.forEach(ph=>{h+='<tr class="ph"><td colspan="8">'+ph.l+'</td></tr>';ph.ids.forEach(pid=>{const a=M[pid];if(!a)return;const[id,role,name,s,e,dep,hito,sd,ed]=a;const isH=hito!=='';const lp=((sd-1)/TT*100).toFixed(2);const wp=Math.max((ed-sd+1)/TT*100,.4).toFixed(2);h+='<tr class="'+(isH?'rh':'')+'"><td style="color:rgba(255,255,255,.28);font-size:.63rem;font-family:monospace">'+id+'</td><td class="an" style="max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+name+'">'+name+'</td><td><span class="rd rd-'+role+'">'+RL[role]+'</span></td><td style="font-family:monospace;font-size:.68rem;color:rgba(255,255,255,.48)">'+s+'</td><td style="font-family:monospace;font-size:.68rem;color:rgba(255,255,255,.48)">'+e+'</td><td style="font-size:.66rem;color:rgba(255,255,255,.28);font-family:monospace">'+dep+'</td><td>'+(hito?'<span class="hp">⬟ '+hito+'</span>':'')+'</td><td style="padding:0 6px;position:relative;height:28px;min-width:230px"><div style="position:absolute;inset:0 6px"><div style="position:absolute;inset:0;display:flex">'+Array(16).fill(0).map(()=>'<div style="flex:1;border-left:1px solid rgba(255,255,255,.04)"></div>').join('')+'</div><div class="gbar gbar-'+role+'" style="left:'+lp+'%;width:'+wp+'%"></div></div></td></tr>'})});h+='</tbody>';document.getElementById('st').innerHTML=h}
+function renderGantt(){const PERSONS=[{role:'pm',name:'PM · Erick',color:'pm'},{role:'ml',name:'ML Engineer',color:'ml'},{role:'be',name:'Backend · Milton',color:'be'},{role:'fe',name:'Frontend · J.J.',color:'fe'}];const MS=[{h:'H1',sd:3},{h:'H2',sd:36},{h:'H3',sd:61},{h:'H4',sd:77},{h:'H5',sd:96},{h:'H6',sd:112}];let h='<div class="gh2"><div class="glc">Actividad</div><div class="gwrap">'+WKS.map(w=>'<div class="gwk">'+(w.m?'<span class="gwk-m">'+w.m+'</span>':'')+'<span class="gwk-n">W'+w.w+'</span></div>').join('')+'</div></div>';h+='<div class="slrow2" style="height:20px"><div class="slnm2" style="font-size:.56rem;color:rgba(251,191,36,.6)">◆ Hitos V2</div><div class="slba">'+MS.map(m=>{const lp=((m.sd-1)/TT*100).toFixed(2);return '<div style="position:absolute;left:'+lp+'%;top:50%;transform:translate(-50%,-50%);text-align:center"><div style="width:8px;height:8px;background:#fbbf24;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);margin:0 auto"></div><div style="font-size:.48rem;color:#fbbf24;font-weight:800;white-space:nowrap;margin-top:1px">'+m.h+'</div></div>'}).join('')+'</div></div>';function wg(){return WKS.map(()=>'<div style="flex:1;border-left:1px solid rgba(255,255,255,.05)"></div>').join('')}PERSONS.forEach(p=>{const pA=A.filter(a=>a[1]===p.role);h+='<div class="sl2"><div class="slh2"><div class="sln2"><span style="width:6px;height:6px;border-radius:50%;background:var(--'+p.color+');display:inline-block;flex-shrink:0"></span>'+p.name+'</div><div style="flex:1;display:flex;height:100%">'+wg()+'</div></div>';pA.forEach(a=>{const[id,role,name,,,dep,hito,sd,ed]=a;const lp=((sd-1)/TT*100).toFixed(2);const wp=Math.max((ed-sd+1)/TT*100,.4).toFixed(2);h+='<div class="slrow2"><div class="slnm2" title="'+name+'">'+(hito?'⬟ '+hito+' · ':'')+'<span style="font-size:.6rem">'+name+'</span></div><div class="slba"><div class="sbar sbar-'+p.color+'" style="left:'+lp+'%;width:'+wp+'%"></div></div></div>'});h+='</div>'});document.getElementById('gc').innerHTML=h}
+function showTab(t,btn){document.querySelectorAll('.tbc').forEach(el=>el.classList.remove('on'));document.querySelectorAll('.tab').forEach(el=>el.classList.remove('on'));document.getElementById(t).classList.add('on');btn.classList.add('on')}
+let cur=1;const TOT=7;function go(d){const nx=Math.max(1,Math.min(TOT,cur+d));if(nx===cur)return;document.getElementById('s'+cur).classList.remove('on');cur=nx;document.getElementById('s'+cur).classList.add('on');document.getElementById('cnt').textContent=cur+' / '+TOT}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1)});
+renderTable();renderGantt();
+</script>
+</body>
+</html>
