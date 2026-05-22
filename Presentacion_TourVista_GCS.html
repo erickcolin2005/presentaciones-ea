@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TourVista S.A.S. — Gobernanza e instrumentación de calidad como única raíz</title>
+<style>
+:root {
+  --dark: #0f172a;
+  --dark-2: #1e293b;
+  --accent: #2563eb;
+  --accent-dk: #1d4ed8;
+  --neutral: #64748b;
+  --light: #f8fafc;
+  --white: #ffffff;
+  --font-system: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --text-base: 17px;
+  --line-height: 1.55;
+  --radius: 16px;
+  --shadow-soft: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+  --shadow-strong: 0 4px 14px rgba(0,0,0,0.10), 0 12px 32px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: var(--font-system);
+  font-size: var(--text-base);
+  line-height: var(--line-height);
+  background: var(--dark);
+  color: var(--dark);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  height: 100%;
+}
+
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  padding: 36px 56px 88px;
+  background: var(--light);
+  overflow-y: auto;
+}
+
+.slide.active { display: flex; opacity: 1; transform: translateX(0); transition: all .4s ease; }
+.slide.out-left  { display: flex; opacity: 0; transform: translateX(-52px); transition: all .4s ease; }
+.slide.out-right { display: flex; opacity: 0; transform: translateX(52px);  transition: all .4s ease; }
+.slide.will-enter-left {
+  transform: translateX(-52px) !important;
+  opacity: 0 !important;
+  transition: none !important;
+}
+
+.section-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--white);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.slide-title {
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--dark);
+  margin-bottom: 22px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-content: start;
+}
+
+.row { display: grid; gap: 14px; align-items: stretch; }
+.row-2 { grid-template-columns: repeat(2, 1fr); }
+.row-3 { grid-template-columns: repeat(3, 1fr); }
+.row-4 { grid-template-columns: repeat(4, 1fr); }
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--dark);
+}
+
+/* Specificity-aware: dark variants declared after base, with .card&.card-dark p targeted explicitly */
+.card.card-dark {
+  background: var(--dark);
+  color: var(--white);
+}
+.card.card-dark .label { color: #93c5fd; }
+.card.card-dark .value { color: var(--white); }
+.card.card-dark p,
+.card.card-dark li { color: #e5e7eb; }
+
+.card.card-accent {
+  background: var(--accent);
+  color: var(--white);
+}
+.card.card-accent .label { color: #dbeafe; }
+.card.card-accent .value { color: var(--white); }
+.card.card-accent p,
+.card.card-accent li { color: #eff6ff; }
+
+.label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--neutral);
+}
+
+.value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--dark);
+  letter-spacing: -0.01em;
+}
+.value-sm { font-size: 1rem; font-weight: 700; color: var(--dark); }
+
+.card p, .card li { color: var(--dark); font-size: 0.93rem; }
+.card .muted { color: var(--neutral); font-size: 0.88rem; }
+.card.card-dark .muted { color: #cbd5e1; }
+
+.term {
+  display: inline-block;
+  background: rgba(37,99,235,0.10);
+  color: var(--accent-dk);
+  padding: 1px 7px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.86em;
+}
+.card.card-dark .term { background: rgba(147,197,253,0.18); color: #93c5fd; }
+.card.card-accent .term { background: rgba(255,255,255,0.18); color: #fff; }
+
+.bullet-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.bullet-list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.93rem;
+  line-height: 1.45;
+}
+.bullet-list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.58em;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.card.card-dark .bullet-list li::before { background: #93c5fd; }
+.card.card-accent .bullet-list li::before { background: #fff; }
+
+.table {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.table thead {
+  background: var(--dark);
+  color: var(--white);
+}
+.table th, .table td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: top;
+  color: var(--dark);
+}
+.table thead th { color: var(--white); }
+.table th {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.table tbody tr:last-child td { border-bottom: none; }
+.table td strong { color: var(--dark); font-weight: 700; }
+.table .tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.tag-crit { background: #fee2e2; color: #991b1b; }
+.tag-high { background: #fef3c7; color: #92400e; }
+.tag-mid  { background: #dbeafe; color: #1e40af; }
+
+.cover {
+  background: var(--dark);
+  color: var(--white);
+  padding: 40px 56px 96px;
+  gap: 18px;
+}
+.cover .slide-title { color: var(--white); font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 8px; }
+.cover .eyebrow { color: #93c5fd; }
+.cover .lead { color: #cbd5e1; font-size: 1rem; max-width: 760px; }
+.cover .meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 12px;
+  padding-top: 18px;
+  border-top: 1px solid #334155;
+}
+.cover .meta div { display: flex; flex-direction: column; gap: 3px; }
+.cover .meta .label { color: #93c5fd; }
+.cover .meta .value { color: var(--white); font-size: 0.95rem; font-weight: 700; }
+
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.kpi {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.kpi .num { font-size: 1.55rem; font-weight: 900; color: var(--accent); letter-spacing: -0.02em; line-height: 1.1; }
+.kpi .lbl { font-size: 0.78rem; color: var(--neutral); font-weight: 600; line-height: 1.3; }
+
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: stretch;
+}
+.flow .step {
+  flex: 1 1 calc(25% - 8px);
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--shadow-soft);
+  padding: 10px 12px;
+  border-left: 4px solid var(--accent);
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+.flow .step strong { display: block; color: var(--dark); margin-bottom: 2px; font-size: 0.88rem; }
+.flow .step span { color: var(--neutral); font-size: 0.78rem; }
+.flow .step.gate { border-left-color: #dc2626; }
+.flow .step.gate span { color: #991b1b; font-weight: 600; }
+
+.callout {
+  background: var(--dark);
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  box-shadow: var(--shadow-strong);
+}
+.callout .label { color: #93c5fd; }
+.callout p { color: var(--white); font-size: 0.98rem; line-height: 1.5; margin-top: 4px; }
+
+.action-bar {
+  margin-top: 8px;
+  padding: 12px 16px;
+  background: rgba(37,99,235,0.08);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--dark);
+}
+.action-bar strong { color: var(--accent-dk); }
+
+/* Code blocks */
+.code-wrap {
+  background: #0b1220;
+  border-radius: 12px;
+  box-shadow: var(--shadow-strong);
+  overflow: hidden;
+  border: 1px solid #1e293b;
+}
+.code-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: #1e293b;
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  font-family: var(--font-system);
+  border-bottom: 1px solid #0b1220;
+}
+.code-head .dots { display: flex; gap: 5px; }
+.code-head .dot { width: 10px; height: 10px; border-radius: 50%; background: #475569; }
+.code-head .dot.r { background: #ef4444; }
+.code-head .dot.y { background: #f59e0b; }
+.code-head .dot.g { background: #22c55e; }
+.code-head .file { color: #93c5fd; font-weight: 700; margin-left: 4px; }
+.code-head .lang { margin-left: auto; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; }
+
+pre.code {
+  margin: 0;
+  padding: 14px 18px;
+  font-family: 'JetBrains Mono','Fira Code','Cascadia Code',Consolas,'Courier New',monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: #e2e8f0;
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 4;
+}
+pre.code .kw  { color: #c084fc; font-weight: 700; }
+pre.code .bk  { color: #f472b6; font-weight: 700; }
+pre.code .tp  { color: #fbbf24; }
+pre.code .fn  { color: #93c5fd; }
+pre.code .str { color: #86efac; }
+pre.code .num { color: #fb923c; }
+pre.code .com { color: #64748b; font-style: italic; }
+pre.code .op  { color: #f87171; }
+pre.code .self{ color: #fda4af; font-style: italic; }
+
+.code-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.code-grid .explain { display: flex; flex-direction: column; gap: 10px; }
+.code-grid .explain .card { padding: 12px 14px; }
+.code-grid .explain .card p { font-size: 0.88rem; }
+.code-grid .explain .label { font-size: 0.66rem; }
+
+/* Navigation */
+.nav {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--dark);
+  padding: 6px 10px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-strong);
+  z-index: 100;
+}
+.nav-btn {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  min-height: 44px;
+  min-width: 44px;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+}
+.nav-btn:active, .nav-btn:hover { background-color: var(--dark-2); }
+.nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.nav-btn.notes-btn {
+  background: var(--accent);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0 14px;
+}
+.nav-btn.notes-btn.on { background: #f59e0b; color: var(--dark); }
+.counter {
+  color: var(--white);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  padding: 0 6px;
+  min-width: 48px;
+  text-align: center;
+}
+
+/* Speaker notes drawer */
+.notes-drawer {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  background: var(--white);
+  border-top: 4px solid var(--accent);
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.18);
+  max-height: 46vh;
+  overflow-y: auto;
+  padding: 18px 26px 26px;
+  transform: translateY(105%);
+  transition: transform 0.32s ease;
+  z-index: 90;
+  color: var(--dark);
+}
+.notes-drawer.open { transform: translateY(0); }
+.notes-drawer .notes-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+.notes-drawer .notes-head .label { color: var(--accent); }
+.notes-drawer .notes-head .small { font-size: 0.78rem; color: var(--neutral); }
+.notes-drawer .notes-body { font-size: 0.95rem; line-height: 1.55; }
+.notes-drawer .notes-body p { margin-bottom: 8px; color: var(--dark); }
+.notes-drawer .notes-body p strong { color: var(--accent-dk); }
+.notes-drawer .notes-body .cue {
+  display: inline-block;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 1px 7px;
+  border-radius: 6px;
+  font-size: 0.78em;
+  font-weight: 700;
+  margin: 0 2px;
+}
+
+.notes-content { display: none; }
+
+@media (max-width: 900px) {
+  .row-3, .row-4 { grid-template-columns: repeat(2, 1fr); }
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .flow .step { flex: 1 1 calc(50% - 8px); }
+  .cover .meta { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 900px) {
+  .code-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .slide { padding: 20px 14px 96px; }
+  .body { gap: 12px; }
+  .cover { padding: 22px 16px 96px; }
+  .row-2 { grid-template-columns: 1fr; }
+  .slide-title { font-size: 1.15rem; line-height: 1.22; margin-bottom: 14px; }
+  .value { font-size: 1.05rem; }
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .kpi .num { font-size: 1.2rem; }
+  .table { font-size: 0.78rem; }
+  .table th, .table td { padding: 7px 9px; }
+  .flow .step { flex: 1 1 100%; }
+  .nav { bottom: 10px; }
+  .notes-drawer { max-height: 60vh; padding: 14px 16px 22px; }
+  pre.code { font-size: 0.7rem; padding: 10px 12px; }
+}
+</style>
+</head>
+<body>
+
+<main class="deck" id="deck">
+
+  <!-- 1. Portada -->
+  <section class="slide cover" aria-label="Portada">
+    <div class="eyebrow">Validación · Gestión y Calidad del Software</div>
+    <h1 class="slide-title">Cinco fallas, una sola raíz: ausencia de gobernanza e instrumentación de calidad en TourVista S.A.S.</h1>
+    <p class="lead">Diagnóstico con ISO/IEC 25010:2023, decisión con AHP y operación con pipeline SQA + IA con quality gates bloqueantes.</p>
+    <div class="meta">
+      <div><span class="label">Autor</span><span class="value">Erick Collin Albornoz Hernández · ID 823003</span></div>
+      <div><span class="label">Profesor</span><span class="value">Jhon Haide Cano Beltrán</span></div>
+      <div><span class="label">Programa</span><span class="value">Ing. Sistemas — UCC Cali · 2026</span></div>
+    </div>
+    <div class="notes-content" data-notes-for="1">
+      <p><strong>Apertura.</strong> Buenas tardes, profesor Cano y compañeros. Mi nombre es Erick Albornoz, ID 823003. Voy a presentar la validación de Gestión y Calidad del Software.</p>
+      <p>El caso es <strong>TourVista S.A.S.</strong>, una plataforma de turismo con cinco problemas de calidad documentados. <span class="cue">PAUSA</span> La pregunta que guía todo el trabajo es: ¿cómo se construye un sistema de aseguramiento de calidad que ataque esos cinco problemas <strong>de raíz</strong>, como síntomas de un mismo problema de gestión?</p>
+      <p>Para responderla desarrollé tres entregables: auditoría SQA, plan integral de calidad y propuesta de IA en aseguramiento. Voy por cada uno.</p>
+    </div>
+  </section>
+
+  <!-- 2. Contexto -->
+  <section class="slide" aria-label="Contexto">
+    <span class="section-badge">Contexto</span>
+    <div class="eyebrow">El caso TourVista S.A.S.</div>
+    <h2 class="slide-title">Cinco fallas documentadas en seis meses afectan ingresos, integridad de datos y confianza en el modelo de IA.</h2>
+    <div class="body">
+      <div class="row row-3">
+        <div class="card"><span class="label">Falla 1</span><span class="value-sm">Sincronización móvil intermitente</span><p class="muted">La app pierde estado al cambiar de red. No hay <span class="term">circuit breaker</span> (cortocircuito que detiene llamadas a un servicio caído).</p></div>
+        <div class="card"><span class="label">Falla 2</span><span class="value-sm">Duplicación de datos en métricas</span><p class="muted">Filas repetidas en tablas de BI. Sin restricciones <span class="term">UNIQUE</span> ni QA de ingesta.</p></div>
+        <div class="card"><span class="label">Falla 3</span><span class="value-sm">Recomendaciones ML incorrectas</span><p class="muted">El modelo sugiere paquetes inexistentes o con precio desactualizado. Sin monitoreo en producción.</p></div>
+        <div class="card"><span class="label">Falla 4</span><span class="value-sm">API sin escalabilidad</span><p class="muted">La API cae bajo carga real. Sin pruebas de carga ni <span class="term">SLA</span> (acuerdo de nivel de servicio) con proveedores.</p></div>
+        <div class="card"><span class="label">Falla 5</span><span class="value-sm">Sin documentación SQA</span><p class="muted">No existe plan formal, roles ni criterios de aceptación escritos.</p></div>
+        <div class="card card-accent"><span class="label">Pregunta guía</span><p>¿Cómo atacarlas como síntomas de <strong>un mismo</strong> problema de gestión, no una por una?</p></div>
+      </div>
+      <div class="action-bar"><strong>Riesgo si se ignora:</strong> cada falla atacada de forma aislada reaparece tras el siguiente ciclo de desarrollo.</div>
+    </div>
+    <div class="notes-content" data-notes-for="2">
+      <p><strong>Contexto del caso.</strong> TourVista es una plataforma con app móvil, backend de microservicios, módulo de ML, tableros web y API de proveedores. En los últimos seis meses se reportaron estas cinco fallas.</p>
+      <p>No las presento como una lista de bugs aislados. <span class="cue">PAUSA</span> Las presento como cinco <strong>síntomas</strong>. Esa lectura es la que cambia toda la propuesta: si fueran bugs aislados, se arreglarían uno por uno; si son síntomas, hay que atacar la causa común.</p>
+      <p><strong>Si el profesor pregunta:</strong> los circuit breakers son patrón estándar en microservicios (Martin Fowler) para evitar fallos en cascada. La duplicación de datos es típica cuando no se modela integridad referencial.</p>
+    </div>
+  </section>
+
+  <!-- 3. Hallazgo central -->
+  <section class="slide" aria-label="Hallazgo central">
+    <span class="section-badge">Hallazgo</span>
+    <div class="eyebrow">Raíz dual del árbol causa–efecto</div>
+    <h2 class="slide-title">Las cinco fallas comparten una sola raíz dual: gobernanza ausente e instrumentación ausente se retroalimentan.</h2>
+    <div class="body">
+      <div class="row row-2">
+        <div class="card card-dark">
+          <span class="label">Raíz A — Gobernanza</span>
+          <p>Sin plan SQA formal, sin roles, sin criterios de aceptación, sin función QA independiente. Nadie decide qué es "lo suficientemente bueno" para producción.</p>
+        </div>
+        <div class="card card-dark">
+          <span class="label">Raíz B — Instrumentación</span>
+          <p>Sin métricas en producción, sin monitoreo del modelo ML, sin <span class="term">pipeline CI/CD</span> que ejecute verificaciones automáticas en cada commit.</p>
+        </div>
+      </div>
+      <div class="callout">
+        <span class="label">Implicación técnica</span>
+        <p>Sin gobernanza no se decide qué instrumentar; sin datos de instrumentación no se puede gobernar. Las dos raíces se retroalimentan: atacar solo una garantiza recaída.</p>
+      </div>
+      <div class="action-bar"><strong>Decisión a validar:</strong> los tres entregables intervienen ambas raíces de forma simultánea, no consecutiva.</div>
+    </div>
+    <div class="notes-content" data-notes-for="3">
+      <p><strong>Hallazgo central — el más importante de la presentación.</strong> Si ustedes recuerdan una sola cosa que sea esta: las cinco fallas tienen una raíz <strong>dual</strong>, no una raíz simple.</p>
+      <p>Raíz A — gobernanza: <em>nadie decide</em> qué es calidad aceptable. Raíz B — instrumentación: <em>nadie mide</em> qué tan bien está funcionando el sistema. <span class="cue">PAUSA</span></p>
+      <p>El bucle es perverso: sin gobernanza, no se prioriza instrumentar nada; y sin métricas, la gerencia no sabe qué decisiones de gobernanza tomar. Por eso un equipo puede pasarse años "mejorando calidad" sin moverse del lugar: ataca un lado del bucle, no los dos.</p>
+      <p><strong>Conexión con lo siguiente:</strong> esta lectura justifica por qué el Entregable 2 ataca gobernanza (PICS, roles) <em>y</em> el Entregable 3 ataca instrumentación (monitoreo ML, predicción) al mismo tiempo.</p>
+    </div>
+  </section>
+
+  <!-- 4. ISO 25010:2023 -->
+  <section class="slide" aria-label="ISO 25010:2023">
+    <span class="section-badge">Entregable 1 · Auditoría</span>
+    <div class="eyebrow">Estándar aplicado</div>
+    <h2 class="slide-title">ISO/IEC 25010:2023 agrega Safety como noveno factor — y es el que TourVista incumple en su modelo de ML.</h2>
+    <div class="body">
+      <div class="row row-3">
+        <div class="card"><span class="label">Cambio 1</span><span class="value-sm">Usability → Interaction Capability</span><p class="muted">Ahora se evalúa la capacidad del sistema completo de interactuar, no solo la facilidad de la interfaz.</p></div>
+        <div class="card"><span class="label">Cambio 2</span><span class="value-sm">Portability → Flexibility</span><p class="muted">La escalabilidad pasa a ser subcaracterística explícita: aplica al problema de la API.</p></div>
+        <div class="card card-accent"><span class="label">Cambio 3 — Nuevo factor</span><span class="value-sm" style="color:#fff">Safety</span><p>Aplica cuando el sistema emite recomendaciones que afectan decisiones del usuario. TourVista cumple esa condición.</p></div>
+      </div>
+      <table class="table">
+        <thead><tr><th>Factor crítico</th><th>Falla TourVista</th><th>Severidad</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Functional Suitability</strong><br><span style="color:#64748b;font-size:0.82rem">¿hace lo que dice que hace?</span></td><td>ML entrega resultados que no corresponden con el catálogo real</td><td><span class="tag tag-crit">5/5</span></td></tr>
+          <tr><td><strong>Reliability</strong><br><span style="color:#64748b;font-size:0.82rem">¿funciona cuando debe?</span></td><td>Errores intermitentes sin tolerancia a fallos ni recuperación</td><td><span class="tag tag-crit">5/5</span></td></tr>
+          <tr><td><strong>Safety</strong> (nuevo)<br><span style="color:#64748b;font-size:0.82rem">¿puede causar daño al usuario?</span></td><td>Recomienda paquetes sin verificar alertas de viaje ni precios</td><td><span class="tag tag-high">4/5</span></td></tr>
+          <tr><td><strong>Flexibility</strong><br><span style="color:#64748b;font-size:0.82rem">¿escala y se adapta?</span></td><td>API sin escalabilidad planificada</td><td><span class="tag tag-high">4/5</span></td></tr>
+        </tbody>
+      </table>
+      <div class="action-bar"><strong>Por qué importa la versión 2023:</strong> con la edición 2011, el riesgo del modelo ML no tendría un factor formal que lo recoja.</div>
+    </div>
+    <div class="notes-content" data-notes-for="4">
+      <p><strong>ISO/IEC 25010:2023.</strong> Es el estándar internacional que define qué significa calidad en un producto de software. Usé la versión 2023, no la de 2011 que se ve en clase, por tres razones que importan al caso.</p>
+      <p>Primero, <strong>Usability fue renombrado Interaction Capability</strong>: ya no es solo "¿la interfaz es bonita?", sino "¿el sistema interactúa bien?" — cambia cómo se diagnostica la sincronización móvil.</p>
+      <p>Segundo, <strong>Portability se renombró Flexibility</strong> e incorpora explícitamente escalabilidad — eso clasifica directamente el problema de la API.</p>
+      <p>Tercero, y lo más relevante: la versión 2023 agrega <strong>Safety</strong> como noveno factor. <span class="cue">PAUSA</span> Safety aplica cuando el sistema toma o sugiere decisiones que pueden dañar al usuario. El modelo ML de TourVista recomienda viajes sin verificar alertas activas: eso ya no es un error funcional, es un riesgo de Safety por el estándar actual.</p>
+      <p><strong>Factores críticos:</strong> Functional Suitability y Reliability están en severidad máxima — el modelo no entrega lo prometido, y el sistema no se recupera de fallos.</p>
+    </div>
+  </section>
+
+  <!-- 5. Diagnóstico SQA -->
+  <section class="slide" aria-label="Diagnósticos">
+    <span class="section-badge">Entregable 1 · Causas</span>
+    <div class="eyebrow">Síntomas vs. causas sistémicas</div>
+    <h2 class="slide-title">Cinco diagnósticos SQA explican por qué los cinco síntomas existen — y dos son prerequisito de los demás.</h2>
+    <div class="body">
+      <div class="row row-3">
+        <div class="card card-dark"><span class="label">D1 · Sistémico</span><span class="value-sm" style="color:#fff">Ausencia de plan SQA formal</span><p>Sin objetivos, roles ni criterios de aceptación documentados.</p></div>
+        <div class="card"><span class="label">D2</span><span class="value-sm">Sin quality gates en pipeline</span><p class="muted">Boehm &amp; Basili (2001): corregir un defecto en producción cuesta <strong>10 a 100 veces más</strong> que durante el desarrollo.</p></div>
+        <div class="card"><span class="label">D3</span><span class="value-sm">Sin validación del modelo ML</span><p class="muted">El modelo se desplegó con métricas de entrenamiento, no de producción. Sin umbrales ni rollback ante degradación.</p></div>
+        <div class="card"><span class="label">D4</span><span class="value-sm">Capacidad arquitectónica no planificada</span><p class="muted">Sin pruebas de carga formales (Locust, k6) ni contratos con proveedores.</p></div>
+        <div class="card card-dark"><span class="label">D5 · Sistémico</span><span class="value-sm" style="color:#fff">Cultura sin SQA independiente</span><p>El equipo de desarrollo se autoevalúa. Bajo presión, ganan las funcionalidades sobre la calidad.</p></div>
+        <div class="card card-accent"><span class="label">Regla de prioridad</span><p><strong>D1 y D5 primero.</strong> Sin gobernanza y cultura, D2–D4 reaparecen tras cada sprint.</p></div>
+      </div>
+      <div class="action-bar"><strong>Acción derivada:</strong> el PICS del Entregable 2 inicia interviniendo D1 y D5, no la herramienta más visible.</div>
+    </div>
+    <div class="notes-content" data-notes-for="5">
+      <p><strong>De síntomas a causas.</strong> Mapear factores ISO describe los síntomas. Diagnóstico SQA es identificar las <em>causas</em> en la gestión.</p>
+      <p>Los cinco diagnósticos son: D1 ausencia de plan formal, D2 sin quality gates, D3 sin validación de ML, D4 capacidad no planificada, D5 cultura sin SQA. <span class="cue">PAUSA</span></p>
+      <p><strong>El argumento clave:</strong> D1 y D5 son <strong>sistémicos</strong>. Si no se resuelven primero, los otros tres reaparecen siempre. Es como pintar paredes con humedad: el problema vuelve.</p>
+      <p>Cita técnica útil: Boehm y Basili (2001) demostraron que el costo de corregir un defecto crece exponencialmente según la fase. Por eso "shift left" — mover las pruebas hacia el inicio del ciclo — no es estética, es economía.</p>
+    </div>
+  </section>
+
+  <!-- 6. Métricas -->
+  <section class="slide" aria-label="Métricas">
+    <span class="section-badge">Entregable 1 · Métricas</span>
+    <div class="eyebrow">Estado actual vs. objetivo verificable</div>
+    <h2 class="slide-title">La brecha entre métricas estimadas y objetivos dimensiona el tamaño técnico del problema.</h2>
+    <div class="body">
+      <div class="kpi-strip">
+        <div class="kpi"><span class="num">48 h</span><span class="lbl">MTTF actual — objetivo ≥ 720 h<br><em style="font-weight:400">Tiempo medio entre fallos</em></span></div>
+        <div class="kpi"><span class="num">8–12</span><span class="lbl">Defectos / KLOC — objetivo ≤ 2<br><em style="font-weight:400">Por cada mil líneas de código</em></span></div>
+        <div class="kpi"><span class="num">~12%</span><span class="lbl">Cobertura de pruebas — objetivo ≥ 80%</span></div>
+        <div class="kpi"><span class="num">N/D</span><span class="lbl">ML Recall@10 — sin medición<br><em style="font-weight:400">% de aciertos del modelo en top 10</em></span></div>
+      </div>
+      <div class="callout">
+        <span class="label">Hallazgo más crítico</span>
+        <p>El <span class="term">ML Accuracy</span> <strong>no se mide</strong>. Un sistema que no mide la calidad de sus predicciones no puede garantizar Functional Suitability ni Safety según el estándar aplicado.</p>
+      </div>
+      <div class="row row-2">
+        <div class="card"><span class="label">Transparencia epistémica</span><p>Los valores actuales son <strong>estimaciones</strong> derivadas de los síntomas y rangos de industria. La medición real exige instrumentar con SonarQube, k6, MLflow y Prometheus.</p></div>
+        <div class="card"><span class="label">Impacto económico</span><p>≥ 15 fallos al mes en una plataforma de e-commerce turístico = pérdida directa de ingresos durante reservas activas.</p></div>
+      </div>
+      <div class="action-bar"><strong>Métrica a validar primero:</strong> instrumentar el modelo ML para producir Recall@10 medible en la semana 1.</div>
+    </div>
+    <div class="notes-content" data-notes-for="6">
+      <p><strong>Métricas.</strong> Voy a las tres más críticas.</p>
+      <p><strong>MTTF</strong> — Mean Time To Failure, tiempo promedio entre fallos. Estimado en 48 horas, lo que significa al menos quince fallos al mes. En e-commerce, cada fallo durante una reserva es ingreso perdido. Objetivo: superar 720 horas, equivalente a un mes sin fallos.</p>
+      <p><strong>Cobertura</strong> alrededor del 12% porque no hay pruebas automatizadas. Objetivo: 80%. <span class="cue">PAUSA</span></p>
+      <p><strong>La más crítica de todas:</strong> el Recall@10 del modelo de recomendaciones es <em>desconocido</em>. No se mide. Un sistema que no mide la calidad de sus predicciones no puede garantizar ni Functional Suitability ni Safety.</p>
+      <p><strong>Si preguntan:</strong> declaro explícitamente que las cifras actuales son estimaciones a partir de síntomas. Presentarlas como medidas sin acceso al código sería inventar datos — eso es honestidad epistémica.</p>
+    </div>
+  </section>
+
+  <!-- 7. PICS estructura -->
+  <section class="slide" aria-label="PICS">
+    <span class="section-badge">Entregable 2 · PICS</span>
+    <div class="eyebrow">Plan Integral de Calidad — IEEE 730 adaptado</div>
+    <h2 class="slide-title">El PICS convierte el aseguramiento en un sistema con cifras concretas y criterios de salida bloqueantes por fase.</h2>
+    <div class="body">
+      <table class="table">
+        <thead><tr><th>Objetivo de calidad</th><th>Umbral</th><th>Plazo</th></tr></thead>
+        <tbody>
+          <tr><td>MTTF backend</td><td>≥ 720 horas</td><td>6 meses</td></tr>
+          <tr><td>Code Coverage en módulos críticos</td><td>≥ 80%</td><td>Trimestre 1</td></tr>
+          <tr><td>ML Recall@10 / Precision@10</td><td>≥ 0,85 / ≥ 0,80</td><td>Semanal en producción</td></tr>
+          <tr><td>Data Integrity Score</td><td>≥ 99,9%</td><td>Tras restricciones BD</td></tr>
+          <tr><td>API Latency P95 <span style="color:#64748b;font-weight:400">(95% de las peticiones)</span></td><td>≤ 500 ms nominal · ≤ 1.000 ms en pico</td><td>Continuo</td></tr>
+        </tbody>
+      </table>
+      <div class="row row-2">
+        <div class="card card-dark"><span class="label">7 fases del ciclo de vida</span><p>Planificación · Requisitos · Diseño · Implementación · Pruebas · Despliegue · Mantenimiento. Cada una con entregables y criterios de salida verificables.</p></div>
+        <div class="card card-accent"><span class="label">Diferencial del plan</span><p>El criterio de salida es <strong>bloqueo</strong>, no recomendación. Sin circuit breakers definidos, no se pasa de diseño a implementación.</p></div>
+      </div>
+      <div class="action-bar"><strong>Regla de aceptación:</strong> sin cifras concretas, no hay forma de verificar si el plan funcionó.</div>
+    </div>
+    <div class="notes-content" data-notes-for="7">
+      <p><strong>Entregable 2 — PICS.</strong> Plan Integral de Calidad del Software, basado en IEEE 730, el estándar internacional para planes de SQA, adaptado a TourVista.</p>
+      <p>No es una lista de pruebas. Es un sistema con objetivos <strong>medibles</strong>, actividades por fase, roles y métricas de control. <span class="cue">PAUSA</span></p>
+      <p>Los objetivos tienen plazos y cifras concretas: MTTF mayor a 720 horas en seis meses, cobertura mayor al 80% en el primer trimestre, Recall del modelo mayor a 0,85 semanal.</p>
+      <p><strong>Lo que diferencia este plan de uno genérico:</strong> el criterio de salida es un <em>bloqueo</em>, no una recomendación. Para pasar de diseño a implementación, los circuit breakers y políticas de timeout <em>tienen</em> que estar definidos. No es opcional, no se negocia.</p>
+    </div>
+  </section>
+
+  <!-- 8. AHP -->
+  <section class="slide" aria-label="AHP">
+    <span class="section-badge">Entregable 2 · Decisión</span>
+    <div class="eyebrow">AHP — Analytic Hierarchy Process de Saaty (1980)</div>
+    <h2 class="slide-title">El enfoque híbrido (automatización + IA) gana porque sus mecanismos son complementarios, no alternativos.</h2>
+    <div class="body">
+      <div class="row row-4">
+        <div class="card"><span class="label">A1 · QA Manual</span><span class="value">2,48</span><p class="muted">No escala.</p></div>
+        <div class="card"><span class="label">A3 · IA pura</span><span class="value">3,33</span><p class="muted">Sin pipeline base donde correr.</p></div>
+        <div class="card"><span class="label">A2 · Automatización</span><span class="value">3,46</span><p class="muted">No prioriza el riesgo.</p></div>
+        <div class="card card-accent"><span class="label">A4 · Híbrido</span><span class="value" style="color:#fff">3,94</span><p>Recomendado.</p></div>
+      </div>
+      <div class="row row-2">
+        <div class="card"><span class="label">Pesos AHP de los criterios</span>
+          <ul class="bullet-list" style="margin-top:6px">
+            <li>C1 Detección de defectos — <strong>0,35</strong></li>
+            <li>C2 Costo de implementación — 0,25</li>
+            <li>C3 Escalabilidad — 0,21</li>
+            <li>C4 Velocidad de implementación — 0,12</li>
+            <li>C5 Mantenibilidad — 0,07</li>
+          </ul>
+        </div>
+        <div class="card card-dark"><span class="label">Consistencia de la matriz</span>
+          <p style="margin-top:6px">El <span class="term">CR</span> (Consistency Ratio) mide si los juicios son lógicamente coherentes. CR = <strong style="color:#93c5fd">0,011</strong> &lt; 0,10 → matriz consistente según Saaty.</p>
+          <p style="margin-top:8px">Implementación en dos fases: meses 1–3 instalan A2; meses 4–6 agregan A3 desde el monitor ML.</p>
+        </div>
+      </div>
+      <div class="action-bar"><strong>Por qué AHP y no intuición:</strong> el AHP no elimina el juicio humano, lo <em>estructura</em> en una matriz verificable. La consistencia es matemática, no opinión.</div>
+    </div>
+    <div class="notes-content" data-notes-for="8">
+      <p><strong>AHP — Analytic Hierarchy Process.</strong> Metodología de Thomas Saaty (1980) para decisiones multicriterio. La uso porque hay cuatro estrategias posibles para TourVista y los criterios pesan distinto.</p>
+      <p>Las cuatro alternativas: QA manual, automatización de pruebas, SQA basado en IA, y enfoque híbrido. Los cinco criterios tienen pesos: detección de defectos pesa 0,35 — el más alto, porque es el problema central de TourVista. <span class="cue">PAUSA</span></p>
+      <p><strong>Si el profesor pregunta si los pesos son subjetivos:</strong> el AHP no elimina la subjetividad, la estructura. La objetividad del método está en la <em>consistencia de los juicios</em>, no en su ausencia. El Consistency Ratio calculado es 0,011, muy por debajo del umbral de 0,10 que exige Saaty. La matriz es consistente.</p>
+      <p><strong>Resultados:</strong> Híbrido 3,94 &gt; Automatización 3,46 &gt; IA pura 3,33 &gt; Manual 2,48. El híbrido gana porque automatización e IA son <strong>complementarias</strong>: automatización garantiza cobertura base, IA focaliza dónde está el riesgo.</p>
+      <p>La implementación <em>sí</em> es secuencial: primero A2 (meses 1–3), luego A3 (meses 4–6). Sin A2, A3 no tiene pipeline.</p>
+    </div>
+  </section>
+
+  <!-- 9. Pipeline CI/CD/SQA -->
+  <section class="slide" aria-label="Pipeline">
+    <span class="section-badge">Entregable 2 · Pipeline</span>
+    <div class="eyebrow">CI/CD/SQA — principio Shift Left Testing</div>
+    <h2 class="slide-title">Once etapas convierten cada commit en punto de control; cuatro de ellas bloquean el despliegue si fallan.</h2>
+    <div class="body">
+      <div class="flow">
+        <div class="step gate"><strong>1. SAST</strong><span>Análisis estático (SonarQube) · Bloqueante</span></div>
+        <div class="step gate"><strong>2. Unit Tests</strong><span>Cobertura ≥ 80% · Bloqueante</span></div>
+        <div class="step"><strong>3. SCA</strong><span>Dependencias vulnerables</span></div>
+        <div class="step"><strong>4. Build</strong><span>Artefactos firmados</span></div>
+        <div class="step"><strong>5. Integration</strong><span>API + microservicios</span></div>
+        <div class="step"><strong>6. E2E</strong><span>Selenium / Cypress end-to-end</span></div>
+        <div class="step"><strong>7. Performance</strong><span>k6 — latencia P95</span></div>
+        <div class="step gate"><strong>8. ML Quality Gate</strong><span>Recall, Precision, drift · Bloqueante</span></div>
+        <div class="step"><strong>9. Security</strong><span>DAST + escaneo de secretos</span></div>
+        <div class="step"><strong>10. Staging</strong><span>Smoke tests</span></div>
+        <div class="step gate"><strong>11. Canary</strong><span>10% del tráfico · 30 min · rollback automático</span></div>
+      </div>
+      <div class="callout">
+        <span class="label">Etapa que no existe en pipelines convencionales</span>
+        <p>El <strong>ML Quality Gate</strong> evalúa Recall@10, Precision@10 y <span class="term">drift</span> (deriva de datos: cuando la realidad ya no se parece a los datos de entrenamiento) antes de aprobar el despliegue. Por debajo del umbral, el modelo no se despliega. Punto.</p>
+      </div>
+      <div class="action-bar"><strong>Objetivo operativo:</strong> pipeline completo &lt; 30 min en horizonte de 6 meses. Etapas costosas corren en paralelo o semanalmente.</div>
+    </div>
+    <div class="notes-content" data-notes-for="9">
+      <p><strong>Pipeline CI/CD/SQA.</strong> Once etapas que convierten cada commit en un punto de control automático. El principio es <strong>Shift Left Testing</strong>: mover las verificaciones lo más temprano posible para reducir el costo de corregir.</p>
+      <p>Las etapas <em>bloqueantes</em> son cuatro. <span class="cue">PAUSA</span></p>
+      <p>Primera, <strong>SAST</strong> con SonarQube: ningún bug crítico pasa al siguiente stage. Segunda, <strong>pruebas unitarias</strong> con cobertura mínima 80% — si el código nuevo no tiene suficientes pruebas, el pipeline se detiene.</p>
+      <p>Tercera, la que no existe en pipelines convencionales: el <strong>ML Quality Gate</strong>. Cuando hay cambios en el módulo de recomendaciones, el sistema evalúa Recall, Precision y drift antes de aprobar el despliegue. Punto.</p>
+      <p>Cuarta, <strong>canary release</strong>: el despliegue comienza con 10% del tráfico y solo se completa si las métricas igualan al baseline durante 30 minutos. Si no, rollback automático.</p>
+      <p><strong>Si preguntan por velocidad:</strong> el pipeline completo es menor a 30 minutos. Las etapas costosas — pruebas de carga — no corren en cada PR, corren semanalmente o ante cambios arquitectónicos.</p>
+    </div>
+  </section>
+
+  <!-- 10. SQA-AI -->
+  <section class="slide" aria-label="SQA-AI">
+    <span class="section-badge">Entregable 3 · SQA-AI</span>
+    <div class="eyebrow">De aseguramiento reactivo a predictivo</div>
+    <h2 class="slide-title">Cuatro componentes de IA convierten el SQA en un sistema que predice, genera y monitorea — no solo detecta.</h2>
+    <div class="body">
+      <div class="row row-2">
+        <div class="card">
+          <span class="label">1 · Defect Prediction Engine</span>
+          <p><strong>XGBoost</strong> (algoritmo de árboles de decisión potenciados) entrenado con el historial de bugs. Predice probabilidad de defecto por archivo modificado.</p>
+          <p class="muted">Lessmann et al. (2008): AUC 0,70–0,90 en proyectos reales.</p>
+        </div>
+        <div class="card">
+          <span class="label">2 · LLM Test Case Generator</span>
+          <p>Para archivos con probabilidad &gt; 0,70, genera tests vía API de Claude con el <span class="term">diff</span> (cambio entre versiones) como contexto y restricciones de cobertura explícitas.</p>
+        </div>
+        <div class="card">
+          <span class="label">3 · ML Quality Monitor</span>
+          <p><strong>Evidently AI</strong> monitorea Recall@10, Precision@10 y drift en tiempo real. Si detecta degradación, dispara alerta y agenda reentrenamiento.</p>
+        </div>
+        <div class="card">
+          <span class="label">4 · NLP Documentation Analyzer</span>
+          <p>Analiza semánticamente la documentación. Detecta módulos sin documentar o textos inconsistentes con el código. Ataca directamente el diagnóstico D5.</p>
+        </div>
+      </div>
+      <div class="callout">
+        <span class="label">Lógica del Orchestrator</span>
+        <p>El campo <strong>overall_passed</strong> es una conjunción lógica (AND): si el ML Quality Gate falla, el pipeline falla completo aunque las pruebas unitarias estén perfectas. Es diseño intencional, no descuido.</p>
+      </div>
+      <div class="action-bar"><strong>Por qué empezar por el componente 3:</strong> el riesgo de mayor impacto y menor controlabilidad con pruebas convencionales es el modelo ML en producción.</div>
+    </div>
+    <div class="notes-content" data-notes-for="10">
+      <p><strong>Entregable 3 — SQA-AI.</strong> La propuesta más avanzada. Convierte el aseguramiento de <em>reactivo</em> — detectar fallos después — a <em>predictivo</em> — anticipar dónde van a ocurrir.</p>
+      <p>Cuatro componentes. <span class="cue">PAUSA</span></p>
+      <p><strong>1. Defect Prediction Engine:</strong> XGBoost entrenado con el historial de bugs del repositorio. Califica cada archivo modificado con una probabilidad de introducir un defecto. Usa características como complejidad ciclomática, número de autores y bugs históricos en ese módulo.</p>
+      <p><strong>2. LLM Test Case Generator:</strong> para archivos de alto riesgo (probabilidad &gt; 0,70), llama a la API de Claude con el diff y genera tests focalizados en valores límite y caminos alternativos.</p>
+      <p><strong>3. ML Quality Monitor:</strong> Evidently AI monitorea el modelo de recomendaciones en producción. Si detecta degradación o drift, alerta y agenda reentrenamiento.</p>
+      <p><strong>4. NLP Documentation Analyzer:</strong> analiza la documentación con NLP para detectar módulos sin documentar o textos inconsistentes con el código. Ataca el D5.</p>
+      <p><strong>Detalle de diseño:</strong> el campo overall_passed del orchestrator es un AND, no un OR. Si el modelo ML falla, el pipeline falla completo. Intencional.</p>
+    </div>
+  </section>
+
+  <!-- 11. Pseudocódigo · Clase 1 -->
+  <section class="slide" aria-label="Pseudocódigo DefectPredictionEngine">
+    <span class="section-badge">Entregable 3 · Pseudocódigo</span>
+    <div class="eyebrow">Clase 1 de 4 — DefectPredictionEngine</div>
+    <h2 class="slide-title">Convierte cada archivo modificado en un vector numérico y devuelve la probabilidad de que introduzca un defecto.</h2>
+    <div class="body">
+      <div class="code-grid">
+        <div class="code-wrap">
+          <div class="code-head">
+            <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+            <span class="file">defect_prediction_engine.py</span>
+            <span class="lang">Python · pseudocode</span>
+          </div>
+<pre class="code"><span class="kw">class</span> <span class="tp">DefectPredictionEngine</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>, model_path: <span class="tp">str</span>):
+        <span class="self">self</span>.model = <span class="fn">load_model</span>(model_path)   <span class="com"># XGBoost entrenado con bugs</span>
+
+    <span class="kw">def</span> <span class="fn">extract_features</span>(<span class="self">self</span>, file_diff: <span class="tp">FileDiff</span>) -> <span class="tp">FeatureVector</span>:
+        <span class="kw">return</span> <span class="fn">FeatureVector</span>(
+            lines_added       = file_diff.additions,
+            lines_removed     = file_diff.deletions,
+            cyclomatic_complex= <span class="fn">compute_cyclomatic</span>(file_diff.new_content),
+            halstead_volume   = <span class="fn">compute_halstead</span>(file_diff.new_content),
+            num_authors       = <span class="fn">count_unique_authors</span>(file_diff.git_history),
+            prior_bug_count   = <span class="fn">get_bug_count</span>(file_diff.path, lookback_days=<span class="num">180</span>),
+            days_since_change = file_diff.staleness_days
+        )
+
+    <span class="kw">def</span> <span class="fn">predict</span>(<span class="self">self</span>, files: <span class="tp">List</span>[<span class="tp">FileDiff</span>]) -> <span class="tp">List</span>[<span class="tp">DefectScore</span>]:
+        <span class="kw">return</span> [<span class="fn">DefectScore</span>(file=f, prob=<span class="self">self</span>.model.<span class="fn">predict</span>(<span class="self">self</span>.<span class="fn">extract_features</span>(f)))
+                <span class="kw">for</span> f <span class="kw">in</span> files]</pre>
+        </div>
+        <div class="explain">
+          <div class="card"><span class="label">Qué hace</span><p>Recibe los archivos modificados en un commit y le entrega al sistema cuáles tienen alta probabilidad de introducir un defecto.</p></div>
+          <div class="card card-dark"><span class="label">Las 7 características</span><p>Líneas +/−, complejidad ciclomática (caminos), volumen de Halstead (densidad lógica), nº de autores, bugs previos, días sin tocar.</p></div>
+          <div class="card card-accent"><span class="label">Umbral de decisión</span><p>Probabilidad &gt; <strong>0,70</strong> → archivo de alto riesgo → activa la generación automática de pruebas (clase 2).</p></div>
+        </div>
+      </div>
+      <div class="action-bar"><strong>Por qué XGBoost:</strong> Lessmann et al. (2008) reporta AUC 0,70–0,90 con esta familia de modelos sobre características de proceso y código.</div>
+    </div>
+    <div class="notes-content" data-notes-for="11">
+      <p><strong>Primera clase del Orchestrator: DefectPredictionEngine.</strong> Su trabajo es decirle al pipeline qué archivos del commit son sospechosos antes de probarlos.</p>
+      <p>Funciona en dos pasos. <span class="cue">PAUSA</span> Primero, <strong>extract_features</strong> convierte cada archivo en un vector de siete números — líneas añadidas y eliminadas, complejidad ciclomática (cuántos caminos independientes tiene el código), volumen de Halstead (densidad lógica), cuántos autores distintos han tocado ese archivo, cuántos bugs previos hubo en ese módulo en los últimos seis meses, y hace cuántos días fue modificado por última vez.</p>
+      <p>Segundo, <strong>predict</strong> le pasa ese vector al modelo XGBoost y obtiene una probabilidad entre 0 y 1. Si la probabilidad supera 0,70, el archivo se marca como de alto riesgo.</p>
+      <p><strong>Si preguntan por qué XGBoost:</strong> es un algoritmo de árboles potenciados, robusto con pocos datos y features heterogéneas. Lessmann et al. (2008) reporta AUC entre 0,70 y 0,90 en proyectos reales.</p>
+    </div>
+  </section>
+
+  <!-- 12. Pseudocódigo · Clase 2 -->
+  <section class="slide" aria-label="Pseudocódigo LLMTestCaseGenerator">
+    <span class="section-badge">Entregable 3 · Pseudocódigo</span>
+    <div class="eyebrow">Clase 2 de 4 — LLMTestCaseGenerator</div>
+    <h2 class="slide-title">Para cada archivo de alto riesgo, llama a la API de Claude con el diff y produce tests ejecutables, no genéricos.</h2>
+    <div class="body">
+      <div class="code-grid">
+        <div class="code-wrap">
+          <div class="code-head">
+            <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+            <span class="file">llm_test_case_generator.py</span>
+            <span class="lang">Python · pseudocode</span>
+          </div>
+<pre class="code"><span class="kw">class</span> <span class="tp">LLMTestCaseGenerator</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>, api_key: <span class="tp">str</span>):
+        <span class="self">self</span>.client = <span class="fn">AnthropicClient</span>(api_key=api_key)
+
+    <span class="kw">def</span> <span class="fn">generate</span>(<span class="self">self</span>, file: <span class="tp">FileDiff</span>, score: <span class="tp">DefectScore</span>) -> <span class="tp">List</span>[<span class="tp">TestCase</span>]:
+        prompt = <span class="str">f'''
+            Archivo: {file.path}  |  Riesgo: {score.prob:.2f}
+            Framework de pruebas: {file.test_framework}
+            Diff del archivo:
+            {file.diff_text[:2000]}   # truncado para contexto
+
+            Genera casos de prueba unitarios para los cambios del diff.
+            Prioriza: valores límite, condiciones de error, paths alternativos.
+            Formato: {file.test_framework} válido, listo para ejecutar.
+            Solo el código de prueba, sin explicaciones adicionales.
+        '''</span>
+        response = <span class="self">self</span>.client.messages.<span class="fn">create</span>(
+            model=<span class="str">'claude-sonnet-4-20250514'</span>,
+            max_tokens=<span class="num">2000</span>,
+            messages=[{<span class="str">'role'</span>: <span class="str">'user'</span>, <span class="str">'content'</span>: prompt}]
+        )
+        <span class="kw">return</span> <span class="fn">parse_test_cases</span>(response.content[<span class="num">0</span>].text, file.test_framework)</pre>
+        </div>
+        <div class="explain">
+          <div class="card"><span class="label">Anatomía del prompt</span><p>3 datos concretos al LLM: ruta del archivo, riesgo calculado y diff truncado a 2.000 caracteres. Sin esa estructura, la salida sería genérica.</p></div>
+          <div class="card card-dark"><span class="label">Restricciones explícitas</span><p>El prompt obliga a priorizar valores límite, errores y caminos alternativos, en el framework exacto del proyecto.</p></div>
+          <div class="card card-accent"><span class="label">Parseo</span><p><code style="color:#fff">parse_test_cases</code> extrae el código de la respuesta y lo convierte en objetos <strong>TestCase</strong> ejecutables.</p></div>
+        </div>
+      </div>
+      <div class="action-bar"><strong>Diseño defensivo:</strong> los tests para módulos críticos (pagos, recomendaciones) pasan por revisión humana antes de incorporarse como regresión permanente — el "test oracle problem".</div>
+    </div>
+    <div class="notes-content" data-notes-for="12">
+      <p><strong>Segunda clase: LLMTestCaseGenerator.</strong> Usa la API de Claude para generar pruebas focalizadas en los archivos que la primera clase marcó como riesgosos.</p>
+      <p>La lógica del método <strong>generate</strong> es importante: no le pide al LLM tests genéricos. Le entrega tres cosas concretas como contexto — ruta del archivo, riesgo calculado, y el diff real del cambio, truncado a 2.000 caracteres para no exceder el contexto. <span class="cue">PAUSA</span></p>
+      <p>Y le da instrucciones específicas: priorizar valores límite, condiciones de error y caminos alternativos, en el framework de pruebas exacto del proyecto. El resultado se parsea y se convierte en objetos TestCase listos para ejecutarse.</p>
+      <p><strong>Si el profesor pregunta si no es peligroso confiar en un LLM para tests:</strong> sí, y se llama "problema del test oracle". El LLM puede generar pruebas sintácticamente correctas pero con resultado esperado incorrecto. Por eso los tests para módulos críticos requieren revisión humana antes de regresión permanente. El LLM <em>reduce el tiempo</em> de escritura, no reemplaza el juicio sobre qué probar.</p>
+    </div>
+  </section>
+
+  <!-- 13. Pseudocódigo · Clase 3 -->
+  <section class="slide" aria-label="Pseudocódigo MLQualityMonitor">
+    <span class="section-badge">Entregable 3 · Pseudocódigo</span>
+    <div class="eyebrow">Clase 3 de 4 — MLQualityMonitor</div>
+    <h2 class="slide-title">Mide el modelo en producción con cuatro métricas y bloquea el despliegue si alguna cae bajo el umbral.</h2>
+    <div class="body">
+      <div class="code-grid">
+        <div class="code-wrap">
+          <div class="code-head">
+            <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+            <span class="file">ml_quality_monitor.py</span>
+            <span class="lang">Python · pseudocode</span>
+          </div>
+<pre class="code"><span class="kw">class</span> <span class="tp">MLQualityMonitor</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>, thresholds: <span class="tp">QualityThresholds</span>):
+        <span class="self">self</span>.thresholds = thresholds   <span class="com"># recall=0.85, precision=0.80, ndcg=0.75</span>
+        <span class="self">self</span>.evidently  = <span class="fn">EvidentlyMonitor</span>()
+        <span class="self">self</span>.mlflow     = <span class="fn">MLflowClient</span>()
+
+    <span class="kw">def</span> <span class="fn">evaluate</span>(<span class="self">self</span>, new_model, production_model, holdout_data) -> <span class="tp">MLQualityReport</span>:
+        metrics = {
+            <span class="str">'recall_10'</span>:    <span class="fn">recall_at_k</span>(new_model, holdout_data, k=<span class="num">10</span>),
+            <span class="str">'precision_10'</span>: <span class="fn">precision_at_k</span>(new_model, holdout_data, k=<span class="num">10</span>),
+            <span class="str">'ndcg_10'</span>:      <span class="fn">ndcg_at_k</span>(new_model, holdout_data, k=<span class="num">10</span>),
+            <span class="str">'drift_score'</span>:  <span class="self">self</span>.evidently.<span class="fn">compute_drift</span>(new_model, production_model)
+        }
+        <span class="self">self</span>.mlflow.<span class="fn">log_metrics</span>(metrics)
+        passed = <span class="fn">all</span>([
+            metrics[<span class="str">'recall_10'</span>]    &gt;= <span class="self">self</span>.thresholds.recall,
+            metrics[<span class="str">'precision_10'</span>] &gt;= <span class="self">self</span>.thresholds.precision,
+            metrics[<span class="str">'ndcg_10'</span>]      &gt;= <span class="self">self</span>.thresholds.ndcg,
+            metrics[<span class="str">'drift_score'</span>]  &lt;= <span class="self">self</span>.thresholds.max_drift
+        ])
+        <span class="kw">if not</span> passed:
+            <span class="tp">AlertingSystem</span>.<span class="fn">send</span>(channel=<span class="str">'sqa-ml-alerts'</span>,
+                message=<span class="str">f'ML Quality Gate FAILED: {metrics}'</span>, severity=<span class="str">'HIGH'</span>)
+        <span class="kw">return</span> <span class="fn">MLQualityReport</span>(metrics=metrics, passed=passed)</pre>
+        </div>
+        <div class="explain">
+          <div class="card"><span class="label">4 métricas evaluadas</span><p><strong>Recall@10</strong>, <strong>Precision@10</strong>, <strong>NDCG@10</strong> (ranking) y <strong>drift</strong> (deriva entre nuevo modelo y el de producción).</p></div>
+          <div class="card card-dark"><span class="label">Umbrales</span><p>recall ≥ 0,85 · precision ≥ 0,80 · ndcg ≥ 0,75 · drift ≤ máx. Una sola métrica fuera → <code style="color:#fca5a5">passed = False</code>.</p></div>
+          <div class="card card-accent"><span class="label">Acción ante fallo</span><p>Alerta HIGH al canal Slack <strong>sqa-ml-alerts</strong> + <code style="color:#fff">schedule_retraining</code>. El modelo degradado <strong>no se despliega</strong>.</p></div>
+        </div>
+      </div>
+      <div class="action-bar"><strong>Resuelve el problema más crítico de TourVista:</strong> que hoy nadie sabe qué tan bien funciona el modelo de recomendaciones en producción.</div>
+    </div>
+    <div class="notes-content" data-notes-for="13">
+      <p><strong>Tercera clase: MLQualityMonitor.</strong> Esta es la que resuelve el problema más crítico de TourVista: hoy nadie sabe qué tan bien funciona el modelo en producción.</p>
+      <p>El método <strong>evaluate</strong> calcula tres métricas estándar de sistemas de recomendación — Recall@10, Precision@10 y NDCG@10, que miden qué tan bien el modelo recupera los paquetes relevantes dentro de las diez primeras recomendaciones. Y también calcula un <em>drift score</em> con Evidently AI para detectar si la distribución de los datos de entrada cambió respecto al modelo en producción. <span class="cue">PAUSA</span></p>
+      <p>Si alguna métrica cae por debajo del umbral, hace dos cosas: envía una alerta al canal Slack de SQA con severidad HIGH, y llama a <em>schedule_retraining</em>. El modelo degradado no se despliega. Punto.</p>
+      <p><strong>Si preguntan qué es NDCG:</strong> Normalized Discounted Cumulative Gain — premia que los resultados más relevantes aparezcan más arriba en la lista. Es la métrica estándar para rankings, donde no basta con acertar sino con acertar <em>en orden</em>.</p>
+    </div>
+  </section>
+
+  <!-- 14. Pseudocódigo · Clase 4 -->
+  <section class="slide" aria-label="Pseudocódigo SQAAIOrchestrator">
+    <span class="section-badge">Entregable 3 · Pseudocódigo</span>
+    <div class="eyebrow">Clase 4 de 4 — SQAAIOrchestrator</div>
+    <h2 class="slide-title">Coordina las tres clases en seis pasos; el resultado global pasa solo si tests y modelo ML pasan a la vez.</h2>
+    <div class="body">
+      <div class="code-grid">
+        <div class="code-wrap">
+          <div class="code-head">
+            <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+            <span class="file">sqa_ai_orchestrator.py</span>
+            <span class="lang">Python · pseudocode</span>
+          </div>
+<pre class="code"><span class="kw">class</span> <span class="tp">SQAAIOrchestrator</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>):
+        <span class="self">self</span>.dpe  = <span class="fn">DefectPredictionEngine</span>(<span class="str">'models/defect_predictor_v2.pkl'</span>)
+        <span class="self">self</span>.ltcg = <span class="fn">LLMTestCaseGenerator</span>(api_key=<span class="fn">env</span>(<span class="str">'ANTHROPIC_API_KEY'</span>))
+        <span class="self">self</span>.mlqm = <span class="fn">MLQualityMonitor</span>(thresholds=DEFAULT_THRESHOLDS)
+
+    <span class="kw">def</span> <span class="fn">run</span>(<span class="self">self</span>, commit: <span class="tp">Commit</span>) -> <span class="tp">PipelineQualityReport</span>:
+        <span class="com"># Paso 1: Extraer archivos modificados</span>
+        changed_files = commit.<span class="fn">get_changed_files</span>()
+
+        <span class="com"># Paso 2: Predecir defectos por archivo</span>
+        scores    = <span class="self">self</span>.dpe.<span class="fn">predict</span>(changed_files)
+        high_risk = [f <span class="kw">for</span> f, s <span class="kw">in</span> <span class="fn">zip</span>(changed_files, scores) <span class="kw">if</span> s.prob &gt;= <span class="num">0.70</span>]
+
+        <span class="com"># Paso 3 + 4: Generar y ejecutar pruebas para alto riesgo</span>
+        generated_tests = []
+        <span class="kw">for</span> file, score <span class="kw">in</span> <span class="fn">zip</span>(high_risk, [s <span class="kw">for</span> s <span class="kw">in</span> scores <span class="kw">if</span> s.prob &gt;= <span class="num">0.70</span>]):
+            generated_tests.<span class="fn">extend</span>(<span class="self">self</span>.ltcg.<span class="fn">generate</span>(file, score))
+        test_results = <span class="tp">TestRunner</span>.<span class="fn">execute</span>(generated_tests)
+
+        <span class="com"># Paso 5: Evaluar modelo ML si cambió el módulo de recomendaciones</span>
+        ml_report = <span class="kw">None</span>
+        <span class="kw">if</span> <span class="fn">any</span>(<span class="str">'recommendations'</span> <span class="kw">in</span> f.path <span class="kw">for</span> f <span class="kw">in</span> changed_files):
+            ml_report = <span class="self">self</span>.mlqm.<span class="fn">evaluate</span>(
+                new_model=commit.<span class="fn">get_artifact</span>(<span class="str">'recommendation_model'</span>),
+                production_model=<span class="fn">get_production_model</span>(),
+                holdout_data=<span class="fn">load_holdout_dataset</span>()
+            )
+
+        <span class="com"># Paso 6: Consolidar reporte — overall_passed es un AND lógico</span>
+        <span class="kw">return</span> <span class="fn">PipelineQualityReport</span>(
+            defect_scores   = scores,
+            high_risk_count = <span class="fn">len</span>(high_risk),
+            tests_generated = <span class="fn">len</span>(generated_tests),
+            tests_passed    = test_results.pass_count,
+            tests_failed    = test_results.fail_count,
+            ml_quality      = ml_report,
+            overall_passed  = test_results.<span class="fn">all_passed</span>() <span class="op">and</span>
+                              (ml_report <span class="op">is</span> <span class="kw">None</span> <span class="op">or</span> ml_report.passed)
+        )</pre>
+        </div>
+        <div class="explain">
+          <div class="card"><span class="label">Flujo de 6 pasos</span><p>1) Archivos del commit · 2) Predecir defectos · 3) Filtrar alto riesgo · 4) Generar + ejecutar tests · 5) Evaluar ML si aplica · 6) Consolidar.</p></div>
+          <div class="card card-dark"><span class="label">El AND intencional</span><p><code style="color:#fda4af">overall_passed</code> es una <strong>conjunción</strong>, no opción: si el ML Quality Gate falla, el pipeline falla completo aunque los tests pasen.</p></div>
+          <div class="card card-accent"><span class="label">Evaluación condicional</span><p>El bloque ML solo se ejecuta si el commit toca <code style="color:#fff">recommendations/</code>. Eficiencia y foco en el riesgo real.</p></div>
+        </div>
+      </div>
+      <div class="action-bar"><strong>Diseño defendible:</strong> la conjunción evita que un modelo degradado se cuele en producción solo porque las pruebas unitarias salieron verdes.</div>
+    </div>
+    <div class="notes-content" data-notes-for="14">
+      <p><strong>Cuarta clase: SQAAIOrchestrator.</strong> Esta es la clase principal. Su método <strong>run</strong> coordina las tres anteriores en seis pasos secuenciales.</p>
+      <p>Paso 1: extrae los archivos modificados del commit. Paso 2: el DefectPredictionEngine calcula probabilidades. Paso 3: filtra los de alto riesgo, probabilidad mayor a 0,70. Paso 4: el LLMTestCaseGenerator produce pruebas y las ejecuta. Paso 5: si el commit tocó el módulo de recomendaciones, el MLQualityMonitor evalúa la calidad del nuevo modelo. Paso 6: consolida todo. <span class="cue">PAUSA</span></p>
+      <p><strong>Detalle importante:</strong> el campo <em>overall_passed</em> es una conjunción lógica, no una opción. Si el modelo ML falla, el pipeline falla completo, aunque las pruebas unitarias estén perfectas. Es diseño intencional, no descuido.</p>
+      <p><strong>Si preguntan por qué evaluar el ML condicionalmente:</strong> porque la evaluación es costosa — exige cargar el modelo en producción, el nuevo modelo y un holdout dataset. Solo tiene sentido si el commit cambió algo en <em>recommendations/</em>. Es eficiencia con foco en el riesgo real.</p>
+    </div>
+  </section>
+
+  <!-- 15. Impacto y limitaciones -->
+  <section class="slide" aria-label="Impacto">
+    <span class="section-badge">Entregable 3 · Evaluación crítica</span>
+    <div class="eyebrow">Impacto teórico y limitaciones declaradas</div>
+    <h2 class="slide-title">El sistema baja el escape de defectos a producción de ~80% a &lt;20% — pero exige revisión humana y métricas de diversidad.</h2>
+    <div class="body">
+      <div class="row row-2">
+        <div class="card card-dark">
+          <span class="label">Impacto en 4 dimensiones</span>
+          <ul class="bullet-list" style="margin-top:6px">
+            <li><strong>Calidad</strong> — defect escape rate &lt; 20% en 6 meses</li>
+            <li><strong>Costo</strong> — ahorro &gt; costo de IA al evitar 2–3 incidentes/mes</li>
+            <li><strong>Mantenibilidad</strong> — completitud documental medible por sprint</li>
+            <li><strong>UX</strong> — menos fallos + recomendaciones con umbral mínimo</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="label">Limitación 1 — Test oracle</span>
+          <p>El LLM puede generar tests sintácticamente correctos pero <em>semánticamente errados</em>. Los tests para módulos críticos (pagos, recomendaciones) exigen revisión humana antes de incorporarse como regresión permanente.</p>
+        </div>
+      </div>
+      <div class="row row-2">
+        <div class="card">
+          <span class="label">Limitación 2 — Popularity bias</span>
+          <p>Optimizar solo por <em>accuracy</em> genera recomendaciones precisas pero poco diversas. El monitor debe incluir <span class="term">intra-list diversity</span> y coverage, no solo accuracy.</p>
+        </div>
+        <div class="card card-accent">
+          <span class="label">Prerequisito honesto</span>
+          <p>Si el repositorio no tiene 200–300 bugs etiquetados, hay fase de recolección 3–6 meses. Mientras tanto, complejidad ciclomática como proxy de riesgo.</p>
+        </div>
+      </div>
+      <div class="action-bar"><strong>Postura del trabajo:</strong> la IA reduce el tiempo de escritura de pruebas; no reemplaza el juicio sobre qué se debe probar.</div>
+    </div>
+    <div class="notes-content" data-notes-for="15">
+      <p><strong>Impacto y límites.</strong> Cuatro dimensiones del impacto: calidad (escape rate baja de 80% a 20%), costo (ahorro al evitar 2–3 incidentes mensuales), mantenibilidad (documentación medible por sprint), UX (menos fallos visibles).</p>
+      <p>Pero señalo dos limitaciones que el trabajo <em>no oculta</em>. <span class="cue">PAUSA</span></p>
+      <p><strong>Test oracle:</strong> el LLM puede generar tests con sintaxis correcta pero comportamiento esperado incorrecto si el contexto del prompt es incompleto. Por eso los tests para pagos y recomendaciones requieren revisión humana. La IA ayuda, no reemplaza al QA Engineer.</p>
+      <p><strong>Popularity bias:</strong> si solo optimizo accuracy, el modelo recomienda siempre los destinos populares y mata la diversidad. El monitor debe incluir métricas de diversidad además de accuracy.</p>
+      <p><strong>Si preguntan cómo entreno el modelo de predicción sin datos:</strong> esa es la limitación real. Necesita 200–300 bugs etiquetados. Si no existen, fase de recolección de 3–6 meses, y mientras tanto uso complejidad ciclomática como proxy de riesgo. No es óptimo, pero es honesto y funcional.</p>
+    </div>
+  </section>
+
+  <!-- 16. Acción / Cierre -->
+  <section class="slide" aria-label="Cierre">
+    <span class="section-badge">Acción</span>
+    <div class="eyebrow">Decisión a tomar y pruebas a ejecutar</div>
+    <h2 class="slide-title">Una decisión, tres pruebas medibles: validar la lógica dual con cifras antes de escalar el sistema completo.</h2>
+    <div class="body">
+      <div class="row row-3">
+        <div class="card card-dark">
+          <span class="label">Prueba 1 · Mes 1</span>
+          <p>Instrumentar Recall@10 del modelo ML en producción. <strong style="color:#93c5fd">Umbral:</strong> medición continua semanal disponible.</p>
+        </div>
+        <div class="card card-dark">
+          <span class="label">Prueba 2 · Mes 3</span>
+          <p>Quality gates de SAST y cobertura 80% bloqueando merges. <strong style="color:#93c5fd">Umbral:</strong> 0 despliegues fuera del pipeline.</p>
+        </div>
+        <div class="card card-dark">
+          <span class="label">Prueba 3 · Mes 6</span>
+          <p>ML Quality Gate operativo en canary release. <strong style="color:#93c5fd">Umbral:</strong> MTTF &gt; 720 h sostenido en backend.</p>
+        </div>
+      </div>
+      <div class="callout">
+        <span class="label">Mensaje único defendible</span>
+        <p>Los cinco problemas de TourVista no son cinco errores: son <strong>dos ausencias</strong> — gobernanza e instrumentación — que se manifiestan en cinco síntomas. El plan interviene ambas raíces simultáneamente y se valida con cifras.</p>
+      </div>
+      <div class="action-bar"><strong>Discusión técnica abierta:</strong> ¿qué condiciones del repositorio de TourVista cambiarían el orden de implementación A2 → A3?</div>
+    </div>
+    <div class="notes-content" data-notes-for="16">
+      <p><strong>Cierre.</strong> Para terminar.</p>
+      <p>Los tres entregables responden a una misma lógica: los cinco problemas de TourVista no son aislados. Son <strong>síntomas</strong> de la ausencia de dos cosas — gobernanza e instrumentación. <span class="cue">PAUSA</span></p>
+      <p>El Entregable 1 lo diagnostica con ISO/IEC 25010:2023 y métricas cuantificables. El Entregable 2 lo resuelve con un plan que integra SQA en cada fase, una estrategia decidida con AHP y un pipeline con quality gates bloqueantes. El Entregable 3 lo lleva un nivel más arriba: de detectar a predecir, con componentes de IA justificados técnicamente y con sus limitaciones explícitas.</p>
+      <p>Las tres pruebas medibles de la izquierda son el camino para validarlo en seis meses.</p>
+      <p><strong>Eso es todo. Quedo atento a preguntas.</strong></p>
+    </div>
+  </section>
+
+</main>
+
+<aside class="notes-drawer" id="notesDrawer" aria-hidden="true">
+  <div class="notes-head">
+    <div>
+      <div class="label">Guion · Slide <span id="notesNum">1</span></div>
+      <div class="small">Tecla N para ocultar · Tecla ← → para navegar</div>
+    </div>
+  </div>
+  <div class="notes-body" id="notesBody"></div>
+</aside>
+
+<nav class="nav" role="navigation" aria-label="Navegación">
+  <button class="nav-btn" id="prev" aria-label="Slide anterior">&#10094;</button>
+  <span class="counter" id="counter">1 / 16</span>
+  <button class="nav-btn" id="next" aria-label="Slide siguiente">&#10095;</button>
+  <button class="nav-btn notes-btn" id="notesBtn" aria-label="Mostrar guion">Notas</button>
+</nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const notesBtn = document.getElementById('notesBtn');
+  const counter = document.getElementById('counter');
+  const drawer = document.getElementById('notesDrawer');
+  const notesBody = document.getElementById('notesBody');
+  const notesNum = document.getElementById('notesNum');
+  if (!slides.length) return;
+
+  let cur = 0;
+  let notesOpen = false;
+  slides[0].classList.add('active');
+  syncNotes();
+  updateUI();
+
+  function updateUI() {
+    counter.textContent = (cur + 1) + ' / ' + total;
+    prevBtn.disabled = cur === 0;
+    nextBtn.disabled = cur === total - 1;
+  }
+
+  function syncNotes() {
+    const current = slides[cur];
+    const noteEl = current.querySelector('.notes-content');
+    notesNum.textContent = (cur + 1);
+    notesBody.innerHTML = noteEl ? noteEl.innerHTML : '<p>Sin notas para este slide.</p>';
+  }
+
+  function toggleNotes(force) {
+    notesOpen = (typeof force === 'boolean') ? force : !notesOpen;
+    drawer.classList.toggle('open', notesOpen);
+    drawer.setAttribute('aria-hidden', String(!notesOpen));
+    notesBtn.classList.toggle('on', notesOpen);
+    notesBtn.setAttribute('aria-label', notesOpen ? 'Ocultar guion' : 'Mostrar guion');
+  }
+
+  function go(next, dir) {
+    if (next < 0 || next >= total || next === cur) return;
+    const outEl = slides[cur];
+    const inEl = slides[next];
+    outEl.classList.remove('active');
+    outEl.classList.add(dir > 0 ? 'out-left' : 'out-right');
+    setTimeout(() => outEl.classList.remove('out-left', 'out-right'), 420);
+    cur = next;
+    if (dir < 0) {
+      inEl.classList.add('will-enter-left');
+      void inEl.offsetWidth;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        inEl.classList.remove('will-enter-left');
+        inEl.classList.add('active');
+      }));
+    } else {
+      inEl.classList.add('active');
+    }
+    syncNotes();
+    updateUI();
+  }
+
+  prevBtn.addEventListener('click', () => go(cur - 1, -1));
+  nextBtn.addEventListener('click', () => go(cur + 1, 1));
+  notesBtn.addEventListener('click', () => toggleNotes());
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(cur + 1, 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(cur - 1, -1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0, -1); }
+    else if (e.key === 'End') { e.preventDefault(); go(total - 1, 1); }
+    else if (e.key === 'n' || e.key === 'N') { e.preventDefault(); toggleNotes(); }
+    else if (e.key === 'Escape' && notesOpen) { e.preventDefault(); toggleNotes(false); }
+  });
+
+  let touchStartX = null;
+  document.addEventListener('touchstart', (e) => {
+    if (drawer.contains(e.target)) { touchStartX = null; return; }
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+    touchStartX = null;
+  }, { passive: true });
+});
+</script>
+
+</body>
+</html>
