@@ -19,13 +19,15 @@ Charlas de opinión y criterio profesional sobre datos, modelos y proyectos.
 | Tus datos no fallaron. Tu presentación sí | Narrativa de datos | [Ver](https://erickcolin2005.github.io/presentaciones-ea/marca-personal/narrativa_datos_ea.html) |
 | Tu modelo funciona en Jupyter. ¿Funciona en producción? | Validación de modelos en producción | [Ver](https://erickcolin2005.github.io/presentaciones-ea/marca-personal/validacion_modelos_ea.html) |
 
-## ✅ Validaciones (Técnicas de Validación y Simulación)
+## ✅ Validaciones
 
-Caso del curso TVS — Técnicas de Validación y Simulación.
+Casos de validación de distintas asignaturas.
 
 | Presentación | Curso | Ver |
 |---|---|---|
 | Examen final — Caso Uribia (NASA POWER) | Técnicas de Validación y Simulación (TVS) | [Ver](https://erickcolin2005.github.io/presentaciones-ea/validaciones/Tecnicas_Validacion_Simulacion_Caso_Uribia.html) |
+| Validación FEP — Albornoz Hernández | Formulación y Evaluación de Proyectos | [Ver](https://erickcolin2005.github.io/presentaciones-ea/validaciones/Presentacion_FEP_Albornoz.html) |
+| TourVista S.A.S. | Gestión y Calidad del Software | [Ver](https://erickcolin2005.github.io/presentaciones-ea/validaciones/Presentacion_TourVista_GCS.html) |
 
 ## 🎓 Trabajos de universidad
 
@@ -35,8 +37,6 @@ Entregables académicos por asignatura.
 |---|---|---|
 | ML en Criptomonedas | Minería de Datos | [Ver](https://erickcolin2005.github.io/presentaciones-ea/universidad/presentacion_crypto_ML.html) |
 | CyberEye — Momento 3 | Gerencia de Proyectos | [Ver](https://erickcolin2005.github.io/presentaciones-ea/universidad/CyberEye_Momento3_Presentacion.html) |
-| Validación FEP — Albornoz Hernández | Formulación y Evaluación de Proyectos | [Ver](https://erickcolin2005.github.io/presentaciones-ea/universidad/Presentacion_FEP_Albornoz.html) |
-| TourVista S.A.S. | Gestión y Calidad del Software | [Ver](https://erickcolin2005.github.io/presentaciones-ea/universidad/Presentacion_TourVista_GCS.html) |
 
 ---
 
