@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formación — Cursos de IA · EAx</title>
+<meta name="description" content="Clases en HTML de los cursos de IA de Erick Albornoz (EAx): Curso General de IA y Curso de Investigación con IA.">
+<style>
+  :root{
+    --dark:#0f172a; --dark-2:#1e293b; --yellow:#f59e0b; --yellow-dk:#d97706;
+    --blue:#60a5fa; --slate:#94a3b8; --line:rgba(148,163,184,.22);
+    --font-system: system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--font-system);background:var(--dark);color:#e5e5e5;
+    line-height:1.6;font-size:17px;
+    padding:0 20px 64px;
+  }
+  .wrap{max-width:960px;margin:0 auto}
+
+  header{padding:48px 0 32px;border-bottom:1px solid var(--line)}
+  .mono{font-size:clamp(2.4rem,9vw,3.4rem);font-weight:900;color:var(--yellow);letter-spacing:-.03em;line-height:1}
+  .kicker{display:inline-block;text-transform:uppercase;letter-spacing:.1em;font-size:.74rem;font-weight:800;
+    padding:5px 13px;border-radius:999px;background:rgba(245,158,11,.18);color:var(--yellow);margin-bottom:18px}
+  h1{font-size:clamp(1.5rem,4.6vw,2.2rem);font-weight:900;color:#fff;letter-spacing:-.02em;line-height:1.15;margin-top:18px}
+  h1 em{color:var(--yellow);font-style:normal}
+  .lead{margin-top:14px;font-size:clamp(1rem,2.4vw,1.14rem);color:#cbd5e1;max-width:62ch}
+  .lead a{color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px solid transparent}
+  .lead a:hover,.lead a:focus{border-bottom-color:var(--blue)}
+
+  .courses{display:grid;grid-template-columns:1fr;gap:24px;margin-top:40px}
+  @media (min-width:820px){.courses{grid-template-columns:1fr 1fr;gap:28px;align-items:start}}
+
+  .course{background:var(--dark-2);border:1px solid var(--line);border-radius:16px;padding:24px 20px}
+  .course .n{font-size:.74rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--yellow)}
+  .course h2{font-size:1.28rem;font-weight:800;color:#fff;margin:6px 0 8px;line-height:1.25}
+  .course p{font-size:.98rem;color:#cbd5e1}
+  .meta{margin-top:12px;font-size:.84rem;color:var(--slate);font-variant-numeric:tabular-nums}
+
+  ul{list-style:none;margin-top:18px;border-top:1px solid var(--line)}
+  li{border-bottom:1px solid var(--line)}
+  li a{
+    display:flex;align-items:center;gap:12px;min-height:52px;padding:10px 4px;
+    color:#e5e5e5;text-decoration:none;font-size:.96rem;line-height:1.35;
+    -webkit-tap-highlight-color:rgba(245,158,11,.15);touch-action:manipulation;
+  }
+  li a:hover,li a:focus{color:var(--yellow);outline:none}
+  li a:focus-visible{outline:2px solid var(--yellow);outline-offset:2px;border-radius:8px}
+  li .tag{
+    flex:0 0 auto;min-width:52px;font-size:.72rem;font-weight:800;letter-spacing:.05em;
+    color:var(--yellow);background:rgba(245,158,11,.14);border-radius:8px;padding:4px 8px;text-align:center;
+  }
+  li.start .tag{color:#86efac;background:rgba(74,222,128,.16)}
+  li .txt{flex:1 1 auto;min-width:0}
+  li .arrow{flex:0 0 auto;color:var(--slate);font-size:1.1rem}
+
+  footer{margin-top:52px;padding-top:24px;border-top:1px solid var(--line);font-size:.92rem;color:var(--slate)}
+  footer a{color:var(--blue);text-decoration:none;font-weight:700;border-bottom:1px solid transparent}
+  footer a:hover,footer a:focus{border-bottom-color:var(--blue)}
+  footer p+p{margin-top:10px}
+
+  @media (max-width:420px){
+    body{padding:0 14px 48px}
+    header{padding:32px 0 24px}
+    .course{padding:20px 16px}
+    li a{font-size:.92rem;gap:10px}
+    li .tag{min-width:46px;font-size:.68rem;padding:4px 6px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="kicker">Capacitación · EAx</span>
+  <div class="mono">EAx</div>
+  <h1>Formación — clases de <em>IA aplicada</em></h1>
+  <p class="lead">
+    Las clases de los dos cursos, en HTML y navegables desde el navegador — sin instalar nada.
+    Se avanza con las flechas del teclado o deslizando en el celular; la tecla <strong>N</strong> abre las notas de orador.
+    Por <a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener">Erick Albornoz</a>.
+  </p>
+</header>
+
+<div class="courses">
+
+  <section class="course">
+    <div class="n">Curso 1</div>
+    <h2>Curso General de IA</h2>
+    <p>Trabajar con método, no con suerte. La herramienta cambia cada pocos meses; el sistema de trabajo, una vez instalado, queda.</p>
+    <p class="meta">13 clases · 1 presentación + módulo 0 + 11 lecciones</p>
+    <ul>
+      <li class="start"><a href="curso_general_ia/curso_general_ia_slides.html"><span class="tag">Inicio</span><span class="txt">Presentación del curso</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L00_el_problema_slides.html"><span class="tag">M0</span><span class="txt">El problema</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L01_configuracion_entorno_slides.html"><span class="tag">L01</span><span class="txt">Entorno de trabajo</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L02_identidad_sobre_mi_slides.html"><span class="tag">L02</span><span class="txt">Tu identidad en la IA</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L03_gestion_del_contexto_slides.html"><span class="tag">L03</span><span class="txt">Gestión del contexto</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L04_anatomia_del_prompt_slides.html"><span class="tag">L04</span><span class="txt">Anatomía del prompt</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L05_diseno_de_solicitudes_slides.html"><span class="tag">L05</span><span class="txt">Diseño de solicitudes</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L06_fase_de_conversacion_slides.html"><span class="tag">L06</span><span class="txt">La fase de conversación</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L07_validacion_de_resultados_slides.html"><span class="tag">L07</span><span class="txt">Validación de resultados</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L08_correccion_sin_reescribir_slides.html"><span class="tag">L08</span><span class="txt">Corregir sin reescribir</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L09_trabajo_colaborativo_slides.html"><span class="tag">L09</span><span class="txt">Trabajo colaborativo con IA</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L10_productividad_asistida_slides.html"><span class="tag">L10</span><span class="txt">Productividad asistida</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_general_ia/L11_ia_aplicada_a_negocios_slides.html"><span class="tag">L11</span><span class="txt">IA aplicada a negocios</span><span class="arrow">›</span></a></li>
+    </ul>
+  </section>
+
+  <section class="course">
+    <div class="n">Curso 2</div>
+    <h2>Curso de Investigación con IA</h2>
+    <p>Investigar con método, no con fe. Preguntarle a la IA no es investigar: el método convierte respuestas en hallazgos con fuente.</p>
+    <p class="meta">8 clases · 1 presentación + apertura + 6 lecciones</p>
+    <ul>
+      <li class="start"><a href="curso_investigacion/curso_investigacion_slides.html"><span class="tag">Inicio</span><span class="txt">Presentación del curso</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_investigacion/I00_preguntar_no_es_investigar_slides.html"><span class="tag">I00</span><span class="txt">Preguntar no es investigar</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_investigacion/I01_la_pregunta_de_investigacion_slides.html"><span class="tag">I01</span><span class="txt">La pregunta de investigación</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_investigacion/I02_regimen_de_evidencia_slides.html"><span class="tag">I02</span><span class="txt">Régimen de evidencia</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_investigacion/I03_modo_mercado_slides.html"><span class="tag">I03</span><span class="txt">Modo A — Investigación de mercado</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_investigacion/I04_modo_documentos_slides.html"><span class="tag">I04</span><span class="txt">Modo B — Análisis de documentos</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_investigacion/I05_modo_profundidad_slides.html"><span class="tag">I05</span><span class="txt">Modo C — Investigación a profundidad</span><span class="arrow">›</span></a></li>
+      <li><a href="curso_investigacion/I06_el_informe_que_queda_slides.html"><span class="tag">I06</span><span class="txt">El informe que queda</span><span class="arrow">›</span></a></li>
+    </ul>
+  </section>
+
+</div>
+
+<footer>
+  <p>Cada clase es un archivo HTML independiente: no requiere instalación ni dependencias.</p>
+  <p><a href="../">← Volver al índice de presentaciones</a></p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -8,6 +8,47 @@ Cada presentación se puede ver en vivo a través de GitHub Pages o abrir direct
 
 ---
 
+## 📚 Formación
+
+Las clases de los cursos de IA, una carpeta por curso. Se avanzan con las flechas del teclado o deslizando en el celular; la tecla **N** abre las notas de orador.
+
+🔗 **Índice del apartado:** https://erickcolin2005.github.io/presentaciones-ea/formacion/
+
+### Curso General de IA — *Trabajar con método, no con suerte*
+
+Carpeta: [`formacion/curso_general_ia/`](formacion/curso_general_ia/) · 13 clases
+
+| # | Clase | Ver |
+|---|---|---|
+| — | Presentación del curso | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/curso_general_ia_slides.html) |
+| M0 | El problema | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L00_el_problema_slides.html) |
+| L01 | Entorno de trabajo | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L01_configuracion_entorno_slides.html) |
+| L02 | Tu identidad en la IA | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L02_identidad_sobre_mi_slides.html) |
+| L03 | Gestión del contexto | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L03_gestion_del_contexto_slides.html) |
+| L04 | Anatomía del prompt | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L04_anatomia_del_prompt_slides.html) |
+| L05 | Diseño de solicitudes | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L05_diseno_de_solicitudes_slides.html) |
+| L06 | La fase de conversación | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L06_fase_de_conversacion_slides.html) |
+| L07 | Validación de resultados | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L07_validacion_de_resultados_slides.html) |
+| L08 | Corregir sin reescribir | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L08_correccion_sin_reescribir_slides.html) |
+| L09 | Trabajo colaborativo con IA | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L09_trabajo_colaborativo_slides.html) |
+| L10 | Productividad asistida | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L10_productividad_asistida_slides.html) |
+| L11 | IA aplicada a negocios | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/L11_ia_aplicada_a_negocios_slides.html) |
+
+### Curso de Investigación con IA — *Investigar con método, no con fe*
+
+Carpeta: [`formacion/curso_investigacion/`](formacion/curso_investigacion/) · 8 clases
+
+| # | Clase | Ver |
+|---|---|---|
+| — | Presentación del curso | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_investigacion/curso_investigacion_slides.html) |
+| I00 | Preguntar no es investigar | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_investigacion/I00_preguntar_no_es_investigar_slides.html) |
+| I01 | La pregunta de investigación | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_investigacion/I01_la_pregunta_de_investigacion_slides.html) |
+| I02 | Régimen de evidencia | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_investigacion/I02_regimen_de_evidencia_slides.html) |
+| I03 | Modo A — Investigación de mercado | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_investigacion/I03_modo_mercado_slides.html) |
+| I04 | Modo B — Análisis de documentos | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_investigacion/I04_modo_documentos_slides.html) |
+| I05 | Modo C — Investigación a profundidad | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_investigacion/I05_modo_profundidad_slides.html) |
+| I06 | El informe que queda | [Ver](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_investigacion/I06_el_informe_que_queda_slides.html) |
+
 ## 🎯 EAX (marca personal)
 
 Charlas de opinión y criterio profesional sobre datos, modelos y proyectos.

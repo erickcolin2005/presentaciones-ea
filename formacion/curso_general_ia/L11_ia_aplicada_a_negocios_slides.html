@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L11 · IA aplicada a negocios — Curso General de IA · EAx</title>
+<style>
+  :root{--dark:#0f172a;--dark-2:#1e293b;--yellow:#f59e0b;--yellow-dk:#d97706;--blue:#2563eb;--slate:#475569;--light:#f8fafc;--white:#ffffff;--red:#dc2626;--green:#16a34a;--font-system:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--text-base:17px;--line-height:1.6;--radius:16px}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;-webkit-text-size-adjust:100%}
+  body{font-family:var(--font-system);font-size:var(--text-base);line-height:var(--line-height);background:var(--dark);color:var(--dark);overflow:hidden}
+  .deck{position:relative;height:100vh;height:100dvh;width:100%;overflow:hidden}
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6vh 8vw 14vh;opacity:0;transform:translateX(52px);transition:opacity .4s ease, transform .4s ease;pointer-events:none;overflow-y:auto}
+  .slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+  .slide.out-left{opacity:0;transform:translateX(-52px)}
+  .slide.out-right{opacity:0;transform:translateX(52px)}
+  .slide.will-enter-left{transform:translateX(-52px)!important;opacity:0!important;transition:none!important}
+  .slide.dark{background:var(--dark);color:var(--white)}
+  .slide.light{background:var(--white);color:var(--dark)}
+  .inner{max-width:880px;width:100%;margin:0 auto;animation:fadeUp .35s ease-out}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .label{display:inline-block;text-transform:uppercase;letter-spacing:.1em;font-size:.76rem;font-weight:700;padding:5px 13px;border-radius:999px;margin-bottom:20px}
+  .l-ctx{background:rgba(37,99,235,.14);color:var(--blue)}
+  .l-hal{background:rgba(245,158,11,.16);color:var(--yellow-dk)}
+  .l-imp{background:rgba(220,38,38,.14);color:var(--red)}
+  .l-acc{background:rgba(22,163,74,.16);color:var(--green)}
+  .slide.dark .l-ctx{background:rgba(96,165,250,.18);color:#93c5fd}
+  .slide.dark .l-hal{background:rgba(245,158,11,.18);color:var(--yellow)}
+  .slide.dark .l-imp{background:rgba(248,113,113,.2);color:#fca5a5}
+  .slide.dark .l-acc{background:rgba(74,222,128,.18);color:#86efac}
+  .l-brand{background:rgba(245,158,11,.18);color:var(--yellow)}
+  h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:900;letter-spacing:-.02em;line-height:1.12;color:var(--dark)}
+  .slide.dark h1{color:var(--white)}
+  h1 em{color:var(--yellow-dk);font-style:normal}
+  .slide.dark h1 em{color:var(--yellow)}
+  .body-text{font-size:clamp(1.05rem,2.3vw,1.32rem);margin-top:18px;max-width:62ch}
+  .slide.light .body-text{color:var(--dark-2)}
+  .slide.dark .body-text{color:#e5e5e5}
+  .body-text strong{font-weight:800}
+  .slide.light .body-text strong{color:var(--dark)}
+  .slide.dark .body-text strong{color:var(--white)}
+  .pull{font-size:clamp(1.3rem,3.3vw,2rem);font-weight:800;line-height:1.28;margin-top:8px;border-left:4px solid var(--yellow);padding-left:22px}
+  .pull em{color:var(--yellow-dk);font-style:normal}
+  .slide.dark .pull em{color:var(--yellow)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:26px}
+  .card{background:var(--light);border-radius:var(--radius);padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.04);border:1px solid #e2e8f0}
+  .slide.dark .card{background:var(--dark-2);border-color:rgba(148,163,184,.22);box-shadow:none}
+  .card .n{font-size:.74rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--yellow-dk)}
+  .slide.dark .card .n{color:var(--yellow)}
+  .card p{font-size:.92rem;color:var(--slate)}
+  .slide.dark .card p{color:#cbd5e1}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+  .compare>div{border-radius:var(--radius);padding:18px 20px}
+  .compare .bad{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.3)}
+  .compare .good{background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.3)}
+  .compare .t{text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;font-weight:800;margin-bottom:8px}
+  .compare .bad .t{color:var(--red)}
+  .compare .good .t{color:var(--green)}
+  .compare p{font-size:.98rem;color:var(--dark-2)}
+  .slide.dark .compare p{color:#e5e5e5}
+  .brand{text-align:left}
+  .brand .mono{font-size:clamp(3rem,9vw,5.5rem);font-weight:900;color:var(--yellow);letter-spacing:-.03em;line-height:1}
+  .brand .by{margin-top:14px;font-size:1.1rem;color:#e5e5e5}
+  .brand .by a{color:var(--blue);text-decoration:none;border-bottom:1px solid transparent;font-weight:700}
+  .brand .by a:hover,.brand .by a:focus{border-bottom-color:var(--blue);color:#60a5fa}
+  .brand .tag{margin-top:22px;font-size:clamp(1.2rem,3vw,1.7rem);font-weight:800;color:var(--white)}
+  .brand .role{margin-top:10px;font-size:1.02rem;color:#e5e5e5}
+  .brand .claim{margin-top:8px;font-size:1.02rem;color:var(--yellow)}
+  .cta-line{margin-top:18px;font-size:1rem}
+  .slide.dark .cta-line{color:#e5e5e5}
+  .firma{position:fixed;right:18px;top:16px;font-weight:800;color:var(--yellow);font-size:1.1rem;z-index:30}
+  .controls{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;background:linear-gradient(to top,rgba(15,23,42,.92),rgba(15,23,42,0));z-index:40}
+  .controls.on-light{background:linear-gradient(to top,rgba(248,250,252,.96),rgba(248,250,252,0))}
+  .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;min-width:44px;padding:0 16px;border:none;border-radius:12px;background:var(--yellow);color:var(--dark);font-weight:800;font-size:.95rem;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
+  .nav-btn:active{background:var(--yellow-dk)}
+  .nav-btn[disabled]{background:#475569;color:#cbd5e1;cursor:not-allowed}
+  .nav-btn.ghost{background:transparent;color:var(--yellow);border:1.5px solid var(--yellow)}
+  .nav-btn.ghost:active{background:rgba(245,158,11,.18)}
+  .on-light .nav-btn.ghost{color:var(--yellow-dk);border-color:var(--yellow-dk)}
+  .progress{flex:1;display:flex;align-items:center;gap:7px;justify-content:center}
+  .dot{width:9px;height:9px;border-radius:50%;background:#64748b;border:none;padding:0;cursor:pointer;touch-action:manipulation;min-width:auto}
+  .dot.active{background:var(--yellow);transform:scale(1.25)}
+  .counter{font-size:.82rem;color:#94a3b8;min-width:42px;text-align:right;font-variant-numeric:tabular-nums}
+  .on-light .counter{color:var(--slate)}
+  .notes{position:fixed;left:0;right:0;bottom:0;max-height:42vh;overflow-y:auto;background:var(--dark-2);color:#e5e5e5;border-top:3px solid var(--yellow);padding:18px 22px 22px;transform:translateY(101%);transition:transform .3s ease;z-index:50}
+  .notes.open{transform:translateY(0)}
+  .notes .t{text-transform:uppercase;letter-spacing:.1em;font-size:.72rem;font-weight:800;color:var(--yellow);margin-bottom:8px}
+  .notes p{font-size:.96rem;line-height:1.55;max-width:70ch}
+  .notes-close{position:absolute;right:14px;top:12px;background:transparent;border:1.5px solid #64748b;color:#e5e5e5;border-radius:10px;min-height:44px;min-width:44px;cursor:pointer;touch-action:manipulation}
+  @media (max-width:768px){.slide{padding:22px 18px 96px}.firma{top:12px;right:14px;font-size:1rem}.grid{grid-template-columns:1fr 1fr}.compare{grid-template-columns:1fr}h1{font-size:1.55rem;line-height:1.18}.body-text{font-size:1.05rem}.controls{padding:10px 12px}.progress{display:none}}
+  @media (max-width:380px){.grid{grid-template-columns:1fr}}
+  /* Ajuste responsive movil (2026-08-29) — se aplica DESPUES de las media queries
+     originales para sobrescribir solo lo que rompe en telefono. */
+  @media (max-width:768px){
+    /* Centrar en vertical recorta la parte de arriba cuando el contenido no cabe
+       y esa parte queda inalcanzable al hacer scroll: arriba y con scroll natural. */
+    .slide{justify-content:flex-start;padding:66px 18px 104px}
+    .inner{max-width:100%}
+    .imgwrap img{max-height:46vh;max-height:46dvh}
+    .notes{max-height:60vh;max-height:60dvh}
+    .firma{font-size:.95rem}
+  }
+  /* Telefono en horizontal: poca altura, mismo criterio */
+  @media (max-height:520px) and (orientation:landscape){
+    .slide{justify-content:flex-start;padding:56px 20px 100px}
+    h1{font-size:1.35rem;line-height:1.2}
+    .body-text{font-size:.98rem;margin-top:12px}
+    .pull{font-size:1.2rem}
+    .imgwrap img{max-height:40vh;max-height:40dvh}
+    .notes{max-height:70vh;max-height:70dvh}
+  }</style>
+</head>
+<body>
+<div class="firma" aria-hidden="true">EAx</div>
+<main class="deck" id="deck">
+
+  <section class="slide dark active" data-bg="dark"
+    data-notes="Lección 6. Aquí el participante descubre necesidades que exceden la capacitación. Tu papel: nombrarlas con honestidad y derivar al servicio correcto, sin inflar la clase.">
+    <div class="inner brand">
+      <span class="label l-brand">Lección 11 · IA aplicada a negocios</span>
+      <div class="mono">EAx</div>
+      <p class="by">By <a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener">Erick Albornoz</a></p>
+      <p class="tag">Obsessed with business logic</p>
+      <p class="role">Systems Engineer · Distributed Architecture · AI Automation</p>
+      <p class="claim">Not demos. Not prototypes. Systems that stay up.</p>
+    </div>
+  </section>
+
+  <section class="slide light" data-bg="light"
+    data-notes="Dolor frecuente del dueño: quiere 'meter IA en todo' sin elegir dónde. Aterrízalo: ¿en qué proceso concreto?">
+    <div class="inner">
+      <span class="label l-ctx">Contexto</span>
+      <h1>Quieres "meter IA en todo" <em>sin elegir dónde</em></h1>
+      <p class="body-text">La IA no transforma un negocio por instalarse. Aporta cuando se aplica a un problema concreto, en un proceso que se entiende — no como una capa que lo arregla todo por sí sola.</p>
+    </div>
+  </section>
+
+  <section class="slide dark" data-bg="dark"
+    data-notes="El hallazgo central de la lección, y la regla del método aplicada al negocio. Meter IA en un proceso roto lo vuelve más caótico. Primero ordenar. Y no todo necesita IA: a veces un bot de reglas basta y es más barato.">
+    <div class="inner">
+      <span class="label l-hal">Hallazgo</span>
+      <h1>Meter IA en un proceso roto lo vuelve <em>más caótico</em></h1>
+      <p class="pull">Primero se <em>ordena</em> el proceso; después entra la IA. Y no todo necesita IA.</p>
+      <p class="body-text">Por área aporta en <strong>ventas, servicio al cliente, operaciones y gestión del conocimiento</strong>. A veces una automatización por reglas (más simple y barata) basta.</p>
+    </div>
+  </section>
+
+  <section class="slide light" data-bg="light"
+    data-notes="Aquí marcas la frontera con los servicios. Es donde el participante suele descubrir que necesita Diagnóstico, Implementación o Consultoría. Nómbralo con honestidad: si excede la capacitación, se deriva.">
+    <div class="inner">
+      <span class="label l-imp">Implicación</span>
+      <h1>Capacitar es enseñar; <em>construir es otra cosa</em></h1>
+      <div class="compare">
+        <div class="bad"><div class="t">Confundir los servicios</div><p>Querer que la clase audite la operación o deje un sistema montado. La capacitación no hace eso.</p></div>
+        <div class="good"><div class="t">Derivar con criterio</div><p>"No sé dónde pierdo" → Diagnóstico · "Déjenmelo montado" → Implementación · "Acompáñenme a decidir" → Consultoría.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide dark" data-bg="dark"
+    data-notes="Cierre con evidencia real (única cifra verificada) y ejercicio. Que cada quien mapee su área, marque un proceso y clasifique si es capacitación o implementación. La cifra se cita con su contexto, nunca como promesa.">
+    <div class="inner">
+      <span class="label l-acc">Acción</span>
+      <h1>Marca <em>un</em> proceso de tu área</h1>
+      <div class="grid">
+        <div class="card"><div class="n">Paso 1</div><p>Mapea tu área y marca UN proceso donde la IA aportaría.</p></div>
+        <div class="card"><div class="n">Paso 2</div><p>Define qué pedirías (L05) y qué contexto haría falta (L03).</p></div>
+        <div class="card"><div class="n">Paso 3</div><p>Clasifica: ¿lo hago yo o requiere construcción?</p></div>
+      </div>
+      <p class="cta-line">Referencia real: una empresa de consumo bajó <strong>40% sus tiempos de respuesta</strong> tras ordenar su proceso. <strong>Cierre del curso</strong> — ¿instalamos este método en tu equipo? <a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener">linkedin.com/in/erick-albornoz</a></p>
+    </div>
+  </section>
+
+  <section class="slide light" data-bg="light"
+    data-notes="No son de reflexión: enfocan UN proceso, deciden el tipo de solución y clasifican el servicio con honestidad. Tres frentes: enfocar, decidir IA vs reglas, clasificar capacitación vs construcción. Y no hay tope — sigue preguntando hasta tener un solo proceso priorizado, no una lista de deseos.">
+    <div class="inner">
+      <span class="label l-ctx">Preguntas para armar la acción</span>
+      <h1>Las preguntas que <em>enfocan</em> dónde empezar</h1>
+      <p class="body-text">No te limites a estas. Sigue preguntando hasta tener UN proceso priorizado, no una lista de deseos.</p>
+      <div class="grid">
+        <div class="card"><div class="n">Para enfocar</div><p>¿En qué área se pierde más tiempo o dinero hoy? ¿En qué proceso concreto entra la IA (no "en todo")?</p></div>
+        <div class="card"><div class="n">Para decidir la solución</div><p>¿Necesita IA, o basta una automatización por reglas más simple?</p></div>
+        <div class="card"><div class="n">Para clasificar el servicio</div><p>¿Lo puedes hacer tú con lo aprendido, o requiere que alguien lo construya (implementación)?</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide light" data-bg="light"
+    data-notes="Prompt para mapear oportunidades por área. El de IA vs reglas está en la lección.">
+    <div class="inner">
+      <span class="label l-hal">Prompts para ejecutar</span>
+      <h1>Mapea oportunidades <em>por área</em></h1>
+      <pre style="background:var(--dark-2);color:#e5e5e5;border-radius:12px;padding:16px 18px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.84rem;line-height:1.5;white-space:pre-wrap;overflow-x:auto;border:1px solid rgba(148,163,184,.25);margin-top:22px;max-width:680px">TAREA: Ayúdame a identificar dónde la IA aportaría en mi negocio, por área.
+OBJETIVO: Elegir UN proceso concreto para empezar, no meter IA en todo.
+CONTEXTO: [mis áreas: ventas, atención, operaciones... y sus dolores].
+CRITERIOS DE ÉXITO: 3 oportunidades priorizadas por impacto, con su proceso.</pre>
+      <p class="cta-line">Segundo prompt (¿IA o automatización por reglas?) en la lección.</p>
+    </div>
+  </section>
+
+  <section class="slide dark" data-bg="dark"
+    data-notes="El entregable se muestra, no se nombra. Esto ES la PLANTILLA_ejercicio_proceso_real.md — la hoja del caso trabajado de principio a fin que se usa en TODO el curso y aquí cierra como capstone. El punto 4 marca la frontera de servicio (capacitación vs implementación).">
+    <div class="inner">
+      <span class="label l-acc">Qué te llevas — y qué lleva dentro</span>
+      <h1>Tu <em>caso real trabajado</em> (PLANTILLA_ejercicio_proceso_real)</h1>
+      <p class="body-text">No es un nombre: es la hoja que llenaste lección a lección y que aquí cierras de principio a fin.</p>
+      <pre style="background:var(--dark-2);color:#e5e5e5;border-radius:12px;padding:16px 18px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8rem;line-height:1.5;white-space:pre-wrap;overflow-x:auto;border:1px solid rgba(148,163,184,.25);margin-top:16px;max-width:720px">1. MI CASO REAL: proceso · cómo lo hago hoy · qué me cuesta · cómo sé que mejoró
+2. LO QUE APLICO: lección · qué haré con la IA · plantilla(s) que uso
+3. RESULTADO Y CORRECCIÓN: 1er resultado · qué falló · cómo lo corregí · final
+4. CIERRE: tiempo antes/ahora · ¿lo hago yo (capacitación) o lo construye
+          alguien (implementación)?</pre>
+      <p class="cta-line">Hoja completa para imprimir: <strong>plantillas/PLANTILLA_ejercicio_proceso_real.md</strong>.</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="controls" id="controls">
+  <button class="nav-btn ghost" id="prev" aria-label="Slide anterior">‹ Atrás</button>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <span class="counter" id="counter">1 / 5</span>
+  <button class="nav-btn" id="next" aria-label="Siguiente slide">Siguiente ›</button>
+</div>
+<button class="nav-btn ghost" id="notesToggle" aria-label="Mostrar u ocultar notas de orador" style="position:fixed;left:16px;top:14px;z-index:45">Notas</button>
+<aside class="notes" id="notes" aria-live="polite">
+  <button class="notes-close" id="notesClose" aria-label="Cerrar notas">✕</button>
+  <div class="t">Notas de orador</div>
+  <p id="notesText"></p>
+</aside>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const slides=[...document.querySelectorAll('.slide')],total=slides.length;
+  const prev=document.getElementById('prev'),next=document.getElementById('next'),counter=document.getElementById('counter'),progress=document.getElementById('progress'),controls=document.getElementById('controls'),notes=document.getElementById('notes'),notesText=document.getElementById('notesText'),notesToggle=document.getElementById('notesToggle'),notesClose=document.getElementById('notesClose');
+  if(!slides.length)return;
+  let cur=0;
+  const dots=slides.map((s,i)=>{const b=document.createElement('button');b.className='dot'+(i===0?' active':'');b.setAttribute('aria-label','Ir a slide '+(i+1));b.addEventListener('click',()=>go(i,i>cur?1:-1));progress.appendChild(b);return b;});
+  function sync(){counter.textContent=(cur+1)+' / '+total;dots.forEach((d,i)=>d.classList.toggle('active',i===cur));prev.disabled=cur===0;next.disabled=cur===total-1;const dark=slides[cur].dataset.bg!=='light';controls.classList.toggle('on-light',!dark);notesText.textContent=slides[cur].dataset.notes||'';}
+  function go(nextIdx,dir){if(nextIdx<0||nextIdx>=total||nextIdx===cur)return;const outEl=slides[cur],inEl=slides[nextIdx];outEl.classList.remove('active');outEl.classList.add(dir>0?'out-left':'out-right');setTimeout(()=>outEl.classList.remove('out-left','out-right'),420);cur=nextIdx;if(dir<0){inEl.classList.add('will-enter-left');void inEl.offsetWidth;requestAnimationFrame(()=>requestAnimationFrame(()=>{inEl.classList.remove('will-enter-left');inEl.classList.add('active');}));}else{inEl.classList.add('active');}sync();}
+  prev.addEventListener('click',()=>go(cur-1,-1));next.addEventListener('click',()=>go(cur+1,1));
+  document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1,1);}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1,-1);}if(e.key==='n'||e.key==='N')toggleNotes();});
+  let x0=null;const deck=document.getElementById('deck');
+  deck.addEventListener('touchstart',e=>{x0=e.changedTouches[0].clientX;},{passive:true});
+  deck.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50){dx<0?go(cur+1,1):go(cur-1,-1);}x0=null;},{passive:true});
+  function toggleNotes(){notes.classList.toggle('open');}
+  notesToggle.addEventListener('click',toggleNotes);notesClose.addEventListener('click',()=>notes.classList.remove('open'));
+  sync();
+});
+</script>
+</body>
+</html>
