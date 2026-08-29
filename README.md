@@ -16,7 +16,7 @@ Las clases de los cursos de IA, una carpeta por curso. Se avanzan con las flecha
 
 ### Curso General de IA — *Trabajar con método, no con suerte*
 
-Carpeta: [`formacion/curso_general_ia/`](formacion/curso_general_ia/) · 13 clases
+📂 [`formacion/curso_general_ia/`](formacion/curso_general_ia/) · 13 clases · 🔗 [Índice del curso](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_general_ia/)
 
 | # | Clase | Ver |
 |---|---|---|
@@ -36,7 +36,7 @@ Carpeta: [`formacion/curso_general_ia/`](formacion/curso_general_ia/) · 13 clas
 
 ### Curso de Investigación con IA — *Investigar con método, no con fe*
 
-Carpeta: [`formacion/curso_investigacion/`](formacion/curso_investigacion/) · 8 clases
+📂 [`formacion/curso_investigacion/`](formacion/curso_investigacion/) · 8 clases · 🔗 [Índice del curso](https://erickcolin2005.github.io/presentaciones-ea/formacion/curso_investigacion/)
 
 | # | Clase | Ver |
 |---|---|---|

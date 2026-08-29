@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso General de IA — Clases · EAx</title>
+<meta name="description" content="Las 13 clases del Curso General de IA de Erick Albornoz (EAx): trabajar con método, no con suerte.">
+<style>
+  :root{
+    --dark:#0f172a; --dark-2:#1e293b; --yellow:#f59e0b;
+    --blue:#60a5fa; --slate:#94a3b8; --line:rgba(148,163,184,.22);
+    --font-system: system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:var(--font-system);background:var(--dark);color:#e5e5e5;line-height:1.6;font-size:17px;padding:0 20px 64px}
+  .wrap{max-width:720px;margin:0 auto}
+
+  header{padding:44px 0 28px;border-bottom:1px solid var(--line)}
+  .kicker{display:inline-block;text-transform:uppercase;letter-spacing:.1em;font-size:.74rem;font-weight:800;
+    padding:5px 13px;border-radius:999px;background:rgba(245,158,11,.18);color:var(--yellow);margin-bottom:16px}
+  .mono{font-size:clamp(2rem,8vw,2.8rem);font-weight:900;color:var(--yellow);letter-spacing:-.03em;line-height:1}
+  h1{font-size:clamp(1.4rem,4.4vw,2rem);font-weight:900;color:#fff;letter-spacing:-.02em;line-height:1.15;margin-top:16px}
+  h1 em{color:var(--yellow);font-style:normal}
+  .lead{margin-top:12px;font-size:1.02rem;color:#cbd5e1;max-width:62ch}
+  .meta{margin-top:14px;font-size:.86rem;color:var(--slate);font-variant-numeric:tabular-nums}
+
+  .bloque{margin-top:30px;font-size:.74rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--yellow)}
+  ul{list-style:none;margin-top:10px;border-top:1px solid var(--line)}
+  li{border-bottom:1px solid var(--line)}
+  li a{display:flex;align-items:center;gap:12px;min-height:56px;padding:10px 4px;color:#e5e5e5;
+    text-decoration:none;font-size:1rem;line-height:1.35;
+    -webkit-tap-highlight-color:rgba(245,158,11,.15);touch-action:manipulation}
+  li a:hover,li a:focus{color:var(--yellow);outline:none}
+  li a:focus-visible{outline:2px solid var(--yellow);outline-offset:2px;border-radius:8px}
+  li .tag{flex:0 0 auto;min-width:56px;font-size:.72rem;font-weight:800;letter-spacing:.05em;color:var(--yellow);
+    background:rgba(245,158,11,.14);border-radius:8px;padding:5px 8px;text-align:center}
+  li.start .tag{color:#86efac;background:rgba(74,222,128,.16)}
+  li .txt{flex:1 1 auto;min-width:0}
+  li .arrow{flex:0 0 auto;color:var(--slate);font-size:1.15rem}
+
+  footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);font-size:.92rem;color:var(--slate)}
+  footer a{color:var(--blue);text-decoration:none;font-weight:700;border-bottom:1px solid transparent}
+  footer a:hover,footer a:focus{border-bottom-color:var(--blue)}
+  footer p+p{margin-top:10px}
+
+  @media (max-width:420px){
+    body{padding:0 14px 48px}
+    header{padding:30px 0 22px}
+    li a{font-size:.95rem;gap:10px}
+    li .tag{min-width:48px;font-size:.68rem;padding:4px 6px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="kicker">Capacitación · Curso 1</span>
+  <div class="mono">EAx</div>
+  <h1>Curso General de IA — <em>trabajar con método, no con suerte</em></h1>
+  <p class="lead">La herramienta cambia cada pocos meses. El sistema de trabajo, una vez instalado, queda. Toca una clase para abrirla.</p>
+  <p class="meta">13 clases · presentación + módulo 0 + 11 lecciones en 4 bloques</p>
+</header>
+
+<div class="bloque">Apertura</div>
+<ul>
+  <li class="start"><a href="curso_general_ia_slides.html"><span class="tag">Inicio</span><span class="txt">Presentación del curso</span><span class="arrow">›</span></a></li>
+  <li><a href="L00_el_problema_slides.html"><span class="tag">M0</span><span class="txt">El problema</span><span class="arrow">›</span></a></li>
+</ul>
+
+<div class="bloque">Bloque 1 · Preparar</div>
+<ul>
+  <li><a href="L01_configuracion_entorno_slides.html"><span class="tag">L01</span><span class="txt">Entorno de trabajo</span><span class="arrow">›</span></a></li>
+  <li><a href="L02_identidad_sobre_mi_slides.html"><span class="tag">L02</span><span class="txt">Tu identidad en la IA</span><span class="arrow">›</span></a></li>
+  <li><a href="L03_gestion_del_contexto_slides.html"><span class="tag">L03</span><span class="txt">Gestión del contexto</span><span class="arrow">›</span></a></li>
+</ul>
+
+<div class="bloque">Bloque 2 · Comunicar</div>
+<ul>
+  <li><a href="L04_anatomia_del_prompt_slides.html"><span class="tag">L04</span><span class="txt">Anatomía del prompt</span><span class="arrow">›</span></a></li>
+  <li><a href="L05_diseno_de_solicitudes_slides.html"><span class="tag">L05</span><span class="txt">Diseño de solicitudes</span><span class="arrow">›</span></a></li>
+  <li><a href="L06_fase_de_conversacion_slides.html"><span class="tag">L06</span><span class="txt">La fase de conversación</span><span class="arrow">›</span></a></li>
+</ul>
+
+<div class="bloque">Bloque 3 · Controlar</div>
+<ul>
+  <li><a href="L07_validacion_de_resultados_slides.html"><span class="tag">L07</span><span class="txt">Validación de resultados</span><span class="arrow">›</span></a></li>
+  <li><a href="L08_correccion_sin_reescribir_slides.html"><span class="tag">L08</span><span class="txt">Corregir sin reescribir</span><span class="arrow">›</span></a></li>
+  <li><a href="L09_trabajo_colaborativo_slides.html"><span class="tag">L09</span><span class="txt">Trabajo colaborativo con IA</span><span class="arrow">›</span></a></li>
+</ul>
+
+<div class="bloque">Bloque 4 · Aplicar</div>
+<ul>
+  <li><a href="L10_productividad_asistida_slides.html"><span class="tag">L10</span><span class="txt">Productividad asistida</span><span class="arrow">›</span></a></li>
+  <li><a href="L11_ia_aplicada_a_negocios_slides.html"><span class="tag">L11</span><span class="txt">IA aplicada a negocios</span><span class="arrow">›</span></a></li>
+</ul>
+
+<footer>
+  <p>Dentro de cada clase: flechas del teclado o deslizar en el celular para avanzar; la tecla <strong>N</strong> abre las notas de orador.</p>
+  <p><a href="../">← Volver a Formación</a></p>
+</footer>
+
+</div>
+</body>
+</html>
