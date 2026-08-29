@@ -69,9 +69,23 @@
   --eax-white:#ffffff;
 
   /* Tonos de texto sobre fondo oscuro. Slate #475569 es texto secundario,
-     NO relleno de gráficos ni texto sobre dark: ahí no contrasta (§2). */
-  --eax-text-dim:#cbd5e1;
-  --eax-text-mute:#94a3b8;
+     NO relleno de gráficos ni texto sobre dark: ahí no contrasta (§2).
+
+     OJO — los dos tonos de abajo NO están en la paleta de visual.md §2.
+     No son invención de esta hoja: ya venían usándose en los decks. Se
+     declaran aquí para que sean visibles, no para darles rango de marca.
+
+     Por qué existen: §2 nombra Slate #475569 como texto secundario, pero
+     sobre el fondo Dark #0f172a da 2,4:1 de contraste — por debajo del 4,5:1
+     que exige un texto de lectura, así que es ilegible. Es el mismo problema
+     que §2 ya documentó para gráficos (error N4, 2026-08-16), pero aplicado
+     al texto. #94a3b8 da 7,0:1 sobre ese fondo y sí se lee.
+
+     visual.md NO define un tono de texto secundario sobre fondo oscuro.
+     Es un hueco de la paleta, y taparlo es decisión del dueño (D#), no de
+     esta hoja: mientras no se decida, estos dos valores quedan marcados. */
+  --eax-text-dim:#cbd5e1;   /* [FUERA DE PALETA] pendiente de decisión */
+  --eax-text-mute:#94a3b8;  /* [FUERA DE PALETA] pendiente de decisión */
   --eax-line:rgba(148,163,184,.22);
 
   --eax-radius:16px;   /* §3 cards */
