@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presentaciones — Erick Albornoz · EAx</title>
+<meta name="description" content="Presentaciones en HTML de Erick Albornoz (EAx): formación en IA, criterio profesional sobre datos y modelos, validaciones y trabajos de universidad.">
+<link rel="stylesheet" href="assets/eax-brand.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--eax-cuerpo);background:var(--eax-dark);color:#e5e5e5;
+    font-size:17px;line-height:1.6;padding:0 20px 72px;
+  }
+  .wrap{max-width:1000px;margin:0 auto}
+
+  /* --- Portada (§4): fondo dark, sin foto, palabra clave en ambar --------- */
+  header{padding:64px 0 40px;border-bottom:1px solid var(--eax-line)}
+  .kicker{
+    display:inline-block;font-family:var(--eax-tecnico);text-transform:uppercase;
+    letter-spacing:.16em;font-size:.72rem;font-weight:700;padding:6px 14px;
+    border-radius:999px;background:rgba(245,158,11,.16);color:var(--eax-yellow);
+  }
+  .mono{
+    font-family:var(--eax-impacto);font-weight:400;font-size:clamp(3rem,12vw,5.5rem);
+    color:var(--eax-yellow);letter-spacing:-.03em;line-height:1;margin-top:20px;
+  }
+  h1{
+    font-family:var(--eax-editorial);font-style:italic;font-weight:400;
+    font-size:clamp(1.6rem,5vw,2.6rem);line-height:1.12;color:#fff;margin-top:18px;
+  }
+  h1 em{font-family:var(--eax-impacto);font-style:normal;font-weight:400;color:var(--eax-yellow);letter-spacing:-.01em}
+  .lead{margin-top:18px;font-size:clamp(1rem,2.4vw,1.14rem);color:var(--eax-text-dim);max-width:62ch}
+  .lead a{color:#60a5fa;font-weight:700;text-decoration:none;border-bottom:1px solid transparent}
+  .lead a:hover,.lead a:focus{border-bottom-color:#60a5fa}
+  .role{margin-top:14px;font-family:var(--eax-tecnico);font-size:.8rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--eax-text-mute)}
+
+  /* --- Secciones -------------------------------------------------------- */
+  section{margin-top:52px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  h2{font-family:var(--eax-cuerpo);font-weight:800;font-size:1.4rem;color:#fff;letter-spacing:-.02em}
+  .count{font-family:var(--eax-tecnico);font-size:.76rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--eax-yellow)}
+  .sec-lead{margin-top:8px;color:var(--eax-text-dim);font-size:1rem;max-width:70ch}
+  .sec-lead a{color:#60a5fa;font-weight:700;text-decoration:none;border-bottom:1px solid transparent}
+  .sec-lead a:hover,.sec-lead a:focus{border-bottom-color:#60a5fa}
+
+  ul{list-style:none;margin-top:18px;border-top:1px solid var(--eax-line)}
+  li{border-bottom:1px solid var(--eax-line)}
+  li a{
+    display:flex;align-items:center;gap:14px;min-height:62px;padding:12px 4px;
+    color:#e5e5e5;text-decoration:none;line-height:1.35;
+    -webkit-tap-highlight-color:rgba(245,158,11,.15);touch-action:manipulation;
+  }
+  li a:hover,li a:focus{color:var(--eax-yellow);outline:none}
+  li a:focus-visible{outline:2px solid var(--eax-yellow);outline-offset:2px;border-radius:8px}
+  li .txt{flex:1 1 auto;min-width:0}
+  li .t{display:block;font-weight:700;font-size:1rem}
+  li .d{display:block;font-family:var(--eax-tecnico);font-size:.74rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--eax-text-mute);margin-top:3px}
+  li a:hover .d,li a:focus .d{color:var(--eax-yellow)}
+  li .arrow{flex:0 0 auto;color:var(--eax-text-mute);font-size:1.2rem}
+
+  /* Formacion va destacada: es el bloque con mas piezas y el unico con indice propio */
+  .destacada{
+    background:var(--eax-dark-2);border:1px solid var(--eax-line);
+    border-radius:var(--eax-radius);padding:26px 22px;margin-top:18px;
+  }
+  .cursos{display:grid;grid-template-columns:1fr;gap:14px;margin-top:18px}
+  @media (min-width:760px){.cursos{grid-template-columns:1fr 1fr}}
+  .curso{
+    display:block;background:var(--eax-dark);border:1px solid var(--eax-line);
+    border-radius:12px;padding:18px;text-decoration:none;color:#e5e5e5;
+    -webkit-tap-highlight-color:rgba(245,158,11,.15);touch-action:manipulation;
+  }
+  .curso:hover,.curso:focus{border-color:var(--eax-yellow);outline:none}
+  .curso .n{font-family:var(--eax-tecnico);font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--eax-yellow)}
+  .curso h3{font-family:var(--eax-cuerpo);font-weight:800;font-size:1.08rem;color:#fff;
+    margin:6px 0 6px;letter-spacing:-.02em}
+  .curso p{font-size:.94rem;color:var(--eax-text-dim)}
+
+  footer{margin-top:60px;padding-top:26px;border-top:1px solid var(--eax-line);
+    font-size:.92rem;color:var(--eax-text-mute)}
+  footer a{color:#60a5fa;text-decoration:none;font-weight:700;border-bottom:1px solid transparent}
+  footer a:hover,footer a:focus{border-bottom-color:#60a5fa}
+  footer p+p{margin-top:10px}
+
+  @media (max-width:420px){
+    body{padding:0 14px 52px}
+    header{padding:40px 0 30px}
+    section{margin-top:40px}
+    .destacada{padding:20px 16px}
+    li a{gap:10px;min-height:58px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="kicker">Presentaciones · EAx</span>
+  <div class="mono">EAx</div>
+  <h1>Tecnología aplicada al negocio, <em>no a la demo</em></h1>
+  <p class="lead">
+    Presentaciones en HTML, autocontenidas: se abren en cualquier navegador, sin instalar nada.
+    Se avanzan con las flechas del teclado o deslizando en el celular.
+    Por <a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener">Erick Albornoz</a>.
+  </p>
+  <p class="role">Systems Engineer · Distributed Architecture · AI Automation</p>
+</header>
+
+<section>
+  <div class="sec-head">
+    <h2>Formación</h2>
+    <span class="count">21 clases · 2 cursos</span>
+  </div>
+  <p class="sec-lead">Los cursos de IA completos, clase por clase. <a href="formacion/">Ver el apartado</a>.</p>
+  <div class="destacada">
+    <div class="cursos">
+      <a class="curso" href="formacion/curso_general_ia/">
+        <div class="n">Curso 1 · 13 clases</div>
+        <h3>Curso General de IA</h3>
+        <p>Trabajar con método, no con suerte. La herramienta cambia cada pocos meses; el sistema de trabajo queda.</p>
+      </a>
+      <a class="curso" href="formacion/curso_investigacion/">
+        <div class="n">Curso 2 · 8 clases</div>
+        <h3>Curso de Investigación con IA</h3>
+        <p>Investigar con método, no con fe. Preguntarle a la IA no es investigar.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Criterio profesional</h2>
+    <span class="count">4 charlas</span>
+  </div>
+  <p class="sec-lead">Opinión y criterio sobre datos, modelos y proyectos.</p>
+  <ul>
+    <li><a href="eax/Agentes_ea.html"><span class="txt"><span class="t">Agentes que operan, no que impresionan</span><span class="d">Agentes de IA con foco en operación real</span></span><span class="arrow">›</span></a></li>
+    <li><a href="eax/metodologia_proyectos_ea.html"><span class="txt"><span class="t">La metodología no entrega el proyecto. El criterio sí</span><span class="d">Metodología vs. criterio en proyectos</span></span><span class="arrow">›</span></a></li>
+    <li><a href="eax/narrativa_datos_ea.html"><span class="txt"><span class="t">Tus datos no fallaron. Tu presentación sí</span><span class="d">Narrativa de datos</span></span><span class="arrow">›</span></a></li>
+    <li><a href="eax/validacion_modelos_ea.html"><span class="txt"><span class="t">Tu modelo funciona en Jupyter. ¿Funciona en producción?</span><span class="d">Validación de modelos en producción</span></span><span class="arrow">›</span></a></li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Validaciones</h2>
+    <span class="count">3 casos</span>
+  </div>
+  <p class="sec-lead">Casos de validación de distintas asignaturas.</p>
+  <ul>
+    <li><a href="validaciones/Tecnicas_Validacion_Simulacion_Caso_Uribia.html"><span class="txt"><span class="t">Examen final — Caso Uribia (NASA POWER)</span><span class="d">Técnicas de Validación y Simulación</span></span><span class="arrow">›</span></a></li>
+    <li><a href="validaciones/Presentacion_FEP_Albornoz.html"><span class="txt"><span class="t">Validación FEP — Albornoz Hernández</span><span class="d">Formulación y Evaluación de Proyectos</span></span><span class="arrow">›</span></a></li>
+    <li><a href="validaciones/Presentacion_TourVista_GCS.html"><span class="txt"><span class="t">TourVista S.A.S.</span><span class="d">Gestión y Calidad del Software</span></span><span class="arrow">›</span></a></li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Trabajos de universidad</h2>
+    <span class="count">2 entregables</span>
+  </div>
+  <p class="sec-lead">Entregables académicos por asignatura. Conservan su estilo propio: son trabajo de universidad, no piezas de marca.</p>
+  <ul>
+    <li><a href="universidad/presentacion_crypto_ML.html"><span class="txt"><span class="t">ML en Criptomonedas</span><span class="d">Minería de Datos</span></span><span class="arrow">›</span></a></li>
+    <li><a href="universidad/CyberEye_Momento3_Presentacion.html"><span class="txt"><span class="t">CyberEye — Momento 3</span><span class="d">Gerencia de Proyectos</span></span><span class="arrow">›</span></a></li>
+  </ul>
+</section>
+
+<footer>
+  <p>Todas son archivos HTML independientes: no requieren instalación ni dependencias.</p>
+  <p><a href="https://github.com/erickcolin2005/presentaciones-ea">Ver el repositorio en GitHub</a></p>
+</footer>
+
+</div>
+</body>
+</html>

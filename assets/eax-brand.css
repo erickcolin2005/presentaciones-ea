@@ -1,0 +1,99 @@
+/* ==========================================================================
+   EAx — hoja de marca del sitio de presentaciones
+   Implementa 02_PRODUCCION/visual.md (los VALORES mandan allí, no aquí).
+   §1 tipografía · §2 paleta · §3 estilo general · §4 portada
+   Las rutas de fuente son relativas a ESTE archivo, así que la hoja
+   funciona desde cualquier profundidad de carpeta.
+   ========================================================================== */
+
+/* --- §1 Tipografía: cuatro roles, una familia cada uno --------------------
+   Decisión del dueño 2026-08-11: la marca abandona system-ui.
+   Archivo Black trae UN solo peso real (400). Pedirle 800/900 hace que el
+   navegador lo engorde solo y el trazo sale sucio — por eso se declara 400
+   y todo uso de la clase fuerza font-weight:400.
+   Todas SIL OFL (verificado 2026-08-16). Auto-alojadas: sin Google Fonts,
+   sin depender de un servidor ajeno.                                       */
+
+@font-face{
+  font-family:'Archivo Black'; src:url('fonts/ArchivoBlack-Regular.woff2') format('woff2');
+  font-weight:400; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'Instrument Serif'; src:url('fonts/InstrumentSerif-Italic.woff2') format('woff2');
+  font-weight:400; font-style:italic; font-display:swap;
+}
+@font-face{
+  font-family:'Inter'; src:url('fonts/Inter-Regular.woff2') format('woff2');
+  font-weight:400; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'Inter'; src:url('fonts/Inter-SemiBold.woff2') format('woff2');
+  font-weight:600; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'Inter'; src:url('fonts/Inter-Bold.woff2') format('woff2');
+  font-weight:700; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'Inter'; src:url('fonts/Inter-ExtraBold.woff2') format('woff2');
+  font-weight:800; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'Inter'; src:url('fonts/Inter-Black.woff2') format('woff2');
+  font-weight:900; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'JetBrains Mono'; src:url('fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight:400; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'JetBrains Mono'; src:url('fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  font-weight:700; font-style:normal; font-display:swap;
+}
+
+:root{
+  /* Roles tipográficos (§1) */
+  --eax-impacto:  'Archivo Black', 'Arial Black', system-ui, sans-serif;
+  --eax-editorial:'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --eax-cuerpo:   'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --eax-tecnico:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Paleta (§2) — no se inventan colores fuera de esta tabla */
+  --eax-dark:#0f172a;
+  --eax-dark-2:#1e293b;
+  --eax-yellow:#f59e0b;
+  --eax-yellow-dk:#d97706;
+  --eax-blue:#2563eb;
+  --eax-slate:#475569;
+  --eax-light:#f8fafc;
+  --eax-white:#ffffff;
+
+  /* Tonos de texto sobre fondo oscuro. Slate #475569 es texto secundario,
+     NO relleno de gráficos ni texto sobre dark: ahí no contrasta (§2). */
+  --eax-text-dim:#cbd5e1;
+  --eax-text-mute:#94a3b8;
+  --eax-line:rgba(148,163,184,.22);
+
+  --eax-radius:16px;   /* §3 cards */
+}
+
+/* --- Utilidades de rol ---------------------------------------------------- */
+.eax-impacto{font-family:var(--eax-impacto);font-weight:400;letter-spacing:-.01em;line-height:1.06}
+.eax-editorial{font-family:var(--eax-editorial);font-style:italic;font-weight:400}
+.eax-kicker{
+  font-family:var(--eax-tecnico);text-transform:uppercase;letter-spacing:.16em;
+  font-size:.72rem;font-weight:700;
+}
+.eax-mono{font-family:var(--eax-tecnico);font-variant-numeric:tabular-nums}
+
+/* Firma de marca (§2): EAx en ámbar, presente en todas las piezas.
+   El monograma va en la fuente de impacto, que trae un solo peso. */
+.eax-firma{font-family:var(--eax-impacto);font-weight:400;color:var(--eax-yellow)}
+
+/* §3 Animación: entrada limpia, sin rebotes */
+@keyframes eaxFadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.eax-fadeup{animation:eaxFadeUp .35s ease-out}
+
+@media (prefers-reduced-motion: reduce){
+  .eax-fadeup{animation:none}
+}

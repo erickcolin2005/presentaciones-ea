@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Formación — Cursos de IA · EAx</title>
 <meta name="description" content="Clases en HTML de los cursos de IA de Erick Albornoz (EAx): Curso General de IA y Curso de Investigación con IA.">
+<link rel="stylesheet" href="../assets/eax-brand.css">
 <style>
   :root{
     --dark:#0f172a; --dark-2:#1e293b; --yellow:#f59e0b; --yellow-dk:#d97706;
@@ -71,6 +72,19 @@
     li a{font-size:.92rem;gap:10px}
     li .tag{min-width:46px;font-size:.68rem;padding:4px 6px}
   }
+
+  /* --- Sistema tipografico EAx (visual.md §1, decision del dueño 2026-08-11) ---
+     Impacto: Archivo Black (un solo peso real, 400) · Editorial: Instrument
+     Serif italica · Cuerpo: Inter · Tecnico: JetBrains Mono en kickers,
+     uppercase con letter-spacing .16em. */
+  body{font-family:var(--eax-cuerpo)}
+  .mono{font-family:var(--eax-impacto);font-weight:400;letter-spacing:-.03em}
+  h1{font-family:var(--eax-editorial);font-style:italic;font-weight:400;letter-spacing:0;line-height:1.12}
+  h1 em{font-family:var(--eax-impacto);font-style:normal;font-weight:400;letter-spacing:-.01em}
+  .kicker,.bloque,.course .n,li .tag,.meta{font-family:var(--eax-tecnico);letter-spacing:.16em;font-weight:700}
+  .meta{letter-spacing:.02em;font-weight:400}
+  .course h2,.course h2 a{font-family:var(--eax-cuerpo);font-weight:800;letter-spacing:-.02em}
+  .lead,.course p,li .txt{font-family:var(--eax-cuerpo)}
 </style>
 </head>
 <body>

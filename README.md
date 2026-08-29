@@ -6,6 +6,14 @@ Cada presentación se puede ver en vivo a través de GitHub Pages o abrir direct
 
 🔗 **Índice publicado:** https://erickcolin2005.github.io/presentaciones-ea/
 
+### Identidad visual
+
+Las piezas comparten `assets/eax-brand.css`, que implementa el sistema de marca definido en el repositorio de marca (`02_PRODUCCION/visual.md`): cuatro roles tipográficos — **Archivo Black** (impacto), **Instrument Serif** itálica (editorial), **Inter** (cuerpo) y **JetBrains Mono** (técnico) — más la paleta y el radio de las cards. Las fuentes están alojadas en `assets/fonts/` (SIL OFL): el sitio no depende de Google Fonts ni de ningún servidor externo.
+
+Los **valores mandan en `visual.md`**, no aquí. Si cambian allá, esta hoja se re-sincroniza.
+
+> Los trabajos de universidad conservan su estilo original: son entregables académicos, no piezas de marca.
+
 ---
 
 ## 📚 Formación

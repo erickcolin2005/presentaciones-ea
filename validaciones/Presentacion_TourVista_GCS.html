@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>TourVista S.A.S. — Gobernanza e instrumentación de calidad como única raíz</title>
+<link rel="stylesheet" href="../assets/eax-brand.css">
 <style>
 :root {
   --dark: #0f172a;
@@ -481,6 +482,58 @@ pre.code .self{ color: #fda4af; font-style: italic; }
   .notes-drawer { max-height: 60vh; padding: 14px 16px 22px; }
   pre.code { font-size: 0.7rem; padding: 10px 12px; }
 }
+
+/* === Sistema tipografico EAx — visual.md §1 (decision del dueño 2026-08-11) ===
+   Cuatro roles: impacto (Archivo Black, un solo peso real 400) · editorial
+   (Instrument Serif italica) · cuerpo (Inter) · tecnico (JetBrains Mono). */
+body{font-family:var(--eax-cuerpo)}
+
+/* Impacto — monograma, firma y numeros ancla */
+.p-mono,.portada-mono,.portada-monogram,.logo,#nav .brand,.firma,
+.stat-num,.crit-num,.kpi-num{
+  font-family:var(--eax-impacto);font-weight:400;letter-spacing:-.03em}
+
+/* Titular SIN palabra clave marcada -> impacto puro. Es "el titular que
+   interrumpe" de §1: sin un <span> que contrastar, la italica sola no forma
+   par, solo inclina la frase entera. */
+h1,.p-title,.portada-title,.cover-title,.slide-title{
+  font-family:var(--eax-impacto);font-weight:400;letter-spacing:-.02em;line-height:1.08}
+
+/* Titular CON palabra clave marcada -> el par que define la marca (P33):
+   editorial italica de base, impacto en la palabra que golpea. */
+h1:has(em),h1:has(span),h1:has(strong),
+.p-title:has(em),.p-title:has(span),.p-title:has(strong),
+.portada-title:has(em),.portada-title:has(span),.portada-title:has(strong),
+.cover-title:has(em),.cover-title:has(span),.cover-title:has(strong),
+.slide-title:has(em),.slide-title:has(span),.slide-title:has(strong){
+  font-family:var(--eax-editorial);font-style:italic;font-weight:400;
+  letter-spacing:0;line-height:1.12}
+h1 em,h1 span,h1 strong,
+.p-title em,.p-title span,.p-title strong,
+.portada-title em,.portada-title span,.portada-title strong,
+.cover-title em,.cover-title span,.cover-title strong,
+.slide-title em,.slide-title span,.slide-title strong{
+  font-family:var(--eax-impacto);font-style:normal;font-weight:400;letter-spacing:-.01em}
+
+/* Editorial — la voz humana: taglines, citas y notas al pie. Inter no trae
+   italica, asi que sin esto el navegador la falsifica inclinando la romana. */
+.obsessed,.tagline,.portada-tagline,.fnote,.stat-note,.stat-src,.vv-q,
+.com,.self,.title{
+  font-family:var(--eax-editorial);font-style:italic;font-weight:400}
+
+/* Tecnico — kickers, etiquetas y contadores (uppercase + tracking §1) */
+.p-tag,.p-tag2,.portada-tag,.tag,.lbl,.label,.eyebrow,.cover-label,.slide-label,
+.hl-lbl,.hl-label,.crit-label,.conclusion-tag,.badge,.stat-label,.card-meta,
+.fs-label,.lv-n,.sn,.cue,
+#counter,.counter,.slide-counter{
+  font-family:var(--eax-tecnico);font-weight:700;letter-spacing:.14em}
+
+/* Cuerpo — subtitulos, texto y controles */
+h2,h3,h4,.card-title,.p-author,.lv-name,.kw{
+  font-family:var(--eax-cuerpo);font-weight:800;letter-spacing:-.02em}
+.p-sub,.portada-sub,.cover-sub,.lead,.byline,.cover-meta,.portada-meta{
+  font-family:var(--eax-cuerpo);font-style:normal}
+button,.btn,.nav-btn,.notes-btn{font-family:var(--eax-cuerpo);font-weight:700}
 </style>
 </head>
 <body>
