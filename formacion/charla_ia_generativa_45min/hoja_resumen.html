@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoja de la charla · IA generativa y productividad · EAx</title>
+<!-- Hoja resumen para asistentes. Se envía en PDF por WhatsApp a quien escribe CLASE (D9: la envía Erick).
+     PDF: abrir en Chrome → Imprimir → Guardar como PDF (A4, sin encabezados), o el comando del REGISTRO del documento madre. -->
+<link rel="stylesheet" href="../../assets/eax-brand.css">
+<style>
+  /* Registro "auditoría" del plano (visual.md §2c): papel claro, acento #d97706 */
+  :root{--dark:#0f172a;--dark-2:#1e293b;--acc:#d97706;--acc-bg:#fffbeb;--slate:#475569;--paper:#f8fafc;--white:#fff;--line:#e2e8f0;--radius:16px}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:var(--eax-cuerpo);font-size:16px;line-height:1.55;color:var(--dark);background:var(--paper)}
+  .page{max-width:820px;margin:0 auto;padding:28px 16px 40px}
+  header{background:var(--dark);color:var(--white);border-radius:var(--radius);padding:26px 24px 24px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(rgba(148,163,184,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.10) 1px,transparent 1px);background-size:40px 40px}
+  header>*{position:relative;z-index:1}
+  .kicker{display:block;padding-right:52px;font-family:var(--eax-tecnico);text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:#fbbf24}
+  h1{font-family:var(--eax-editorial);font-style:italic;font-weight:400;font-size:clamp(1.7rem,6vw,2.5rem);line-height:1.12;margin-top:10px}
+  h1 em{font-family:var(--eax-impacto);font-style:normal;font-weight:400;text-transform:uppercase;color:#f59e0b;letter-spacing:-.01em}
+  header p{margin-top:12px;color:#e2e8f0;font-size:1rem}
+  .firma-top{position:absolute;right:20px;top:18px;font-family:var(--eax-impacto);color:#f59e0b;font-size:1.2rem;z-index:2}
+
+  section{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:20px 20px 18px;margin-top:14px;break-inside:avoid;page-break-inside:avoid}
+  .n{font-family:var(--eax-tecnico);text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:#92400e}
+  h2{font-family:var(--eax-editorial);font-style:italic;font-weight:400;font-size:1.6rem;line-height:1.2;margin-top:4px}
+  h2 b{font-family:var(--eax-impacto);font-style:normal;font-weight:400;text-transform:uppercase;color:var(--acc);font-size:.92em}
+  section p{margin-top:8px}
+  .muted{color:var(--slate)}
+  ul{margin-top:8px;padding-left:20px}
+  li{margin-top:4px}
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+  .three div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:700}
+  .three div.hot{background:var(--acc-bg);border:2px solid var(--acc)}
+  pre{margin-top:12px;background:var(--dark);color:#f1f5f9;border-left:4px solid #f59e0b;border-radius:12px;padding:14px 16px;font-family:var(--eax-tecnico);font-size:.86rem;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+  .when{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .when>div{border-radius:12px;padding:12px 14px;border:1px solid var(--line);background:var(--paper)}
+  .when .t{font-family:var(--eax-tecnico);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;font-weight:700}
+  .when .si .t{color:#166534}
+  .when .no .t{color:#b91c1c}
+  .stamp{display:inline-block;margin-top:12px;font-family:var(--eax-tecnico);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:.78rem;color:#b91c1c;border:2px solid #b91c1c;border-radius:6px;padding:5px 10px;transform:rotate(-1.5deg)}
+
+  footer{margin-top:18px;padding:18px 20px;border-radius:var(--radius);background:var(--dark);color:#e2e8f0;font-size:.95rem}
+  footer .who{font-weight:700;color:var(--white)}
+  footer a{color:#93c5fd;text-decoration:none;border-bottom:1px solid rgba(147,197,253,.5);font-weight:700}
+  footer a:hover,footer a:focus{color:#bfdbfe}
+  footer .eax{font-family:var(--eax-impacto);color:#f59e0b}
+
+  @media (max-width:560px){
+    .three,.when{grid-template-columns:1fr}
+    header{padding:22px 18px 20px}
+    .firma-top{right:16px;top:14px}
+    h1{padding-right:44px}
+  }
+  @page{size:A4;margin:12mm}
+  @media print{
+    body{background:#fff;font-size:9.6pt;line-height:1.45}
+    .page{max-width:none;padding:0}
+    header,footer,pre,.three .hot{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    header{padding:14px 18px 14px}
+    h1{font-size:1.75rem}
+    header p{margin-top:6px}
+    section{margin-top:7px;padding:10px 14px}
+    section p{margin-top:5px}
+    h2{font-size:1.2rem}
+    ul{margin-top:4px}
+    li{margin-top:1px}
+    .three,.when{margin-top:7px;gap:8px}
+    .three>div,.when>div{padding:7px 10px}
+    pre{font-size:7.8pt;line-height:1.5;padding:8px 12px;margin-top:6px}
+    .stamp{margin-top:6px;font-size:.66rem}
+    footer{margin-top:8px;padding:10px 14px;font-size:9pt}
+    a{color:#1d4ed8}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <span class="firma-top" aria-hidden="true">EAx</span>
+    <div class="kicker">Hoja de la charla · IA generativa y productividad</div>
+    <h1><i>La herramienta es la misma.</i> <em>Lo que cambia</em> <i>es cómo le pides.</i></h1>
+    <p>Lo que vimos en la charla, listo para usarlo esta semana. Copia los bloques oscuros tal cual.</p>
+  </header>
+
+  <section>
+    <div class="n">1 · Antes de pedir</div>
+    <h2><i>La IA no adivina</i> <b>para qué</b> <i>lo quieres</i></h2>
+    <p>Antes de escribirle, responde tres cosas y díselas:</p>
+    <div class="three">
+      <div>¿Qué es?</div>
+      <div>¿Para quién?</div>
+      <div class="hot">¿Para qué lo vas a usar?</div>
+    </div>
+    <p class="muted">La tercera es la que más se olvida y la que más cambia el resultado. Lo que no le digas, lo va a suponer.</p>
+  </section>
+
+  <section>
+    <div class="n">2 · Pedir bien</div>
+    <h2><i>Siete cosas que decirle</i> <b>antes de pedir</b></h2>
+    <p>Lo que llaman "prompting" no son trucos: es no dejarle nada importante por adivinar.</p>
+<pre>TAREA: qué necesitas, concreto.
+OBJETIVO: para qué, exactamente.
+CONTEXTO: qué es, para quién, la situación.
+REFERENCIAS: un ejemplo de cómo lo quieres (si lo tienes).
+CRITERIOS DE ÉXITO: cómo sabrás que quedó bien.
+RESTRICCIONES: qué no puede hacer.
+PROCESO ESPERADO: los pasos, y si debe preguntarte antes.</pre>
+  </section>
+
+  <section>
+    <div class="n">3 · Antes del resultado</div>
+    <h2><i>La línea que</i> <b>ahorra rehacer</b></h2>
+    <p>Agrégala al final de cualquier pedido largo:</p>
+<pre>Antes de hacerlo, dime cómo lo vas a hacer y qué te falta saber.</pre>
+    <div class="when">
+      <div class="si"><div class="t">Úsala</div>Documentos, trabajos, presentaciones: todo lo que cueste rehacer.</div>
+      <div class="no"><div class="t">No hace falta</div>Un mensaje corto o una pregunta rápida.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="n">4 · Cuando se equivoca</div>
+    <h2><i>No borres el chat:</i> <b>corrige</b></h2>
+    <p>Antes de volver a pedir, hazte tres preguntas:</p>
+    <ul>
+      <li>¿Qué información le faltó?</li>
+      <li>¿Qué le pedí de forma ambigua?</li>
+      <li>¿Qué dio por sentado que yo no le dije?</li>
+    </ul>
+    <p>Y se lo dices en la misma conversación:</p>
+<pre>Supusiste [lo que supuso]. No es así: [el dato correcto].
+Corrige solo eso y deja igual todo lo demás.</pre>
+  </section>
+
+  <section>
+    <div class="n">5 · Antes de usar un dato</div>
+    <h2><i>Una cifra inventada y una correcta</i> <b>se leen igual</b></h2>
+    <p>La IA escribe lo que suena bien, no lo que está comprobado. Antes de usar una cifra, una cita o una fuente:</p>
+    <ul>
+      <li>¿Abrí la fuente?</li>
+      <li>¿Dice exactamente lo que la IA afirma?</li>
+      <li>¿El año y el lugar sirven para lo que lo voy a usar?</li>
+    </ul>
+    <p>Y pídeselo por escrito:</p>
+<pre>Si no tienes una fuente que yo pueda abrir, dímelo en vez de dar la cifra.</pre>
+    <span class="stamp">La fuente se abre siempre</span>
+  </section>
+
+  <section>
+    <div class="n">6 · Una sola vez</div>
+    <h2><i>Tus reglas de casa,</i> <b>pegadas una vez</b></h2>
+    <p>Pégalas en la configuración de tu asistente, donde dice <strong>instrucciones o preferencias personalizadas</strong>. Desde ahí aplican a todas tus conversaciones.</p>
+<pre>Trabaja conmigo con estas reglas permanentes:
+- Respuestas claras y precisas, sin relleno.
+- Antes de una tarea larga, dime qué estás suponiendo.
+- Si algo de lo que te pido es ambiguo, pregúntame en vez de asumir.
+- Dime los riesgos y los puntos débiles que veas.
+- Si crees que me equivoco, dímelo; no me des la razón por cortesía.
+- No cambies nada que no te haya pedido cambiar.
+- Cuando des un dato o una cifra, dime de dónde sale. Si no tienes la fuente, dilo.</pre>
+  </section>
+
+  <section>
+    <div class="n">7 · Que la IA sepa quién eres</div>
+    <h2><i>Tu</i> <b>"sobre mí"</b><i>, en cuatro líneas</i></h2>
+    <p>Es lo que hace EAx con toda la empresa, en pequeño. Llénalo y pégalo junto a las reglas de casa:</p>
+<pre>SOBRE MÍ
+- Quién soy y qué hago: [estudio / trabajo en ...]
+- Cómo escribo: [formal / directo / cercano]. Evito: [...]
+- Algo está bien hecho para mí cuando: [...]
+- Nunca: [lo que no quieres que haga]</pre>
+  </section>
+
+  <footer>
+    <p class="who"><a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener">Erick Albornoz</a> · <span class="eax">EAx</span></p>
+    <p>Consultor de operaciones · Automatización e IA. Corrijo el proceso antes de automatizarlo.</p>
+    <p style="margin-top:6px">WhatsApp 310 376 1189 · linkedin.com/in/erick-albornoz</p>
+  </footer>
+
+</div>
+</body>
+</html>

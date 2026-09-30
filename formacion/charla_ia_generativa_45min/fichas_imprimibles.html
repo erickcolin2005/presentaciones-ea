@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fichas y planilla · Charla IA generativa · EAx</title>
+<!-- Material de la actividad (KIT_actividad.md §5). Imprimir en A4, sin encabezados:
+     página 1 = 24 fichas para recortar (imprimir 1 y media hoja ≈ 30-36) · página 2 = planilla de registro para quien anota. -->
+<link rel="stylesheet" href="../../assets/eax-brand.css">
+<style>
+  :root{--dark:#0f172a;--acc:#f59e0b;--acc-dk:#b45309;--slate:#475569;--line:#cbd5e1}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--eax-cuerpo);color:var(--dark);background:#e2e8f0}
+  .sheet{width:210mm;min-height:297mm;margin:10mm auto;background:#fff;padding:10mm;box-shadow:0 2px 10px rgba(15,23,42,.15)}
+  .hint{font-family:var(--eax-tecnico);font-size:8.5pt;letter-spacing:.08em;color:var(--slate);margin-bottom:5mm}
+
+  /* Página 1 — fichas */
+  .fichas{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:44mm;border-top:1px dashed var(--line);border-left:1px dashed var(--line)}
+  .ficha{border-right:1px dashed var(--line);border-bottom:1px dashed var(--line);display:flex;align-items:center;justify-content:center;padding:3mm}
+  .ficha .in{width:100%;height:100%;border-radius:4mm;background:var(--dark);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5mm;
+    background-image:linear-gradient(rgba(148,163,184,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.14) 1px,transparent 1px);background-size:5mm 5mm;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .ficha .eax{font-family:var(--eax-impacto);font-size:22pt;color:var(--acc);line-height:1}
+  .ficha .t{font-family:var(--eax-tecnico);font-size:6.5pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#e2e8f0}
+  .ficha .u{font-family:var(--eax-editorial);font-style:italic;font-size:10pt;color:#fde68a}
+
+  /* Página 2 — planilla */
+  h1{font-family:var(--eax-editorial);font-style:italic;font-weight:400;font-size:22pt;line-height:1.1}
+  h1 em{font-family:var(--eax-impacto);font-style:normal;text-transform:uppercase;color:var(--acc-dk)}
+  .how{margin:3mm 0 5mm;font-size:9.5pt;color:var(--slate);line-height:1.45}
+  .how b{color:var(--dark)}
+  .meta{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:4mm;margin-bottom:5mm;font-size:9pt}
+  .meta div{border-bottom:1px solid var(--dark);padding-bottom:1.5mm}
+  .meta span{font-family:var(--eax-tecnico);font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--slate)}
+  table{width:100%;border-collapse:collapse;font-size:9pt}
+  th{font-family:var(--eax-tecnico);font-size:7pt;letter-spacing:.12em;text-transform:uppercase;text-align:left;color:var(--slate);border-bottom:1.5px solid var(--dark);padding:1.5mm 2mm}
+  td{border-bottom:1px solid var(--line);height:7.2mm;padding:0 2mm}
+  td.n{width:8mm;font-family:var(--eax-tecnico);color:var(--slate)}
+  td.tally{width:62mm}
+  td.tot{width:18mm}
+  .foot{margin-top:4mm;display:flex;justify-content:space-between;font-size:8.5pt;color:var(--slate)}
+  .foot .eax{font-family:var(--eax-impacto);color:var(--acc-dk)}
+
+  @page{size:A4;margin:0}
+  @media print{
+    body{background:#fff}
+    .sheet{margin:0;box-shadow:none;page-break-after:always;break-after:page}
+    .sheet:last-child{page-break-after:auto;break-after:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+  <p class="hint">FICHAS · recortar por la línea punteada · se entrega una por cada respuesta buena</p>
+  <div class="fichas" id="fichas"></div>
+</div>
+
+<div class="sheet">
+  <h1><i>Planilla de</i> <em>fichas</em></h1>
+  <p class="how">La lleva <b>una persona del grupo que invita</b>. Cada vez que Erick entrega una ficha, se escribe el nombre (si ya está, una raya más). Al final, esta hoja es la <b>evidencia de participación</b> para el docente: cuántas personas respondieron, cuántas respuestas buenas hubo y quién ganó.</p>
+  <div class="meta">
+    <div><span>Curso / evento</span></div>
+    <div><span>Fecha</span></div>
+    <div><span>Asistentes (aprox.)</span></div>
+  </div>
+  <table>
+    <thead><tr><th>#</th><th>Nombre</th><th>Fichas (una raya por ficha)</th><th>Total</th></tr></thead>
+    <tbody id="filas"></tbody>
+  </table>
+  <div class="foot"><span>Ganador: ______________________ · Fichas: ____</span><span>Charla · IA generativa y productividad · <span class="eax">EAx</span></span></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const f = document.getElementById('fichas'), t = document.getElementById('filas');
+  if (f) f.innerHTML = Array.from({length: 24}, () =>
+    '<div class="ficha"><div class="in"><span class="eax">EAx</span><span class="t">1 ficha</span><span class="u">respuesta buena</span></div></div>').join('');
+  if (t) t.innerHTML = Array.from({length: 30}, (_, i) =>
+    '<tr><td class="n">' + (i + 1) + '</td><td></td><td class="tally"></td><td class="tot"></td></tr>').join('');
+});
+</script>
+</body>
+</html>
