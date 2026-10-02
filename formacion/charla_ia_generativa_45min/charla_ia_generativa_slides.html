@@ -119,7 +119,7 @@
   .media video.wide{height:auto;width:min(46vw,620px)}
   .media figcaption{font-family:var(--eax-tecnico);font-size:.85rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow)}
   .missing{border:2px dashed rgba(245,158,11,.7);border-radius:14px;padding:22px;color:#fde68a;max-width:360px;font-size:1rem}
-  .missing[hidden],video[hidden]{display:none}
+  .missing[hidden],video[hidden],figure[hidden]{display:none}
 
   /* Cita del guion */
   .quote{margin-top:26px;background:var(--light);border:1px solid #e2e8f0;border-radius:var(--radius);padding:22px 26px}
@@ -148,6 +148,20 @@
   .brand .by a{color:#93c5fd;text-decoration:none;border-bottom:1px solid rgba(147,197,253,.5);font-weight:700}
   .brand .by a:hover,.brand .by a:focus{color:#bfdbfe}
   .brand .claim{margin-top:6px;font-size:1.05rem;color:var(--yellow)}
+
+  /* Tema del temario que cubre la lámina */
+  .tema{display:block;font-family:var(--eax-tecnico);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--slate);margin-bottom:12px}
+  .tema b{color:#92400e}
+  .slide.dark .tema{color:#cbd5e1}
+  .slide.dark .tema b{color:var(--yellow)}
+  /* Lista de los ocho temas (mapa y repaso) */
+  .temas{display:grid;grid-template-columns:1fr 1fr;gap:0 34px;margin-top:22px}
+  .temas .it{display:flex;gap:16px;align-items:baseline;padding:11px 0;border-bottom:1px solid rgba(148,163,184,.28)}
+  .temas .num{flex:0 0 auto;font-family:var(--eax-impacto);font-size:1.5rem;line-height:1;color:var(--yellow);min-width:1.4em}
+  .temas .tx{font-size:1.08rem;font-weight:700;color:var(--white);line-height:1.3}
+  .temas .tx small{display:block;font-size:.86rem;font-weight:400;color:#cbd5e1;margin-top:2px}
+  .temas .ok{flex:0 0 auto;margin-left:auto;font-family:var(--eax-tecnico);font-weight:700;color:#86efac}
+  @media (max-width:900px){.temas{grid-template-columns:1fr}}
 
   /* Pregunta al salón (marca en la lámina) */
   .ask{display:inline-block;margin:0 0 22px 10px;font-family:var(--eax-tecnico);text-transform:uppercase;letter-spacing:.16em;font-size:.78rem;font-weight:700;padding:6px 14px;border-radius:999px;background:var(--yellow);color:var(--dark);vertical-align:top}
@@ -214,7 +228,7 @@
 «Soy Erick Albornoz. Trabajo con inteligencia artificial todos los días: con ella opero mi propia empresa. Hoy no les voy a dar definiciones. Van a ver cómo funciona, y van a decidir ustedes qué le pedimos.»
 Pulsa R al empezar a hablar: el reloj de abajo se pone en cero.">
     <div class="inner brand">
-      <span class="label l-hal">Charla · IA generativa y productividad</span>
+      <span class="label l-hal">IA generativa y productividad empresarial</span>
       <div class="mono">EAx</div>
       <h1><i>La misma IA,</i> <em>resultados distintos</em></h1>
       <p class="by"><a href="https://linkedin.com/in/erick-albornoz" target="_blank" rel="noopener">Erick Albornoz</a> · Consultor de operaciones · Automatización e IA</p>
@@ -235,6 +249,26 @@ Presenta a quien anota (alguien del grupo que invita): «[Nombre] va a anotar qu
         <div class="card"><div class="n">Cómo se gana</div><h3>Estando atento</h3><p>Las preguntas son sobre lo que pase aquí, no sobre definiciones.</p></div>
       </div>
       <p class="note-line">Alguien del grupo anota quién gana cada ficha.</p>
+    </div>
+  </section>
+
+  <section class="slide dark" data-bg="dark" data-min="2"
+    data-notes="0:02 · Veinte segundos. «Estos son los ocho temas de hoy. No los voy a dar en este orden ni como definiciones: los van a ver funcionando sobre un caso de ustedes. Al final los repasamos uno por uno.»
+En cada lámina, arriba, va el tema que se está cubriendo: es lo que el docente va a revisar.">
+    <div class="inner">
+      <span class="label l-ctx">Lo que vamos a ver</span>
+      <h1><i>Ocho temas,</i> <em>un solo caso</em></h1>
+      <p class="sub">Funcionando en vivo, no en definiciones.</p>
+      <div class="temas">
+        <div class="it"><span class="num">1</span><span class="tx">¿Cómo funciona la IA generativa?</span></div>
+        <div class="it"><span class="num">2</span><span class="tx">Modelos de lenguaje (LLM)</span></div>
+        <div class="it"><span class="num">3</span><span class="tx">Chatbots y asistentes de IA</span></div>
+        <div class="it"><span class="num">4</span><span class="tx">Generación de texto, imágenes, audio y video</span></div>
+        <div class="it"><span class="num">5</span><span class="tx">Copilotos empresariales</span></div>
+        <div class="it"><span class="num">6</span><span class="tx">Automatización de tareas intelectuales</span></div>
+        <div class="it"><span class="num">7</span><span class="tx">IA para investigación, análisis y generación de documentos</span></div>
+        <div class="it"><span class="num">8</span><span class="tx">Técnicas de prompting</span></div>
+      </div>
     </div>
   </section>
 
@@ -262,6 +296,7 @@ Pregunta: «¿Cuál le sirve más a [nombre]?» Deja que respondan.
 Remate: «La herramienta es la misma. Lo que cambió es lo que le di.»
 FICHA 2 · «¿Cuál de las dos le sirve más, y por qué?» → a la mejor razón (no basta con decir 'la B').">
     <div class="inner">
+      <span class="tema">Tema <b>1</b> de 8 · ¿Cómo funciona la IA generativa?</span>
       <span class="label l-ctx">01 · El contraste</span><span class="ask">Pregunta al salón · ficha</span>
       <h1><i>La misma herramienta,</i> <em>dos pedidos</em></h1>
       <div class="compare">
@@ -278,6 +313,7 @@ FICHA 2 · «¿Cuál de las dos le sirve más, y por qué?» → a la mejor raz�
 «Claude, ChatGPT, Gemini: esos son los asistentes o chatbots. Son la ventana de conversación montada sobre uno de esos modelos. Cambia la ventana; la forma de usarla bien es la misma.»
 FICHA 3 · ANTES de explicar: «Si es la misma herramienta, ¿por qué creen que cambió?» → a quien se acerque a 'por lo que se le dio'. Después explicas.">
     <div class="inner">
+      <span class="tema">Temas <b>2</b> y <b>3</b> de 8 · Modelos de lenguaje (LLM) · Chatbots y asistentes de IA</span>
       <span class="label l-ctx">01 · Qué pasó por dentro</span><span class="ask">Pregunta al salón · ficha</span>
       <h1><i>No busca ni consulta:</i> <em>completa</em></h1>
       <div class="flow">
@@ -294,6 +330,7 @@ FICHA 3 · ANTES de explicar: «Si es la misma herramienta, ¿por qué creen que
   <section class="slide dark" data-bg="dark" data-min="9"
     data-notes="0:09 · «Uno: completa con lo que le das. Por eso el segundo resultado fue mejor. Dos: escribe lo que suena bien, no lo que está comprobado. Por eso hay que revisarlo. De eso son los próximos quince minutos.»">
     <div class="inner">
+      <span class="tema">Tema <b>1</b> de 8 · ¿Cómo funciona la IA generativa?</span>
       <span class="label l-imp">01 · Dos consecuencias</span>
       <h1><i>Lo que ordena</i> <em>el resto</em></h1>
       <div class="grid g2">
@@ -310,6 +347,7 @@ En el MISMO chat del pedido B. Tú escribes; el salón dicta los tres marcados:
 «¿Para qué lo quieres, exactamente?» → objetivo · «¿Cómo sabrías que quedó bien?» → criterios · «¿Qué no puede hacer?» → restricciones.
 FICHA 4 · una por cada campo dictado: objetivo, criterios de éxito, restricciones.">
     <div class="inner">
+      <span class="tema">Tema <b>8</b> de 8 · Técnicas de prompting</span>
       <span class="label l-ctx">02 · Pedir bien</span><span class="ask">Pregunta al salón · ficha</span>
       <h1 class="long"><i>No son trucos:</i> <em>siete cosas</em> <i>que decirle antes de pedir</i></h1>
       <div class="grid g4">
@@ -328,6 +366,7 @@ FICHA 4 · una por cada campo dictado: objetivo, criterios de éxito, restriccio
     data-notes="0:14 · Agrega esta línea al final de la petición, antes de enviar. La IA responde con preguntas; el salón las responde. Se las pasas y le pides que lo haga.
 «Una pregunta de la IA ahora cuesta menos que un resultado equivocado después.»">
     <div class="inner">
+      <span class="tema">Tema <b>8</b> de 8 · Técnicas de prompting</span>
       <span class="label l-hal">02 · Antes del resultado</span>
       <h1><i>La línea que</i> <em>ahorra rehacer</em></h1>
       <div class="code">Antes de hacerlo, dime cómo lo vas a hacer y qué te falta saber.</div>
@@ -340,6 +379,7 @@ FICHA 4 · una por cada campo dictado: objetivo, criterios de éxito, restriccio
 Cuando lo encuentren: las tres preguntas → corriges EN LA MISMA conversación (guion, Anexo D). Si en 40 s nadie encuentra nada, lo señalas tú: tono, a quién va dirigido, un dato que inventó.
 FICHA 5 · a quien encuentre el supuesto (+1 si dice cuál de las tres preguntas aplica).">
     <div class="inner">
+      <span class="tema">Tema <b>8</b> de 8 · Técnicas de prompting</span>
       <span class="label l-imp">02 · Caza el error</span><span class="ask">Pregunta al salón · ficha</span>
       <h1><i>¿Qué dio por hecho</i> <em>que nadie le dijo?</em></h1>
       <div class="grid g3">
@@ -358,6 +398,7 @@ Eliges UN dato. «Apuesten a mano alzada: ¿esta fuente existe y dice eso?»
 0:21 · Abres el enlace o buscas el dato. Tres salidas posibles, las tres enseñan (guion, bloque 3). Sin internet → captura de respaldo.
 FICHA 6 · después de la apuesta (sin ficha): «¿Cómo lo comprobamos?» → al primero que diga abrir o buscar la fuente.">
     <div class="inner">
+      <span class="tema">Tema <b>7</b> de 8 · IA para investigación, análisis y generación de documentos</span>
       <span class="label l-hal">03 · Investigar sin creerle todo</span><span class="ask">Pregunta al salón · ficha</span>
       <h1><i>Apuesten:</i> <em>¿la fuente existe?</em></h1>
       <p class="sub">¿Existe, y dice lo que la IA afirma? Mano arriba.</p>
@@ -369,6 +410,7 @@ FICHA 6 · después de la apuesta (sin ficha): «¿Cómo lo comprobamos?» → a
     data-notes="0:23 · «Una cifra inventada y una correcta se leen exactamente igual. Por eso se verifica siempre, no cuando algo 'se ve raro'.»
 La línea de abajo se la llevan en la hoja resumen.">
     <div class="inner">
+      <span class="tema">Tema <b>7</b> de 8 · IA para investigación, análisis y generación de documentos</span>
       <span class="label l-acc">03 · La regla</span>
       <h1 class="long"><i>Una cifra inventada y una correcta</i> <em>se leen igual</em></h1>
       <p class="sub">Por eso se verifica <strong>siempre</strong>, no cuando algo "se ve raro".</p>
@@ -383,6 +425,7 @@ La línea de abajo se la llevan en la hoja resumen.">
 Cambias al explorador (carpetas CERRADAS) y abres CLAUDE.md en §2, luego §5. NO navegas nada más.
 Línea a señalar: «Nada se publica ni se envía solo. La IA produce; yo decido.»">
     <div class="inner">
+      <span class="tema">Tema <b>5</b> de 8 · Copilotos empresariales</span>
       <span class="label l-ctx">04 · EAx por dentro</span>
       <h1 class="long"><i>Tres preguntas, escritas</i> <em>una vez</em> <i>para toda la empresa</i></h1>
       <div class="tree" role="list">
@@ -400,6 +443,7 @@ Línea a señalar: «Nada se publica ni se envía solo. La IA produce; yo decido
   <section class="slide dark" data-bg="dark" data-min="26"
     data-notes="0:26 · «Esto es lo que llaman un copiloto empresarial: un asistente que conoce la empresa y trabaja dentro de sus herramientas. Van a oír los nombres comerciales. Yo lo hago con Claude sobre mis propios archivos. La idea es la misma: la IA sirve cuanto más sabe de cómo trabajas.»">
     <div class="inner">
+      <span class="tema">Tema <b>5</b> de 8 · Copilotos empresariales</span>
       <span class="label l-hal">04 · Copiloto empresarial</span>
       <h1><i>Un asistente que</i> <em>conoce la empresa</em></h1>
       <div class="grid g3">
@@ -415,6 +459,7 @@ Línea a señalar: «Nada se publica ni se envía solo. La IA produce; yo decido
     data-notes="0:27 · PRIMERO lanza la imagen en ChatGPT (Anexo F, con el caso del salón) y vuelve aquí mientras genera.
 «Todo arranca en texto. Este es el guion de un video mío, escrito con Claude desde las reglas de mi marca.» Lee las dos líneas.">
     <div class="inner">
+      <span class="tema">Tema <b>4</b> de 8 · Generación de texto, imágenes, audio y video</span>
       <span class="label l-ctx">04 · Una pieza, cuatro formatos</span>
       <h1><i>Todo arranca</i> <em>en texto</em></h1>
       <div class="quote">
@@ -432,11 +477,12 @@ Línea a señalar: «Nada se publica ni se envía solo. La IA produce; yo decido
   </section>
 
   <section class="slide dark" data-bg="dark" data-min="28"
-    data-notes="0:28 · Reproduce 10 s de la VOZ 1 y 10 s de la VOZ 2. NO cambies el orden: la pregunta 4 del cuestionario depende de él (voz 1 = sintética · voz 2 = Erick).
+    data-notes="0:28 · NECESITA SONIDO (parlante, o el computador al máximo y el salón en silencio). Reproduce 10 s de la VOZ 1 y 10 s de la VOZ 2. NO cambies el orden: la pregunta 4 del cuestionario depende de él (voz 1 = sintética · voz 2 = Erick).
 «Una es mía y la otra la generó una IA. Voten a mano alzada: ¿cuál es la mía? La respuesta la doy en la ronda final.»
 «Con ElevenLabs se hace lo mismo sin instalar nada.» Después vuelve a ChatGPT y muestra la imagen.
 FICHA 7 · después de la votación (sin ficha): «¿En qué se nota?» → a la mejor pista. NO reveles la respuesta.">
     <div class="inner">
+      <span class="tema">Tema <b>4</b> de 8 · Generación de texto, imágenes, audio y video</span>
       <span class="label l-hal">04 · Audio</span><span class="ask">Pregunta al salón · ficha</span>
       <h1><i>¿Cuál es</i> <em>mi voz?</em></h1>
       <p class="sub">Una es mía. La otra la generó una IA con el mismo texto. <strong>La respuesta, en la ronda final.</strong></p>
@@ -457,17 +503,19 @@ FICHA 7 · después de la votación (sin ficha): «¿En qué se nota?» → a la
 
   <section class="slide dark" data-bg="dark" data-min="29"
     data-notes="0:29 · Reel completo (56 s), después el clip generado (~8 s).
-«Este reel lo montó mi sistema a partir de nueve tomas que grabé con el celular. Y este otro clip no lo grabó nadie: salió de un texto, con [Veo / Grok / Higgsfield].»">
+«Este reel lo montó mi sistema a partir de nueve tomas que grabé con el celular.» Si está el clip: «Y este otro no lo grabó nadie: salió de un texto, con [Veo / Grok / Higgsfield].» Si NO está: «Y hoy también se genera video desde un texto, sin grabar nada: con Veo, Grok o Higgsfield.»
+SIN SONIDO EN EL SALÓN: el reel tiene el texto en pantalla, se entiende igual.">
     <div class="inner">
+      <span class="tema">Tema <b>4</b> de 8 · Generación de texto, imágenes, audio y video</span>
       <span class="label l-hal">04 · Video</span>
-      <h1 class="long"><i>Uno lo montó el sistema.</i> <em>El otro no lo grabó nadie.</em></h1>
+      <h1 class="long" id="titulo-video" data-alt="&lt;i&gt;Este video lo montó&lt;/i&gt; &lt;em&gt;el sistema&lt;/em&gt;"><i>Uno lo montó el sistema.</i> <em>El otro no lo grabó nadie.</em></h1>
       <div class="media">
         <figure>
           <figcaption>Montado desde 9 tomas</figcaption>
           <video poster="../../../02_PRODUCCION/REMOTION/VIDEOS/ERROR-1/cover.png" controls preload="metadata" playsinline data-fallback="miss-v3"><source src="media/reel_error1.mp4#t=0.1" type="video/mp4"><source src="../../../02_PRODUCCION/REMOTION/VIDEOS/ERROR-1/reel.mp4#t=0.1" type="video/mp4"></video>
           <div class="missing" id="miss-v3" hidden>Este video no está en esta copia de la presentación: se reproduce en la versión local, abierta desde el repositorio.</div>
         </figure>
-        <figure>
+        <figure id="fig-clip">
           <figcaption>Generado desde un texto</figcaption>
           <video class="wide" controls preload="metadata" playsinline data-fallback="miss-v4"><source src="media/clip_generado.mp4" type="video/mp4"></video>
           <div class="missing" id="miss-v4" hidden>Aquí va el clip generado desde un texto (<code>media/clip_generado.mp4</code>).</div>
@@ -480,6 +528,7 @@ FICHA 7 · después de la votación (sin ficha): «¿En qué se nota?» → a la
     data-notes="0:31 · «Para ese reel, la IA transcribió cada toma, propuso dónde cortar y tapó lo que no debía verse. Eso es automatizar una tarea intelectual: no mueve cajas, revisa, ordena y propone. La última palabra la tuve yo.»
 FICHA 8 · «¿Qué tarea de su trabajo o de la materia le darían a un sistema así? ¿Para qué?» → a quien diga la tarea Y su para qué.">
     <div class="inner">
+      <span class="tema">Tema <b>6</b> de 8 · Automatización de tareas intelectuales</span>
       <span class="label l-acc">04 · Lo que el sistema hace solo</span><span class="ask">Pregunta al salón · ficha</span>
       <h1><i>Automatizar una</i> <em>tarea intelectual</em></h1>
       <div class="flow">
@@ -495,12 +544,30 @@ FICHA 8 · «¿Qué tarea de su trabajo o de la materia le darían a un sistema 
     </div>
   </section>
 
+  <section class="slide dark" data-bg="dark" data-min="32.5"
+    data-notes="0:32:30 · Veinte segundos, sin re-explicar. «Estos eran los ocho temas. Los vimos todos, sobre el caso de [nombre]. Ahora viene la actividad.»">
+    <div class="inner">
+      <span class="label l-acc">Los ocho temas</span>
+      <h1><i>Ocho de ocho,</i> <em>sobre un caso real</em></h1>
+      <div class="temas">
+        <div class="it"><span class="num">1</span><span class="tx">¿Cómo funciona la IA generativa?<small>El contraste: misma herramienta, dos resultados</small></span><span class="ok">✓</span></div>
+        <div class="it"><span class="num">2</span><span class="tx">Modelos de lenguaje (LLM)<small>Escribe prediciendo cómo sigue</small></span><span class="ok">✓</span></div>
+        <div class="it"><span class="num">3</span><span class="tx">Chatbots y asistentes de IA<small>La ventana de conversación sobre el modelo</small></span><span class="ok">✓</span></div>
+        <div class="it"><span class="num">4</span><span class="tx">Generación de texto, imágenes, audio y video<small>Una pieza en cuatro formatos</small></span><span class="ok">✓</span></div>
+        <div class="it"><span class="num">5</span><span class="tx">Copilotos empresariales<small>Un asistente que conoce la empresa</small></span><span class="ok">✓</span></div>
+        <div class="it"><span class="num">6</span><span class="tx">Automatización de tareas intelectuales<small>De nueve tomas a un video revisado</small></span><span class="ok">✓</span></div>
+        <div class="it"><span class="num">7</span><span class="tx">IA para investigación, análisis y generación de documentos<small>La fuente se abre siempre</small></span><span class="ok">✓</span></div>
+        <div class="it"><span class="num">8</span><span class="tx">Técnicas de prompting<small>Siete cosas que decirle antes de pedir</small></span><span class="ok">✓</span></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ BLOQUE 5 · CUESTIONARIO ============ -->
   <section class="slide dark" data-bg="dark" data-min="33"
-    data-notes="0:33 · NO SE RECORTA. «Cinco preguntas sobre lo que pasó aquí. Responde la primera mano que se levante; si falla, rebota a otra. Si ya tienes dos fichas, dejas responder a otro primero.»
+    data-notes="0:33 · NO SE RECORTA. Dilo con esa palabra: «Ahora la ACTIVIDAD.» «Cinco preguntas sobre lo que pasó aquí. Responde la primera mano que se levante; si falla, rebota a otra. Si ya tienes dos fichas, dejas responder a otro primero.»
 En cada pregunta: la lees, esperas la mano, escuchas la respuesta y SOLO ENTONCES flecha → aparece la respuesta. Comentario de una frase (kit §4).">
     <div class="inner">
-      <span class="label l-hal">05 · Ronda final</span>
+      <span class="label l-hal">Actividad · ronda final</span>
       <h1><i>Cinco preguntas,</i> <em>la primera mano</em></h1>
       <p class="sub">Sobre lo que pasó aquí. Responde la primera mano que se levante; si falla, <strong>rebota</strong>.</p>
       <div class="grid g2" style="max-width:860px">
@@ -514,7 +581,7 @@ En cada pregunta: la lees, esperas la mano, escuchas la respuesta y SOLO ENTONCE
   <section class="slide dark" data-bg="dark" data-min="33.5"
     data-notes="Respuesta: lo que se le dio antes de pedir. Comentario: «Misma herramienta, otro resultado: por lo que se le dio.»">
     <div class="inner">
-      <span class="label l-hal">Ronda final · 1 de 5</span>
+      <span class="label l-hal">Actividad · pregunta 1 de 5</span>
       <h1 class="long"><i>Entre la primera y la segunda respuesta de la IA,</i> <em>¿qué cambió?</em></h1>
       <p class="hand">Primera mano que se levante</p>
       <div class="answer frag"><div class="n">Respuesta</div><p>Lo que se le dio antes de pedir.</p><div class="src">Momento: el contraste · minuto 5</div></div>
@@ -523,7 +590,7 @@ En cada pregunta: la lees, esperas la mano, escuchas la respuesta y SOLO ENTONCE
   <section class="slide dark" data-bg="dark" data-min="34.5"
     data-notes="Respuesta: las tres preguntas, en la misma conversación. Comentario: «No se empieza de cero: se le dice qué faltó.»">
     <div class="inner">
-      <span class="label l-hal">Ronda final · 2 de 5</span>
+      <span class="label l-hal">Actividad · pregunta 2 de 5</span>
       <h1 class="long"><i>Cuando la IA se equivoca,</i> <em>¿qué se hace primero?</em></h1>
       <p class="hand">Primera mano que se levante</p>
       <div class="answer frag"><div class="n">Respuesta</div><p>Revisar qué le faltó, qué fue ambiguo y qué supuso. Sin borrar el chat.</p><div class="src">Momento: caza el error · minuto 16</div></div>
@@ -532,7 +599,7 @@ En cada pregunta: la lees, esperas la mano, escuchas la respuesta y SOLO ENTONCE
   <section class="slide dark" data-bg="dark" data-min="35.5"
     data-notes="Respuesta: en nada, se leen igual. Comentario: «Por eso se verifica siempre, no cuando algo se ve raro.»">
     <div class="inner">
-      <span class="label l-hal">Ronda final · 3 de 5</span>
+      <span class="label l-hal">Actividad · pregunta 3 de 5</span>
       <h1 class="long"><i>¿En qué se diferencian una cifra inventada y una</i> <em>correcta?</em></h1>
       <p class="hand">Primera mano que se levante</p>
       <div class="answer frag"><div class="n">Respuesta</div><p>En nada: se leen igual. Por eso se abre la fuente.</p><div class="src">Momento: la fuente · minuto 21</div></div>
@@ -541,7 +608,7 @@ En cada pregunta: la lees, esperas la mano, escuchas la respuesta y SOLO ENTONCE
   <section class="slide dark" data-bg="dark" data-min="36.5"
     data-notes="Respuesta: LA VOZ 2 (TEST_01_erick). Pregunta: «¿Cuántos votaron por la 2?»">
     <div class="inner">
-      <span class="label l-hal">Ronda final · 4 de 5</span>
+      <span class="label l-hal">Actividad · pregunta 4 de 5</span>
       <h1 class="long"><i>¿Cuál de las dos voces</i> <em>era la mía?</em></h1>
       <p class="hand">Primera mano que se levante</p>
       <div class="answer frag"><div class="n">Respuesta</div><p>La voz 2. La voz 1 la generó una IA con el mismo texto.</p><div class="src">Momento: las voces · minuto 28</div></div>
@@ -550,7 +617,7 @@ En cada pregunta: la lees, esperas la mano, escuchas la respuesta y SOLO ENTONCE
   <section class="slide dark" data-bg="dark" data-min="37.5"
     data-notes="Respuesta: la empresa escrita en archivos. Comentario: «No es un modelo especial: es la empresa escrita.» Luego el CONTEO: «¿Quién tiene tres fichas o más? ¿Cuatro?…» Empate → tecla D.">
     <div class="inner">
-      <span class="label l-hal">Ronda final · 5 de 5</span>
+      <span class="label l-hal">Actividad · pregunta 5 de 5</span>
       <h1 class="long"><i>¿Qué hace que la IA de EAx</i> <em>conozca la empresa?</em></h1>
       <p class="hand">Primera mano que se levante</p>
       <div class="answer frag"><div class="n">Respuesta</div><p>Archivos con las reglas y el contexto de la empresa, que lee antes de trabajar.</p><div class="src">Momento: EAx por dentro · minuto 24</div></div>
@@ -635,7 +702,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Videos: si el archivo no está, se muestra el aviso en vez de un reproductor vacío */
   document.querySelectorAll('video[data-fallback]').forEach(v => {
-    const fail = () => { v.hidden = true; const f = $(v.dataset.fallback); if (f) f.hidden = false; };
+    const fail = () => {
+      v.hidden = true;
+      if (v.dataset.fallback === 'miss-v4') {   /* sin clip generado: se quita el hueco y el título habla solo del reel */
+        const fig = $('fig-clip'), h = $('titulo-video');
+        if (fig) fig.hidden = true;
+        if (h && h.dataset.alt) h.innerHTML = h.dataset.alt;
+        return;
+      }
+      const f = $(v.dataset.fallback); if (f) f.hidden = false;
+    };
     const srcs = v.querySelectorAll('source');
     if (srcs.length) srcs[srcs.length - 1].addEventListener('error', fail);
     else v.addEventListener('error', fail);
