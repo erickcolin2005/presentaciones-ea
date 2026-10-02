@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fichas y planilla · Charla IA generativa · EAx</title>
 <!-- Material de la actividad (KIT_actividad.md §5). Imprimir en A4, sin encabezados:
-     página 1 = 24 fichas para recortar (imprimir 1 y media hoja ≈ 30-36) · página 2 = planilla de registro para quien anota. -->
+     página 1 = 24 fichas para recortar · página 2 = planilla de registro para quien anota · página 3 = el vale del premio, que se entrega en la mano. -->
 <link rel="stylesheet" href="../../assets/eax-brand.css">
 <style>
   :root{--dark:#0f172a;--acc:#f59e0b;--acc-dk:#b45309;--slate:#475569;--line:#cbd5e1}
@@ -41,6 +41,20 @@
   .foot{margin-top:4mm;display:flex;justify-content:space-between;font-size:8.5pt;color:var(--slate)}
   .foot .eax{font-family:var(--eax-impacto);color:var(--acc-dk)}
 
+  /* Página 3 — el vale del premio */
+  .vale{margin-top:12mm;border:2px dashed var(--line);padding:6mm}
+  .vale .in{border-radius:6mm;background:var(--dark);color:#fff;padding:14mm 14mm 12mm;
+    background-image:linear-gradient(rgba(148,163,184,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.14) 1px,transparent 1px);background-size:8mm 8mm;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .vale .k{font-family:var(--eax-tecnico);font-size:8pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fbbf24}
+  .vale h2{font-family:var(--eax-editorial);font-style:italic;font-weight:400;font-size:30pt;line-height:1.08;margin-top:4mm}
+  .vale h2 em{font-family:var(--eax-impacto);font-style:normal;text-transform:uppercase;color:var(--acc)}
+  .vale p{margin-top:5mm;font-size:11pt;line-height:1.5;color:#e2e8f0;max-width:150mm}
+  .vale .campos{display:grid;grid-template-columns:1.3fr 1fr;gap:8mm;margin-top:10mm}
+  .vale .campos div{border-bottom:1px solid #cbd5e1;padding-bottom:9mm;font-family:var(--eax-tecnico);font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:#cbd5e1}
+  .vale .pie{margin-top:9mm;display:flex;justify-content:space-between;align-items:flex-end;font-size:9.5pt;color:#e2e8f0}
+  .vale .pie .eax{font-family:var(--eax-impacto);font-size:22pt;color:var(--acc);line-height:1}
+
   @page{size:A4;margin:0}
   @media print{
     body{background:#fff}
@@ -68,7 +82,23 @@
     <thead><tr><th>#</th><th>Nombre</th><th>Fichas (una raya por ficha)</th><th>Total</th></tr></thead>
     <tbody id="filas"></tbody>
   </table>
-  <div class="foot"><span>Ganador: ______________________ · Fichas: ____</span><span>Charla · IA generativa y productividad · <span class="eax">EAx</span></span></div>
+  <div class="foot"><span>Ganador: __________________ · Fichas: ____ · WhatsApp: ______________</span><span>Charla · IA generativa y productividad · <span class="eax">EAx</span></span></div>
+</div>
+
+<div class="sheet">
+  <p class="hint">VALE DEL PREMIO · recortar por la línea punteada · se entrega en la mano a quien gane</p>
+  <div class="vale">
+    <div class="in">
+      <div class="k">Vale · premio de la charla</div>
+      <h2><i>Una hora de</i> <em>clase de IA</em><br><i>ajustada a tu perfil</i></h2>
+      <p>Una sesión individual con Erick Albornoz, armada para ti: lo que estudias, tu trabajo o tu idea de negocio. Por videollamada, en la fecha que acordemos.</p>
+      <div class="campos">
+        <div>Para</div>
+        <div>Válido hasta</div>
+      </div>
+      <div class="pie"><span>Para agendarla: WhatsApp 310 376 1189</span><span class="eax">EAx</span></div>
+    </div>
+  </div>
 </div>
 
 <script>
